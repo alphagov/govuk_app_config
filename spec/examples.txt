@@ -1,0 +1,6 @@
+example_id                                  | status | run_time        |
+------------------------------------------- | ------ | --------------- |
+./spec/integration/configuring_spec.rb[1:1] | passed | 0.01335 seconds |
+./spec/lib/error_spec.rb[1:1:1]             | passed | 0.00031 seconds |
+./spec/lib/error_spec.rb[1:1:2]             | passed | 0.02143 seconds |
+./spec/lib/statsd_spec.rb[1:1:1]            | passed | 0.00399 seconds |

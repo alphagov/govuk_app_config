@@ -5,7 +5,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'govuk_config'
+gem 'govuk_app_config'
 ```
 
 And then execute:

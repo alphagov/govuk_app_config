@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "govuk_config/version"
+require "govuk_app_config/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "govuk_config"
-  spec.version       = GovukConfig::VERSION
+  spec.name          = "govuk_app_config"
+  spec.version       = GovukAppConfig::VERSION
   spec.authors       = ["GOV.UK Dev"]
   spec.email         = ["govuk-dev@digital.cabinet-office.gov.uk"]
 
   spec.summary       = %q{Base configuration for GOV.UK applications}
   spec.description   = %q{Base configuration for GOV.UK applications}
-  spec.homepage      = "https://github.com/alphagov/govuk_config"
+  spec.homepage      = "https://github.com/alphagov/govuk_app_config"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
