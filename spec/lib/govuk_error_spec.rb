@@ -1,12 +1,12 @@
 require 'spec_helper'
-require 'govuk_app_config/error'
+require 'govuk_app_config/govuk_error'
 
-RSpec.describe GOVUK::Error do
+RSpec.describe GovukError do
   describe '.notify' do
     it 'forwards the exception' do
       allow(Raven).to receive(:capture_exception)
 
-      GOVUK::Error.notify(StandardError.new)
+      GovukError.notify(StandardError.new)
 
       expect(Raven).to have_received(:capture_exception)
     end
@@ -14,7 +14,7 @@ RSpec.describe GOVUK::Error do
     it 'allows Airbrake-style parameters' do
       allow(Raven).to receive(:capture_exception)
 
-      error = GOVUK::Error.notify(StandardError.new, parameters: 'Something')
+      error = GovukError.notify(StandardError.new, parameters: 'Something')
 
       expect(Raven).to have_received(:capture_exception).with(StandardError.new, extra: { parameters: 'Something'})
     end

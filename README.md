@@ -23,17 +23,17 @@ If you include `govuk_app_config` in your `Gemfile` your application will be aut
 Report something to Sentry manually:
 
 ```rb
-GOVUK::Error.notify("Something went terrible")
+GovukError.notify("Something went terrible")
 ```
 
 ```rb
-GOVUK::Error.notify(ArgumentError.new("Or some exception object"))
+GovukError.notify(ArgumentError.new("Or some exception object"))
 ```
 
 Extra parameters are:
 
 ```rb
-GOVUK::Error.notify(
+GovukError.notify(
   "Oops",
   extra: { offending_content_id: '123' }, # Additional context for this event. Must be a hash. Children can be any native JSON type.
   level: 'debug', # debug, info, warning, error, fatal
