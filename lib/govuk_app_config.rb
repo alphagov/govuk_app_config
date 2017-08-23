@@ -1,4 +1,4 @@
 require "govuk_app_config/version"
-
-module GovukAppConfig
-end
+require "govuk_app_config/statsd"
+require "govuk_app_config/error"
+require "govuk_app_config/auto_configure"
