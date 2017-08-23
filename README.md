@@ -23,7 +23,7 @@ If you include `govuk_app_config` in your `Gemfile` your application will be aut
 Report something to Sentry manually:
 
 ```rb
-GovukError.notify("Something went terrible")
+GovukError.notify("Something went terribly wrong")
 ```
 
 ```rb
