@@ -24,6 +24,14 @@ If you use the gem outside of Rails you'll have to explicitly require it:
 require 'govuk_app_config/configure'
 ```
 
+Your app will have to have the following environment variables set:
+
+- `SENTRY_DSN` - the [Data Source Name (DSN)][dsn] for Sentry
+- `SENTRY_CURRENT_ENV` - production, staging or integration
+- `GOVUK_STATSD_PREFIX` - a Statsd prefix like `govuk.apps.application-name`
+
+[dsn]: https://docs.sentry.io/quickstart/#about-the-dsn
+
 ### Manual error reporting
 
 Report something to Sentry manually:
