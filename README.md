@@ -16,7 +16,7 @@ And then execute:
 
 ### Automatic error reporting
 
-If you include `govuk_config` in your `Gemfile` your application will be automatically configured to send errors to Sentry.
+If you include `govuk_app_config` in your `Gemfile` your application will be automatically configured to send errors to Sentry.
 
 ### Manual error reporting
 

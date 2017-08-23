@@ -1,5 +1,5 @@
 require "sentry-raven"
-require "govuk_config/statsd"
+require "govuk_app_config/statsd"
 
 module GOVUK
   module Error

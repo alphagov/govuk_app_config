@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'govuk_config/error'
+require 'govuk_app_config/error'
 
 RSpec.describe GOVUK::Error do
   describe '.notify' do

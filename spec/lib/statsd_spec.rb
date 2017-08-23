@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'govuk_config/statsd'
+require 'govuk_app_config/statsd'
 
 RSpec.describe GOVUK::Statsd do
   describe '#increment' do
