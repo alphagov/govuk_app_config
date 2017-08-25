@@ -57,4 +57,4 @@ GovukError.notify(
 
 ## License
 
-[MIT License][LICENSE.md]
+[MIT License](LICENSE.md)
