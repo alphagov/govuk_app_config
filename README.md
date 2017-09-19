@@ -55,6 +55,28 @@ GovukError.notify(
 )
 ```
 
+### Capture filtering
+
+If you need to have fine-grained control over which exceptions are reported to Sentry,
+and cannot make use of [`excluded_exceptions`][sentry_docs], then this gem exposes
+configuration for determining what should and should not be reported.
+
+This takes the form of a chain of "capture filters". A capture filter is a `Proc`
+that accepts the Sentry error, and returns `true` if the error **should** be reported:
+
+```rb
+GovukError.configure do |config|
+  config.add_capture_filter do |error|
+    return true unless ExampleErrorHandler.should_ignore?(error)
+  end
+end
+```
+
+Note that all capture filters will be run against all raised errors, and if **any** of
+them return something falsy, then the error will **not** be reported.
+
+[sentry_docs]: https://docs.sentry.io/clients/ruby/config/
+
 ## License
 
 [MIT License](LICENSE.md)
