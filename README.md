@@ -16,7 +16,7 @@ And then execute:
 
 ### Automatic error reporting
 
-If you include `govuk_app_config` in your `Gemfile`, Rails' autoloading mechanism will make sure that your application is configured to send errors Sentry.
+If you include `govuk_app_config` in your `Gemfile`, Rails' autoloading mechanism will make sure that your application is configured to send errors to Sentry.
 
 If you use the gem outside of Rails you'll have to explicitly require it:
 
