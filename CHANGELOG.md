@@ -1,5 +1,7 @@
 # Changelog
 
+* Add `time` and `gauge` to `GovukStatsd` 
+
 ## 0.2.0
 
 * First actual release with support for Sentry

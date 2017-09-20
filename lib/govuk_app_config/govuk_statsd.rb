@@ -1,9 +1,9 @@
 require "statsd"
+require "forwardable"
 
 module GovukStatsd
-  def self.increment(*args)
-    client.increment(*args)
-  end
+  extend SingleForwardable
+  def_delegators :client, :increment, :time, :gauge
 
   def self.client
     @statsd_client ||= begin
