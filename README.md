@@ -55,6 +55,18 @@ GovukError.notify(
 )
 ```
 
+### Error configuration
+
+You can exclude certain errors from being reported using this:
+
+```ruby
+GovukError.configure do |config|
+  config.excluded_exceptions << "RetryableError"
+end
+```
+
+`GovukError.configure` has the same options as the Sentry client, Raven. See [the Raven docs for all configuration options](https://docs.sentry.io/clients/ruby/config).
+
 ## License
 
 [MIT License](LICENSE.md)

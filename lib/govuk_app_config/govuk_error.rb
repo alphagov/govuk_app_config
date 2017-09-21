@@ -10,4 +10,10 @@ module GovukError
 
     Raven.capture_exception(exception_or_message, args)
   end
+
+  def self.configure
+    Raven.configure do |config|
+      yield(config)
+    end
+  end
 end
