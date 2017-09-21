@@ -21,7 +21,7 @@ If you include `govuk_app_config` in your `Gemfile`, Rails' autoloading mechanis
 If you use the gem outside of Rails you'll have to explicitly require it:
 
 ```rb
-require 'govuk_app_config/configure'
+require 'govuk_app_config'
 ```
 
 Your app will have to have the following environment variables set:
