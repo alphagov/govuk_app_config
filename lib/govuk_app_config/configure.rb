@@ -2,7 +2,7 @@ if defined?(Airbrake)
   raise "This gem isn't compatible with Airbrake. Please remove it from the Gemfile."
 end
 
-Raven.configure do |config|
+GovukError.configure do |config|
   # We need this until https://github.com/getsentry/raven-ruby/pull/736 is released
   config.current_environment = ENV["SENTRY_CURRENT_ENV"]
 

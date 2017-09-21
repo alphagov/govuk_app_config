@@ -21,7 +21,7 @@ If you include `govuk_app_config` in your `Gemfile`, Rails' autoloading mechanis
 If you use the gem outside of Rails you'll have to explicitly require it:
 
 ```rb
-require 'govuk_app_config/configure'
+require 'govuk_app_config'
 ```
 
 Your app will have to have the following environment variables set:
@@ -54,6 +54,18 @@ GovukError.notify(
   tags: { key: 'value' } # Tags to index with this event. Must be a mapping of strings.
 )
 ```
+
+### Error configuration
+
+You can exclude certain errors from being reported using this:
+
+```ruby
+GovukError.configure do |config|
+  config.excluded_exceptions << "RetryableError"
+end
+```
+
+`GovukError.configure` has the same options as the Sentry client, Raven. See [the Raven docs for all configuration options](https://docs.sentry.io/clients/ruby/config).
 
 ## License
 
