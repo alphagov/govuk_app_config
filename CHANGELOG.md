@@ -1,6 +1,8 @@
 # Changelog
 
-* Add `time` and `gauge` to `GovukStatsd` 
+## 0.3.0
+
+* Add `time` and `gauge` to `GovukStatsd`
 * Add `GovukError.configure` as an alias to `Raven.configure`
 
 ## 0.2.0
