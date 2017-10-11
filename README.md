@@ -1,5 +1,11 @@
 # GOV.UK Config
 
+Adds the basics of a GOV.UK application:
+
+- Unicorn as a web server
+- Error reporting with Sentry
+- Statsd client for reporting stats
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -13,6 +19,12 @@ And then execute:
     $ bundle
 
 ## Usage
+
+## Unicorn
+
+No configuration required.
+
+## Error reporting
 
 ### Automatic error reporting
 
