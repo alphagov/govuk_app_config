@@ -3,9 +3,6 @@ if defined?(Airbrake)
 end
 
 GovukError.configure do |config|
-  # We need this until https://github.com/getsentry/raven-ruby/pull/736 is released
-  config.current_environment = ENV["SENTRY_CURRENT_ENV"]
-
   # We're misusing the `should_capture` block here to hook into raven until
   # there's a better way: https://github.com/getsentry/raven-ruby/pull/750
   config.should_capture = Proc.new {
