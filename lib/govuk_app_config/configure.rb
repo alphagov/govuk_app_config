@@ -17,6 +17,7 @@ GovukError.configure do |config|
 
   config.excluded_exceptions = [
     'AbstractController::ActionNotFound',
+    'ActionController::BadRequest',
     'ActionController::InvalidAuthenticityToken',
     'ActionController::RoutingError',
     'ActionController::UnknownAction',
