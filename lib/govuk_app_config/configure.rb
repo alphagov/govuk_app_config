@@ -15,6 +15,19 @@ GovukError.configure do |config|
     true
   }
 
+  config.excluded_exceptions = [
+    'AbstractController::ActionNotFound',
+    'ActionController::BadRequest',
+    'ActionController::InvalidAuthenticityToken',
+    'ActionController::RoutingError',
+    'ActionController::UnknownAction',
+    'ActiveJob::DeserializationError',
+    'ActiveRecord::RecordNotFound',
+    'CGI::Session::CookieStore::TamperedWithCookie',
+    'Mongoid::Errors::DocumentNotFound',
+    'Sinatra::NotFound',
+  ]
+
   config.transport_failure_callback = Proc.new {
     GovukStatsd.increment("error_reports_failed")
   }
