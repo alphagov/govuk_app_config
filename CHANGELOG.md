@@ -1,4 +1,4 @@
-# Changelog
+# 1.0.0
 
 * Add Unicorn (our web server) as a dependency
 * Use version [2.7.0 of the Sentry client][sentry-270].
