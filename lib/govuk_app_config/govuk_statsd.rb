@@ -3,7 +3,8 @@ require "forwardable"
 
 module GovukStatsd
   extend SingleForwardable
-  def_delegators :client, :increment, :time, :gauge
+  def_delegators :client, :increment, :decrement, :count, :time, :timing,
+    :guage, :set, :batch
 
   def self.client
     @statsd_client ||= begin

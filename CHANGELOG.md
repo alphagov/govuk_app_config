@@ -1,3 +1,7 @@
+# Unreleased
+
+- Support statsd methods of decrement, count, timing, set, and batch
+
 # 1.0.0
 
 * Add Unicorn (our web server) as a dependency
