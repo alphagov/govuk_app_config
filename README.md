@@ -40,7 +40,7 @@ Your app will have to have the following environment variables set:
 
 - `SENTRY_DSN` - the [Data Source Name (DSN)][dsn] for Sentry
 - `SENTRY_CURRENT_ENV` - production, staging or integration
-- `GOVUK_STATSD_PREFIX` - a Statsd prefix like `govuk.apps.application-name`
+- `GOVUK_STATSD_PREFIX` - a Statsd prefix like `govuk.apps.application-name.hostname`
 
 [dsn]: https://docs.sentry.io/quickstart/#about-the-dsn
 
