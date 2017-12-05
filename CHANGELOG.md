@@ -1,4 +1,4 @@
-# Unreleased
+# 1.1.0
 
 - Support statsd methods of decrement, count, timing, set, and batch
 
