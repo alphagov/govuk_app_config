@@ -79,6 +79,21 @@ end
 
 `GovukError.configure` has the same options as the Sentry client, Raven. See [the Raven docs for all configuration options](https://docs.sentry.io/clients/ruby/config).
 
+## Statsd
+
+Use `GovukStatsd` to send stats to graphite. It has the same interface as [the Ruby Statsd client](https://github.com/reinh/statsd).
+
+Examples:
+
+```ruby
+GovukStatsd.increment 'garets'
+GovukStatsd.timing 'glork', 320
+GovukStatsd.gauge 'bork', 100
+
+# Use {#time} to time the execution of a block
+GovukStatsd.time('account.activate') { @account.activate! }
+```
+
 ## License
 
 [MIT License](LICENSE.md)
