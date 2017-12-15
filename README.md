@@ -5,6 +5,7 @@ Adds the basics of a GOV.UK application:
 - Unicorn as a web server
 - Error reporting with Sentry
 - Statsd client for reporting stats
+- Rails logging
 
 ## Installation
 
@@ -93,6 +94,11 @@ GovukStatsd.gauge 'bork', 100
 # Use {#time} to time the execution of a block
 GovukStatsd.time('account.activate') { @account.activate! }
 ```
+
+## Rails logging
+
+In Rails applications, the application will be configured to send JSON-formatted
+logs to `STDOUT` and unstructed logs to `STDERR`.
 
 ## License
 
