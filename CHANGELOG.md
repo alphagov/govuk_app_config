@@ -14,8 +14,8 @@
 ### How to upgrade
 
 * Remove `gem 'unicorn'` from your Gemfile
-* Remove `gem 'logstasher'` from your Gemfile
-* Remove all `config.logstasher.*` configs from `config/production.rb`
+* Remove `gem 'logstasher'` from your Gemfile (Rails only)
+* Remove all `config.logstasher.*` configs from `config/production.rb` (Rails only)
 
 ## 0.3.0
 
