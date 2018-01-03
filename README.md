@@ -23,7 +23,14 @@ And then execute:
 
 ## Unicorn
 
-No configuration required.
+Find or create a `config/unicorn.rb` in the app
+
+At the start of the file insert:
+
+```rb
+require "govuk_app_config"
+GovukUnicorn.configure(self)
+```
 
 ## Error reporting
 

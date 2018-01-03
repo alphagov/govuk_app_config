@@ -1,3 +1,24 @@
+# Unreleased
+
+* Include a class to configure unicorn to the common GOV.UK configuration
+
+### How to upgrade
+
+* Find or create a config/unicorn.rb file in the app
+* At the top of the file insert:
+  ```rb
+  require "govuk_app_config"
+  GovukUnicorn.configure(self)
+  ```
+* If the app has the following, remove it:
+  ```rb
+  # Load the system-wide standard Unicorn file
+  def load_file_if_exists(config, file)
+    config.instance_eval(File.read(file)) if File.exist?(file)
+  end
+  load_file_if_exists(self, "/etc/govuk/unicorn.rb")
+  ```
+
 # 1.2.1
 
 * Use `INFO` log level for the default Rails logger
