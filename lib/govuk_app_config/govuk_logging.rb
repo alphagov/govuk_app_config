@@ -20,7 +20,7 @@ require 'logstasher'
 module GovukLogging
   def self.configure
     # Send Rails' logs to STDERR because they're not JSON formatted.
-    Rails.logger = ActiveSupport::TaggedLogging.new(Logger.new($stderr))
+    Rails.logger = ActiveSupport::TaggedLogging.new(Logger.new($stderr, level: Logger::INFO))
 
     # Custom that will be added to the Rails request logs
     LogStasher.add_custom_fields do |fields|
