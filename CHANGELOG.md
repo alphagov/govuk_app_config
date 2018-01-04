@@ -1,10 +1,14 @@
+# 1.2.1
+
+* Use `INFO` log level for the default Rails logger
+
 # 1.2.0
 
 * Upgrade unicorn gem from 5.3.1 to 5.4.0
 
 # 1.1.0
 
-- Support statsd methods of decrement, count, timing, set, and batch
+* Support statsd methods of decrement, count, timing, set, and batch
 
 # 1.0.0
 
