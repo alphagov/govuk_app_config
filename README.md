@@ -12,7 +12,7 @@ Adds the basics of a GOV.UK application:
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'govuk_app_config'
+gem "govuk_app_config"
 ```
 
 And then execute:
@@ -50,7 +50,7 @@ If you include `govuk_app_config` in your `Gemfile`, Rails' autoloading mechanis
 If you use the gem outside of Rails you'll have to explicitly require it:
 
 ```rb
-require 'govuk_app_config'
+require "govuk_app_config"
 ```
 
 Your app will have to have the following environment variables set:
@@ -78,9 +78,9 @@ Extra parameters are:
 ```rb
 GovukError.notify(
   "Oops",
-  extra: { offending_content_id: '123' }, # Additional context for this event. Must be a hash. Children can be any native JSON type.
-  level: 'debug', # debug, info, warning, error, fatal
-  tags: { key: 'value' } # Tags to index with this event. Must be a mapping of strings.
+  extra: { offending_content_id: "123" }, # Additional context for this event. Must be a hash. Children can be any native JSON type.
+  level: "debug", # debug, info, warning, error, fatal
+  tags: { key: "value" } # Tags to index with this event. Must be a mapping of strings.
 )
 ```
 
@@ -103,12 +103,12 @@ Use `GovukStatsd` to send stats to graphite. It has the same interface as [the R
 Examples:
 
 ```ruby
-GovukStatsd.increment 'garets'
-GovukStatsd.timing 'glork', 320
-GovukStatsd.gauge 'bork', 100
+GovukStatsd.increment "garets"
+GovukStatsd.timing "glork", 320
+GovukStatsd.gauge "bork", 100
 
 # Use {#time} to time the execution of a block
-GovukStatsd.time('account.activate') { @account.activate! }
+GovukStatsd.time("account.activate") { @account.activate! }
 ```
 
 ## Rails logging
