@@ -19,9 +19,10 @@ And then execute:
 
     $ bundle
 
-## Usage
 
 ## Unicorn
+
+### Configuration
 
 Find or create a `config/unicorn.rb` in the app
 
@@ -30,6 +31,14 @@ At the start of the file insert:
 ```rb
 require "govuk_app_config"
 GovukUnicorn.configure(self)
+```
+
+### Usage
+
+To serve an app with unicorn run:
+
+```sh
+$ bundle exec unicorn -c config/unicorn.rb
 ```
 
 ## Error reporting
