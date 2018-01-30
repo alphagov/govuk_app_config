@@ -1,4 +1,4 @@
-# Unreleased
+# 1.3.0
 
 * Include a class to configure unicorn to the common GOV.UK configuration
 
