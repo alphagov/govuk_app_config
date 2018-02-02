@@ -43,8 +43,22 @@
 ### How to upgrade
 
 * Remove `gem 'unicorn'` from your Gemfile
-* Remove `gem 'logstasher'` from your Gemfile (Rails only)
-* Remove all `config.logstasher.*` configs from `config/production.rb` (Rails only)
+* For Rails apps only:
+  * Remove `gem 'logstasher'` from your Gemfile
+  * Remove all `config.logstasher.*` configs from `config/environments/production.rb`
+  * If the app has a `config/initializers/logstash.rb` remove it
+  * If the app has any of the following (likely in `config/environments/production.rb`), remove it:
+    ```rb
+    # Use default logging formatter so that PID and timestamp are not suppressed.
+    config.log_formatter = ::Logger::Formatter.new		
+  	
+    # Use a different logger for distributed setups.		
+    # require 'syslog/logger'		
+    config.logger = ActiveSupport::TaggedLogging.new(Logger.new($stderr))		
+ 		
+    $real_stdout = $stdout.clone		
+    $stdout.reopen($stderr)
+    ```
 
 ## 0.3.0
 
