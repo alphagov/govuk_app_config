@@ -29,7 +29,7 @@ Find or create a `config/unicorn.rb` in the app
 At the start of the file insert:
 
 ```rb
-require "govuk_app_config"
+require "govuk_app_config/govuk_unicorn"
 GovukUnicorn.configure(self)
 ```
 
