@@ -1,3 +1,8 @@
+# Unreleased
+
+* Move STDOUT/STDERR configuration inside GovukLogging module to reduce side
+  effects when gem is initialised.
+
 # 1.3.1
 
 * Fix collection of Statsd gauge metrics
@@ -54,13 +59,13 @@
   * If the app has any of the following (likely in `config/environments/production.rb`), remove it:
     ```rb
     # Use default logging formatter so that PID and timestamp are not suppressed.
-    config.log_formatter = ::Logger::Formatter.new		
+    config.log_formatter = ::Logger::Formatter.new
 
-    # Use a different logger for distributed setups.		
-    # require 'syslog/logger'		
-    config.logger = ActiveSupport::TaggedLogging.new(Logger.new($stderr))		
+    # Use a different logger for distributed setups.
+    # require 'syslog/logger'
+    config.logger = ActiveSupport::TaggedLogging.new(Logger.new($stderr))
 
-    $real_stdout = $stdout.clone		
+    $real_stdout = $stdout.clone
     $stdout.reopen($stderr)
     ```
 
