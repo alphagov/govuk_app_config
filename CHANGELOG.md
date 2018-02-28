@@ -1,4 +1,4 @@
-# Unreleased
+# 1.3.2
 
 * Update instructions to suggest that GovukUnicorn should be required directly
   `require "govuk_app_config/govuk_unicorn"` rather than passively through
