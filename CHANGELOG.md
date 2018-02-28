@@ -1,3 +1,16 @@
+# Unreleased
+
+* Update instructions to suggest that GovukUnicorn should be required directly
+  `require "govuk_app_config/govuk_unicorn"` rather than passively through
+  `require "govuk_app_config"` to isolate it from other configuration.
+* Move STDOUT/STDERR configuration inside GovukLogging module to reduce side
+  effects when gem is initialised.
+
+### How to upgrade
+
+* In your applications `config/unicorn.rb` file change
+  `require "govuk_app_config"` to `require "govuk_app_config/govuk_unicorn"`
+
 # 1.3.1
 
 * Fix collection of Statsd gauge metrics
@@ -11,7 +24,7 @@
 * Find or create a config/unicorn.rb file in the app
 * At the top of the file insert:
   ```rb
-  require "govuk_app_config"
+  require "govuk_app_config/govuk_unicorn"
   GovukUnicorn.configure(self)
   ```
 * If the app has the following, remove it:
@@ -54,13 +67,13 @@
   * If the app has any of the following (likely in `config/environments/production.rb`), remove it:
     ```rb
     # Use default logging formatter so that PID and timestamp are not suppressed.
-    config.log_formatter = ::Logger::Formatter.new		
+    config.log_formatter = ::Logger::Formatter.new
 
-    # Use a different logger for distributed setups.		
-    # require 'syslog/logger'		
-    config.logger = ActiveSupport::TaggedLogging.new(Logger.new($stderr))		
+    # Use a different logger for distributed setups.
+    # require 'syslog/logger'
+    config.logger = ActiveSupport::TaggedLogging.new(Logger.new($stderr))
 
-    $real_stdout = $stdout.clone		
+    $real_stdout = $stdout.clone
     $stdout.reopen($stderr)
     ```
 
