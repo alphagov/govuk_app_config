@@ -1,3 +1,8 @@
+# dev
+
+* Don't log intermittent errors from `gds-api-adapters` in Sentry, count them
+  in Graphite instead
+
 # 1.3.2
 
 * Update instructions to suggest that GovukUnicorn should be required directly
