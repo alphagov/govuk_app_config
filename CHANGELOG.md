@@ -1,4 +1,4 @@
-# dev
+# 1.4.0
 
 * Don't log intermittent errors from `gds-api-adapters` in Sentry, count them
   in Graphite instead
