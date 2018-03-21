@@ -11,7 +11,8 @@ GovukError.configure do |config|
     # For backwards compatibility
     GovukStatsd.increment("errbit.errors_occurred")
 
-    if e.class.ancestors.any? { |c| c.name =~ /^GdsApi::(HTTPIntermittent|TimedOutException)/ }
+    exception_class = e.respond_to?(:original_exception) ? e.original_exception.class : e.class
+    if exception_class.ancestors.any? { |c| c.name =~ /^GdsApi::(HTTPIntermittent|TimedOutException)/ }
       GovukStatsd.increment("gds_api_adapters.errors.#{e.class.name.demodulize.underscore}")
       false
     else
