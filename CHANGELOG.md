@@ -1,3 +1,8 @@
+# 1.4.1
+
+* Check the inner exception as well for the intermittent failure behaviour
+  added in 1.4.0, eg in the case of `ActionView::Template::Error`
+
 # 1.4.0
 
 * Don't log intermittent errors from `gds-api-adapters` in Sentry, count them
