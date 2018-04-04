@@ -1,4 +1,4 @@
-# Unreleased
+# 1.4.2
 
 * Ignore `ActionController::UnknownHttpMethod` errors.
 
