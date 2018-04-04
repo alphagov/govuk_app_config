@@ -1,3 +1,7 @@
+# Unreleased
+
+* Ignore `ActionController::UnknownHttpMethod` errors.
+
 # 1.4.1
 
 * Check the inner exception as well for the intermittent failure behaviour

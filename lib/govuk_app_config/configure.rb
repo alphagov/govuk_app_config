@@ -26,6 +26,7 @@ GovukError.configure do |config|
     'ActionController::InvalidAuthenticityToken',
     'ActionController::RoutingError',
     'ActionController::UnknownAction',
+    'ActionController::UnknownHttpMethod',
     'ActiveJob::DeserializationError',
     'ActiveRecord::RecordNotFound',
     'CGI::Session::CookieStore::TamperedWithCookie',
