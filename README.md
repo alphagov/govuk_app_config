@@ -47,12 +47,6 @@ $ bundle exec unicorn -c config/unicorn.rb
 
 If you include `govuk_app_config` in your `Gemfile`, Rails' autoloading mechanism will make sure that your application is configured to send errors to Sentry.
 
-If you use the gem outside of Rails you'll have to explicitly require it:
-
-```rb
-require "govuk_app_config"
-```
-
 Your app will have to have the following environment variables set:
 
 - `SENTRY_DSN` - the [Data Source Name (DSN)][dsn] for Sentry
