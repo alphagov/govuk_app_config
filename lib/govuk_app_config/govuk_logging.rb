@@ -1,4 +1,3 @@
-
 require 'logstasher'
 
 module GovukLogging
