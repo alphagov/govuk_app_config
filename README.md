@@ -105,6 +105,38 @@ GovukStatsd.gauge "bork", 100
 GovukStatsd.time("account.activate") { @account.activate! }
 ```
 
+## Healthchecks
+
+Set up a route in your rack-compatible Ruby application, and pick the built-in
+or custom checks you wish to perform.
+
+Custom checks must be any object which responds to `#call`.
+
+For Rails apps:
+```ruby
+module CustomCheck
+  def self.call
+    {
+      my_custom_check: {
+        status: ThingChecker.everything_okay? ? "OK" : "Critical"
+      }
+    }
+  end
+end
+```
+```ruby
+get "/healthcheck", to: GovukHealthcheck.rack_response(
+  GovukHealthcheck::SidekiqRedis,
+  GovukHealthcheck::ActiveRecord,
+  CustomCheck,
+)
+```
+
+This will check:
+- Redis connectivity (via Sidekiq)
+- Database connectivity (via ActiveRecord)
+- Your custom healthcheck
+
 ## Rails logging
 
 In Rails applications, the application will be configured to send JSON-formatted
