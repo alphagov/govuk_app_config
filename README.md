@@ -110,20 +110,33 @@ GovukStatsd.time("account.activate") { @account.activate! }
 Set up a route in your rack-compatible Ruby application, and pick the built-in
 or custom checks you wish to perform.
 
-Custom checks must be any object which responds to `#call`.
-
-For Rails apps:
+Custom checks must be any class or instance which implements
+[this interface](spec/lib/govuk_healthcheck/shared_interface.rb):
 ```ruby
 module CustomCheck
-  def self.call
+  def self.name
+    :custom_check
+  end
+
+  def self.status
+    ThingChecker.everything_okay? ? OK : CRITICAL
+  end
+
+  # Optional
+  def self.message
+    "This is an optional custom message"
+  end
+
+  # Optional
+  def self.details
     {
-      my_custom_check: {
-        status: ThingChecker.everything_okay? ? "OK" : "Critical"
-      }
+      extra: "This is an optional details hash",
     }
   end
 end
 ```
+
+For Rails apps:
 ```ruby
 get "/healthcheck", to: GovukHealthcheck.rack_response(
   GovukHealthcheck::SidekiqRedis,
