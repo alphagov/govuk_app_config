@@ -47,12 +47,6 @@ $ bundle exec unicorn -c config/unicorn.rb
 
 If you include `govuk_app_config` in your `Gemfile`, Rails' autoloading mechanism will make sure that your application is configured to send errors to Sentry.
 
-If you use the gem outside of Rails you'll have to explicitly require it:
-
-```rb
-require "govuk_app_config"
-```
-
 Your app will have to have the following environment variables set:
 
 - `SENTRY_DSN` - the [Data Source Name (DSN)][dsn] for Sentry
@@ -110,6 +104,51 @@ GovukStatsd.gauge "bork", 100
 # Use {#time} to time the execution of a block
 GovukStatsd.time("account.activate") { @account.activate! }
 ```
+
+## Healthchecks
+
+Set up a route in your rack-compatible Ruby application, and pick the built-in
+or custom checks you wish to perform.
+
+Custom checks must be any class or instance which implements
+[this interface](spec/lib/govuk_healthcheck/shared_interface.rb):
+```ruby
+module CustomCheck
+  def self.name
+    :custom_check
+  end
+
+  def self.status
+    ThingChecker.everything_okay? ? OK : CRITICAL
+  end
+
+  # Optional
+  def self.message
+    "This is an optional custom message"
+  end
+
+  # Optional
+  def self.details
+    {
+      extra: "This is an optional details hash",
+    }
+  end
+end
+```
+
+For Rails apps:
+```ruby
+get "/healthcheck", to: GovukHealthcheck.rack_response(
+  GovukHealthcheck::SidekiqRedis,
+  GovukHealthcheck::ActiveRecord,
+  CustomCheck,
+)
+```
+
+This will check:
+- Redis connectivity (via Sidekiq)
+- Database connectivity (via ActiveRecord)
+- Your custom healthcheck
 
 ## Rails logging
 
