@@ -9,6 +9,6 @@ module GovukHealthcheck
   end
 
   def self.healthcheck(checks)
-    Checkup.new(checks).as_json
+    Checkup.new(checks).run
   end
 end

@@ -9,7 +9,7 @@ module GovukHealthcheck
       @checks = checks
     end
 
-    def as_json
+    def run
       {
         status: worst_status,
         checks: component_statuses,
