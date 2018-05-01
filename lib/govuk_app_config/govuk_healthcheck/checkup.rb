@@ -1,7 +1,9 @@
 module GovukHealthcheck
-  OK = "ok".freeze
-  WARNING = "warning".freeze
-  CRITICAL = "critical".freeze
+  STATUSES = [
+    OK = "ok".freeze,
+    WARNING = "warning".freeze,
+    CRITICAL = "critical".freeze,
+  ].freeze
 
   class Checkup
     # @param checks [Array] Array of objects/classes that respond to `run`
@@ -19,8 +21,11 @@ module GovukHealthcheck
   private
 
     def component_statuses
-      @component_statuses ||= @checks.reduce({}) do |hash, check|
-        hash.merge(check.call)
+      @component_statuses ||= @checks.each_with_object({}) do |check, hash|
+        check_result = check.details.merge(status: check.status)
+        check_result[:message] = check.message if check.respond_to?(:message)
+
+        hash[check.name] = check_result
       end
     end
 
