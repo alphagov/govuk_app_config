@@ -3,18 +3,16 @@ require "govuk_app_config/govuk_healthcheck"
 require_relative "shared_interface"
 
 RSpec.describe GovukHealthcheck::SidekiqRedis do
-  module Sidekiq
-    def self.redis_info
-      true
-    end
+  let(:redis_info) { double(:redis_info) }
+
+  before do
+    stub_const("Sidekiq", double(:sidekiq, redis_info: redis_info))
   end
 
   it_behaves_like "a healthcheck", described_class
 
   context "when the database is connected" do
-    before do
-      allow(Sidekiq).to receive(:redis_info).and_return(double(:redis_info))
-    end
+    let(:redis_info) { double(:redis_info) }
 
     it "returns OK" do
       expect(described_class.status).to eq(GovukHealthcheck::OK)
@@ -22,9 +20,7 @@ RSpec.describe GovukHealthcheck::SidekiqRedis do
   end
 
   context "when the database is not connected" do
-    before do
-      allow(Sidekiq).to receive(:redis_info).and_return(nil)
-    end
+    let(:redis_info) { nil }
 
     it "returns CRITICAL" do
       expect(described_class.status).to eq(GovukHealthcheck::CRITICAL)
