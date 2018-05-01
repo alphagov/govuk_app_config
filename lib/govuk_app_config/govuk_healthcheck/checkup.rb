@@ -22,10 +22,7 @@ module GovukHealthcheck
 
     def component_statuses
       @component_statuses ||= @checks.each_with_object({}) do |check, hash|
-        check_result = check.details.merge(status: check.status)
-        check_result[:message] = check.message if check.respond_to?(:message)
-
-        hash[check.name] = check_result
+        hash[check.name] = build_component_status(check)
       end
     end
 
@@ -41,6 +38,16 @@ module GovukHealthcheck
 
     def status?(status)
       component_statuses.values.any? {|s| s[:status] == status }
+    end
+
+    def build_component_status(check)
+      component_status = details(check).merge(status: check.status)
+      component_status[:message] = check.message if check.respond_to?(:message)
+      component_status
+    end
+
+    def details(check)
+      check.respond_to?(:details) ? check.details : {}
     end
   end
 end

@@ -7,9 +7,5 @@ module GovukHealthcheck
     def self.status
       Sidekiq.redis_info ? OK : CRITICAL
     end
-
-    def self.details
-      {}
-    end
   end
 end

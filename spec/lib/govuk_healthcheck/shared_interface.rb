@@ -9,9 +9,10 @@ RSpec.shared_examples "a healthcheck" do |healthcheck|
     expect(GovukHealthcheck::STATUSES).to include(healthcheck.status)
   end
 
-  it "returns a `details` hash with no reserved keys" do
-    expect(healthcheck).to respond_to(:details)
-    expect(healthcheck.details).to be_a(Hash)
-    expect(healthcheck.details).not_to have_key(:status)
+  it "optionally returns a `details` hash with no reserved keys" do
+    if healthcheck.respond_to?(:details)
+      expect(healthcheck.details).to be_a(Hash)
+      expect(healthcheck.details).not_to have_key(:status)
+    end
   end
 end

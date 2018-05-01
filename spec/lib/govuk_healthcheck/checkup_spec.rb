@@ -27,7 +27,7 @@ RSpec.describe GovukHealthcheck::Checkup do
   end
 
   it "puts the details at the top level of each check" do
-    response = described_class.new([ok_check]).run
+    response = described_class.new([TestHealthcheckWithDetails.new(GovukHealthcheck::OK)]).run
     expect(response.dig(:checks, :ok_check, :extra)).to eq("This is an extra detail")
   end
 
@@ -37,7 +37,7 @@ RSpec.describe GovukHealthcheck::Checkup do
   end
 
   it "leaves out the message key if the check doesn't supply one" do
-    response = described_class.new([TestHealthcheck.new(GovukHealthcheck::OK)]).run
+    response = described_class.new([ok_check]).run
     expect(response.dig(:checks, :ok_check)).not_to have_key(:message)
   end
 
@@ -53,17 +53,19 @@ RSpec.describe GovukHealthcheck::Checkup do
     def status
       @status
     end
-
-    def details
-      {
-        extra: "This is an extra detail",
-      }
-    end
   end
 
   class TestHealthcheckWithMessage < TestHealthcheck
     def message
       "This is a custom message"
+    end
+  end
+
+  class TestHealthcheckWithDetails < TestHealthcheck
+    def details
+      {
+        extra: "This is an extra detail",
+      }
     end
   end
 end

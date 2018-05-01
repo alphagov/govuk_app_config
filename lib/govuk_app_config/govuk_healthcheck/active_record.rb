@@ -7,9 +7,5 @@ module GovukHealthcheck
     def self.status
       ::ActiveRecord::Base.connected? ? OK : CRITICAL
     end
-
-    def self.details
-      {}
-    end
   end
 end
