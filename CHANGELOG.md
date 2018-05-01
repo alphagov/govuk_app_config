@@ -1,3 +1,7 @@
+# 1.5.0
+
+* Add healthcheck support.  See README.md for usage information.
+
 # 1.4.2
 
 * Ignore `ActionController::UnknownHttpMethod` errors.
