@@ -27,6 +27,7 @@ GovukError.configure do |config|
     'ActionController::RoutingError',
     'ActionController::UnknownAction',
     'ActionController::UnknownHttpMethod',
+    'ActionDispatch::RemoteIp::IpSpoofAttackError',
     'ActiveJob::DeserializationError',
     'ActiveRecord::RecordNotFound',
     'CGI::Session::CookieStore::TamperedWithCookie',
