@@ -24,6 +24,7 @@ GovukError.configure do |config|
     'AbstractController::ActionNotFound',
     'ActionController::BadRequest',
     'ActionController::InvalidAuthenticityToken',
+    'ActionController::ParameterMissing',
     'ActionController::RoutingError',
     'ActionController::UnknownAction',
     'ActionController::UnknownHttpMethod',
