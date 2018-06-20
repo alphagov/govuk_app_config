@@ -1,6 +1,7 @@
 # Unreleased
 
 * Set the `Content-Type` of healthchecks to `application/json`.
+* Make the health check statuses symbols.
 
 # 1.5.0
 

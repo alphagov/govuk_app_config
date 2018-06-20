@@ -1,8 +1,8 @@
 module GovukHealthcheck
   STATUSES = [
-    OK = "ok".freeze,
-    WARNING = "warning".freeze,
-    CRITICAL = "critical".freeze,
+    OK = :ok,
+    WARNING = :warning,
+    CRITICAL = :critical,
   ].freeze
 
   class Checkup
