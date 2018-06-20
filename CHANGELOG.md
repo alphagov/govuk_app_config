@@ -1,3 +1,7 @@
+# Unreleased
+
+* Set the `Content-Type` of healthchecks to `application/json`.
+
 # 1.5.0
 
 * Add healthcheck support.  See README.md for usage information.
