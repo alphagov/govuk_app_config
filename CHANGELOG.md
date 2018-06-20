@@ -1,3 +1,7 @@
+# Unreleased
+
+* Make the health check statuses symbols.
+
 # 1.5.0
 
 * Add healthcheck support.  See README.md for usage information.
