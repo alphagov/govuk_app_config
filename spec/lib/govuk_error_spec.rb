@@ -14,7 +14,7 @@ RSpec.describe GovukError do
     it 'allows Airbrake-style parameters' do
       allow(Raven).to receive(:capture_exception)
 
-      error = GovukError.notify(StandardError.new, parameters: 'Something')
+      GovukError.notify(StandardError.new, parameters: 'Something')
 
       expect(Raven).to have_received(:capture_exception).with(StandardError.new, extra: { parameters: 'Something'})
     end
