@@ -2,9 +2,9 @@ require "spec_helper"
 require "govuk_app_config/govuk_healthcheck"
 
 RSpec.describe GovukHealthcheck::Checkup do
-  let(:ok_check) { TestHealthcheck.new(GovukHealthcheck::OK) }
-  let(:warning_check) { TestHealthcheck.new(GovukHealthcheck::WARNING) }
-  let(:critical_check) { TestHealthcheck.new(GovukHealthcheck::CRITICAL) }
+  let(:ok_check) { OkTestHealthcheck }
+  let(:warning_check) { WarningTestHealthcheck }
+  let(:critical_check) { CriticalTestHealthcheck }
 
   it "sets the overall status to the worse component status" do
     expect(described_class.new([ok_check]).run[:status]).to eq(GovukHealthcheck::OK)
@@ -27,12 +27,12 @@ RSpec.describe GovukHealthcheck::Checkup do
   end
 
   it "puts the details at the top level of each check" do
-    response = described_class.new([TestHealthcheckWithDetails.new(GovukHealthcheck::OK)]).run
+    response = described_class.new([OkTestHealthcheckWithDetails]).run
     expect(response.dig(:checks, :ok_check, :extra)).to eq("This is an extra detail")
   end
 
   it "adds the message to the check's top level if it supplies one" do
-    response = described_class.new([TestHealthcheckWithMessage.new(GovukHealthcheck::OK)]).run
+    response = described_class.new([OkTestHealthcheckWithMessage]).run
     expect(response.dig(:checks, :ok_check, :message)).to eq("This is a custom message")
   end
 
@@ -42,26 +42,36 @@ RSpec.describe GovukHealthcheck::Checkup do
   end
 
   class TestHealthcheck
-    def initialize(status)
-      @status = status
-    end
-
     def name
       "#{status}_check".to_sym
     end
+  end
 
+  class OkTestHealthcheck < TestHealthcheck
     def status
-      @status
+      :ok
     end
   end
 
-  class TestHealthcheckWithMessage < TestHealthcheck
+  class WarningTestHealthcheck < TestHealthcheck
+    def status
+      :warning
+    end
+  end
+
+  class CriticalTestHealthcheck < TestHealthcheck
+    def status
+      :critical
+    end
+  end
+
+  class OkTestHealthcheckWithMessage < OkTestHealthcheck
     def message
       "This is a custom message"
     end
   end
 
-  class TestHealthcheckWithDetails < TestHealthcheck
+  class OkTestHealthcheckWithDetails < OkTestHealthcheck
     def details
       {
         extra: "This is an extra detail",
