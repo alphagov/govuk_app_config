@@ -20,8 +20,10 @@ module GovukHealthcheck
 
   private
 
+    attr_reader :checks
+
     def component_statuses
-      @component_statuses ||= @checks.each_with_object({}) do |check, hash|
+      @component_statuses ||= checks.map(&:new).each_with_object({}) do |check, hash|
         hash[check.name] = build_component_status(check)
       end
     end

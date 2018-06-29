@@ -1,4 +1,6 @@
-RSpec.shared_examples "a healthcheck" do |healthcheck|
+RSpec.shared_examples "a healthcheck" do
+  let(:healthcheck) { subject }
+
   it "has a name" do
     expect(healthcheck).to respond_to(:name)
     expect(healthcheck.name).to be_a(Symbol)

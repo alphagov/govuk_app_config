@@ -1,10 +1,10 @@
 module GovukHealthcheck
-  module ActiveRecord
-    def self.name
+  class ActiveRecord
+    def name
       :database_connectivity
     end
 
-    def self.status
+    def status
       ::ActiveRecord::Base.connected? ? OK : CRITICAL
     end
   end

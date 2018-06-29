@@ -31,4 +31,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.6.0"
   spec.add_development_dependency "climate_control"
   spec.add_development_dependency "webmock"
+  spec.add_development_dependency "pry"
 end

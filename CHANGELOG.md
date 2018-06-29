@@ -1,3 +1,8 @@
+# Unreleased
+
+* Make health checks classes rather than instances, allowing internal data to
+  be cached and improve performance.
+
 # 1.5.1
 
 * Set the `Content-Type` of healthchecks to `application/json`.
