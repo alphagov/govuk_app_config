@@ -1,4 +1,4 @@
-# Unreleased
+# 1.6.0
 
 * Make health checks classes rather than instances, allowing internal data to
   be cached and improve performance.
