@@ -43,7 +43,7 @@ It is expected that these methods may cache their results for performance
 reasons, if a user wants to ensure they have the latest value they should
 create a new instance of the check first.
 
-# Including checks in your app
+## Including checks in your app
 
 Set up a route in your rack-compatible Ruby application, and pick the built-in
 or custom checks you wish to perform.
@@ -59,6 +59,11 @@ get "/healthcheck", to: GovukHealthcheck.rack_response(
 ```
 
 ## Built-in Checks
+
+A convention used when naming these classes is that it should end with `Check`
+if it must be subclassed to work, but a concrete class which works on its own
+doesn't need that suffix. You should aim to follow this convention in your own
+apps, ideally putting custom health checks into a `Healthcheck` module.
 
 ### `SidekiqRedis`
 
