@@ -31,6 +31,11 @@ class CustomCheck
       extra: "This is an optional details hash",
     }
   end
+
+  # Optional
+  def enabled?
+    true # false if the check is not relevant at this time
+  end
 end
 ```
 

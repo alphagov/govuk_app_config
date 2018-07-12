@@ -43,9 +43,13 @@ module GovukHealthcheck
     end
 
     def build_component_status(check)
-      component_status = details(check).merge(status: check.status)
-      component_status[:message] = check.message if check.respond_to?(:message)
-      component_status
+      if check.respond_to?(:enabled?) && !check.enabled?
+        { status: :ok, message: "currently disabled" }
+      else
+        component_status = details(check).merge(status: check.status)
+        component_status[:message] = check.message if check.respond_to?(:message)
+        component_status
+      end
     end
 
     def details(check)
