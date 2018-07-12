@@ -47,3 +47,44 @@ This will check:
 
 Each check class gets instanced each time the health check end point is called.
 This allows you to cache any complex queries speeding up performance.
+
+## Built-in Checks
+
+### `SidekiqRedis`
+
+This checks that the app has a connection to Redis via Sidekiq.
+
+### `ActiveRecord`
+
+This checks that the app has a connection to the database via ActiveRecord.
+
+### `ThresholdCheck`
+
+This class is the basis for a check which compares a value with a warning or a
+critical threshold. To implement this kind of check in your application, you
+can inherit from the class.
+
+```ruby
+class MyThresholdCheck < GovukHealthcheck::ThresholdCheck
+  def name
+    :my_threshold_check
+  end
+
+  def value
+    # get the value to be checked
+  end
+
+  def total
+    # (optional) get the total value to be included in the details as extra
+    # information
+  end
+
+  def warning_threshold
+    # if the value is above this threshold, its status is warning
+  end
+
+  def critical_threshold
+    # if the value is above this threshold, its status is critical
+  end
+end
+```
