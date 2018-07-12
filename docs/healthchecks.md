@@ -1,19 +1,23 @@
 # Health Checks
 
-Set up a route in your rack-compatible Ruby application, and pick the built-in
-or custom checks you wish to perform.
+## Check interface
 
-Custom checks must be a class which implements
-[this interface](../spec/lib/govuk_healthcheck/shared_interface.rb):
+A check is expected to be a class with the following methods:
 
 ```ruby
 class CustomCheck
   def name
-    :custom_check
+    :the_name_of_the_check
   end
 
   def status
-    ThingChecker.everything_okay? ? OK : CRITICAL
+    if critical_condition?
+      :critical
+    elsif warning_condition?
+      :warning
+    else
+      :ok
+    end
   end
 
   # Optional
@@ -30,6 +34,15 @@ class CustomCheck
 end
 ```
 
+It is expected that these methods may cache their results for performance
+reasons, if a user wants to ensure they have the latest value they should
+create a new instance of the check first.
+
+# Including checks in your app
+
+Set up a route in your rack-compatible Ruby application, and pick the built-in
+or custom checks you wish to perform.
+
 For Rails apps:
 
 ```ruby
@@ -39,14 +52,6 @@ get "/healthcheck", to: GovukHealthcheck.rack_response(
   CustomCheck,
 )
 ```
-
-This will check:
-- Redis connectivity (via Sidekiq)
-- Database connectivity (via ActiveRecord)
-- Your custom healthcheck
-
-Each check class gets instanced each time the health check end point is called.
-This allows you to cache any complex queries speeding up performance.
 
 ## Built-in Checks
 
