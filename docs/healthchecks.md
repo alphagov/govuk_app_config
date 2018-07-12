@@ -71,8 +71,7 @@ This checks that the app has a connection to the database via ActiveRecord.
 ### `ThresholdCheck`
 
 This class is the basis for a check which compares a value with a warning or a
-critical threshold. To implement this kind of check in your application, you
-can inherit from the class.
+critical threshold.
 
 ```ruby
 class MyThresholdCheck < GovukHealthcheck::ThresholdCheck
@@ -95,6 +94,40 @@ class MyThresholdCheck < GovukHealthcheck::ThresholdCheck
 
   def critical_threshold
     # if the value is above this threshold, its status is critical
+  end
+end
+```
+
+### `SidekiqQueueLatencyCheck`
+
+This class is the basis for a check which compares the Sidekiq queue latencies
+with warning or critical thresholds.
+
+```ruby
+class MySidekiqQueueLatencyCheck < GovukHealthcheck::SidekiqQueueLatencyCheck
+  def warning_threshold(queue:)
+    # the warning threshold for a particular queue
+  end
+
+  def critical_threshold(queue:)
+    # the critical threshold for a particular queue
+  end
+end
+```
+
+### `SidekiqQueueSizeCheck`
+
+This class is the basis for a check which compares the Sidekiq queue sizes
+with warning or critical thresholds.
+
+```ruby
+class MySidekiqQueueSizeCheck < GovukHealthcheck::SidekiqQueueSizeCheck
+  def warning_threshold(queue:)
+    # the warning threshold for a particular queue
+  end
+
+  def critical_threshold(queue:)
+    # the critical threshold for a particular queue
   end
 end
 ```

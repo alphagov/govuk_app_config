@@ -17,4 +17,10 @@ RSpec.shared_examples "a healthcheck" do
       expect(healthcheck.details).not_to have_key(:status)
     end
   end
+
+  it "optionally returns a `message` string" do
+    if healthcheck.respond_to?(:message)
+      expect(healthcheck.message).to be_a(String)
+    end
+  end
 end
