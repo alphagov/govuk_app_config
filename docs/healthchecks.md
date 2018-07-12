@@ -131,3 +131,21 @@ class MySidekiqQueueSizeCheck < GovukHealthcheck::SidekiqQueueSizeCheck
   end
 end
 ```
+
+
+### `SidekiqRetrySizeCheck`
+
+Similar to `SidekiqQueueSizeCheck`, this class is the basis for a check which
+compares the Sidekiq retry set size with a warning and critical threshold.
+
+```ruby
+class MySidekiqRetrySizeCheck < GovukHealthcheck::SidekiqRetrySizeCheck
+  def warning_threshold
+    # the warning threshold for the retry set
+  end
+
+  def critical_threshold
+    # the critical threshold for the retry set
+  end
+end
+```
