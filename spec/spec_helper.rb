@@ -1,4 +1,5 @@
 require 'climate_control'
+require 'rspec/its'
 require 'webmock/rspec'
 
 RSpec.configure do |config|
