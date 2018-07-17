@@ -5,12 +5,17 @@ RSpec.describe GovukHealthcheck::Checkup do
   let(:ok_check) { OkTestHealthcheck }
   let(:warning_check) { WarningTestHealthcheck }
   let(:critical_check) { CriticalTestHealthcheck }
+  let(:disabled_critical_check) { DisabledCriticalHealthcheck }
 
   it "sets the overall status to the worse component status" do
     expect(described_class.new([ok_check]).run[:status]).to eq(GovukHealthcheck::OK)
     expect(described_class.new([ok_check, critical_check]).run[:status]).to eq(GovukHealthcheck::CRITICAL)
     expect(described_class.new([warning_check, critical_check]).run[:status]).to eq(GovukHealthcheck::CRITICAL)
     expect(described_class.new([warning_check, ok_check]).run[:status]).to eq(GovukHealthcheck::WARNING)
+  end
+
+  it "ignores disabled checks" do
+    expect(described_class.new([ok_check, disabled_critical_check]).run[:status]).to eq(GovukHealthcheck::OK)
   end
 
   it "sets the specific status of component checks" do
@@ -39,6 +44,16 @@ RSpec.describe GovukHealthcheck::Checkup do
   it "leaves out the message key if the check doesn't supply one" do
     response = described_class.new([ok_check]).run
     expect(response.dig(:checks, :ok_check)).not_to have_key(:message)
+  end
+
+  it "sets the message of disabled checks" do
+    response = described_class.new([DisabledCriticalHealthcheck]).run
+    expect(response.dig(:checks, :critical_check, :message)).to eq("currently disabled")
+  end
+
+  it "sets the status of disabled checks to ok" do
+    response = described_class.new([DisabledCriticalHealthcheck]).run
+    expect(response.dig(:checks, :critical_check, :status)).to eq(:ok)
   end
 
   class TestHealthcheck
@@ -76,6 +91,12 @@ RSpec.describe GovukHealthcheck::Checkup do
       {
         extra: "This is an extra detail",
       }
+    end
+  end
+
+  class DisabledCriticalHealthcheck < CriticalTestHealthcheck
+    def enabled?
+      false
     end
   end
 end

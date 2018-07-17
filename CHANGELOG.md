@@ -1,3 +1,8 @@
+# Unreleased
+
+* Add various convenience health check classes which make it easier to add
+  custom checks into apps without writing lots of code.
+
 # 1.6.0
 
 * Make health checks classes rather than instances, allowing internal data to
