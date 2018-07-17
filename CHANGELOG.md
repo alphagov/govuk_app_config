@@ -1,3 +1,7 @@
+# Unreleased
+
+* Handle a health check which raises an exception.
+
 # 1.7.0
 
 * Add various convenience health check classes which make it easier to add

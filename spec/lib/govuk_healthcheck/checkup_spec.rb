@@ -6,6 +6,7 @@ RSpec.describe GovukHealthcheck::Checkup do
   let(:warning_check) { WarningTestHealthcheck }
   let(:critical_check) { CriticalTestHealthcheck }
   let(:disabled_critical_check) { DisabledCriticalHealthcheck }
+  let(:exception_check) { ExceptionHealthcheck }
 
   it "sets the overall status to the worse component status" do
     expect(described_class.new([ok_check]).run[:status]).to eq(GovukHealthcheck::OK)
@@ -16,6 +17,12 @@ RSpec.describe GovukHealthcheck::Checkup do
 
   it "ignores disabled checks" do
     expect(described_class.new([ok_check, disabled_critical_check]).run[:status]).to eq(GovukHealthcheck::OK)
+  end
+
+  it "sets the status as critical for health checks which error" do
+    response = described_class.new([exception_check]).run
+    expect(response[:status]).to eq(GovukHealthcheck::CRITICAL)
+    expect(response.dig(:checks, :exception_check, :message)).to eq("something bad happened")
   end
 
   it "sets the specific status of component checks" do
@@ -97,6 +104,16 @@ RSpec.describe GovukHealthcheck::Checkup do
   class DisabledCriticalHealthcheck < CriticalTestHealthcheck
     def enabled?
       false
+    end
+  end
+
+  class ExceptionHealthcheck
+    def name
+      :exception_check
+    end
+
+    def status
+      raise "something bad happened"
     end
   end
 end
