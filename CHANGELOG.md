@@ -1,4 +1,4 @@
-# Unreleased
+# 1.7.0
 
 * Add various convenience health check classes which make it easier to add
   custom checks into apps without writing lots of code.
