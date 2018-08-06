@@ -20,6 +20,8 @@ GovukError.configure do |config|
     end
   }
 
+  config.silence_ready = !Rails.env.production? if defined?(Rails)
+
   config.excluded_exceptions = [
     'AbstractController::ActionNotFound',
     'ActionController::BadRequest',
