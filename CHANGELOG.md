@@ -1,6 +1,8 @@
-# Unreleased
+# 1.8.0
 
 * Handle a health check which raises an exception.
+* Configure Sentry to only log on startup in the production Rails
+  environment (if Rails is in use)
 
 # 1.7.0
 
