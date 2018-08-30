@@ -30,3 +30,6 @@ RSpec.configure do |config|
 
   Kernel.srand config.seed
 end
+
+support_file_glob = File.expand_path(File.join(File.dirname(__FILE__), "support/**/*.rb"))
+Dir[support_file_glob].each {|f| require f}
