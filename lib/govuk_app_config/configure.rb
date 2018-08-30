@@ -42,3 +42,7 @@ GovukError.configure do |config|
     GovukStatsd.increment("error_reports_failed")
   }
 end
+
+GovukNodes.configure do |config|
+  config.is_aws = ENV["AWS_STACKNAME"].present?
+end
