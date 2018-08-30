@@ -12,10 +12,10 @@ module PuppetDBHelper
     }
   end
 
-  def db_url(node_class)
+  def db_url(base_url, node_class)
     query = '["or", ["~", ["fact", "fqdn"], "^' + node_class + '-\d+."]]'
     query_string = URI.encode_www_form(query: query)
-    "http://puppetdb.cluster/v2/nodes?#{query_string}"
+    "#{base_url}?#{query_string}"
   end
 end
 

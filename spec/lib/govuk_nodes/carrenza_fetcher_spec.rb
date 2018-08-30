@@ -12,28 +12,36 @@ RSpec.describe GovukNodes::CarrenzaFetcher do
   }
 
   let(:node_class) { "email-alert-api" }
+  let(:puppetdb_node_url) { "http://puppetdb.cluster/v2/nodes" }
+  let(:full_node_url) { db_url(puppetdb_node_url, node_class) }
 
   subject { described_class.new }
 
   before do
-    stub_request(:get, db_url(node_class)).to_return(
+    stub_request(:get, full_node_url).to_return(
       body: response_body,
       status: response_code,
     )
+  end
+
+  around do |example|
+    ClimateControl.modify PUPPETDB_NODE_URL: puppetdb_node_url do
+      example.run
+    end
   end
 
   describe "#hostnames_of_class(node_class)" do
     it "queries puppetdb for the nodes" do
       subject.hostnames_of_class(node_class)
 
-      expect(a_request(:get, db_url(node_class))).to have_been_made.once
+      expect(a_request(:get, full_node_url)).to have_been_made.once
     end
 
     it "allows underscores or hyphens" do
       subject.hostnames_of_class("email_alert_api")
       subject.hostnames_of_class("email-alert-api")
 
-      expect(a_request(:get, db_url(node_class))).to have_been_made.twice
+      expect(a_request(:get, full_node_url)).to have_been_made.twice
     end
 
     it "returns the names of the instances found" do

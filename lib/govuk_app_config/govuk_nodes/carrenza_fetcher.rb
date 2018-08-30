@@ -11,7 +11,7 @@ class GovukNodes
   private
 
     def instances_of_class(node_class)
-      url = "http://puppetdb.cluster/v2/nodes?#{query_string(node_class)}"
+      url = "#{puppetdb_node_url}?#{query_string(node_class)}"
       json_response = open(url).read
       JSON.parse(json_response)
     end
@@ -21,6 +21,10 @@ class GovukNodes
       query = %{["or", ["~", ["fact", "fqdn"], "^#{hyphenated_node_class}-\\d+."]]}
 
       URI.encode_www_form(query: query)
+    end
+
+    def puppetdb_node_url
+      @puppetdb_node_url ||= ENV["PUPPETDB_NODE_URL"]
     end
   end
 end
