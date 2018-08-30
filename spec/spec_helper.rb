@@ -1,6 +1,7 @@
 require 'climate_control'
 require 'rspec/its'
 require 'webmock/rspec'
+require 'pry'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
