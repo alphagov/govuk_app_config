@@ -1,3 +1,5 @@
+* Record 1% of requests with AWS X-Ray.
+
 # 1.8.0
 
 * Handle a health check which raises an exception.
