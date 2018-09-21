@@ -8,9 +8,13 @@ module GovukXRay
   end
 
   def self.start(app)
+    # if aws-sdk is loaded, we want to instrument that too
+    patch = Gem.loaded_specs.has_key?('aws-sdk-core') ?
+              %I[aws_sdk net_http] : %I[net_http]
+
     XRay.recorder.configure(
       name: ENV['GOVUK_APP_NAME'].to_s,
-      patch: %I[net_http aws_sdk],
+      patch: patch,
       sampling_rules: {
         default: {
           'fixed_target': ENV.fetch('XRAY_SAMPLE_TARGET', 0).to_i,
