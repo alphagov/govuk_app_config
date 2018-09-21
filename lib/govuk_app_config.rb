@@ -6,6 +6,6 @@ require "govuk_app_config/govuk_healthcheck"
 # This require is deprecated and should be removed on next major version bump
 # and should be required by applications directly.
 require "govuk_app_config/govuk_unicorn"
+require "govuk_app_config/govuk_xray"
 require "govuk_app_config/configure"
 require "govuk_app_config/railtie" if defined?(Rails)
-require "govuk_app_config/xray" if defined?(Rails)
