@@ -21,6 +21,7 @@ module GovukXRay
           'fixed_target': ENV.fetch('XRAY_SAMPLE_TARGET', 0).to_i,
           'rate': ENV.fetch('XRAY_SAMPLE_RATE', 0.01).to_f,
         },
+        rules: [],
       },
     )
   end
