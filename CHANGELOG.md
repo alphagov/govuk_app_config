@@ -1,3 +1,6 @@
+* Make XRay log missing segments (such as when executing rake tasks)
+  as an error, rather than throwing an exception.
+
 # 1.9.0
 
 * Record 1% of requests with AWS X-Ray.
