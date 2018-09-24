@@ -1,3 +1,5 @@
+# 1.9.1
+
 * Make XRay log missing segments (such as when executing rake tasks)
   as an error, rather than throwing an exception.
 
