@@ -9,8 +9,8 @@ module GovukAppConfig
       GovukLogging.configure if Rails.env.production?
     end
 
-    config.after_initialize do |app|
-      GovukXRay.start app if Rails.env.production?
+    config.after_initialize do
+      GovukXRay.start if Rails.env.production?
     end
   end
 end

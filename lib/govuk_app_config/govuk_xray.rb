@@ -7,7 +7,7 @@ module GovukXRay
     app.middleware.use XRay::Rails::ExceptionMiddleware
   end
 
-  def self.start(app)
+  def self.start
     # if aws-sdk is loaded, we want to instrument that too
     patch = Gem.loaded_specs.has_key?('aws-sdk-core') ?
               %I[aws_sdk net_http] : %I[net_http]
