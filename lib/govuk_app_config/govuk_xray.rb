@@ -15,6 +15,7 @@ module GovukXRay
     XRay.recorder.configure(
       name: ENV['GOVUK_APP_NAME'].to_s,
       patch: patch,
+      context_missing: 'LOG_ERROR',
       sampling_rules: {
         version: 1,
         default: {
