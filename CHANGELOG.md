@@ -1,3 +1,5 @@
+# 1.9.0
+
 * Record 1% of requests with AWS X-Ray.
 
 # 1.8.0
