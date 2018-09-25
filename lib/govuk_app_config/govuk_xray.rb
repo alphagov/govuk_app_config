@@ -12,8 +12,13 @@ module GovukXRay
     patch = Gem.loaded_specs.has_key?('aws-sdk-core') ?
               %I[aws_sdk net_http] : %I[net_http]
 
+    # if there isn't a name set, attempting to record a segment will
+    # throw an error
+    govuk_app_name = ENV['GOVUK_APP_NAME']
+    name = govuk_app_name.blank? ? 'xray' : govuk_app_name
+
     XRay.recorder.configure(
-      name: ENV['GOVUK_APP_NAME'].to_s,
+      name: name,
       patch: patch,
       context_missing: 'LOG_ERROR',
       sampling_rules: {
