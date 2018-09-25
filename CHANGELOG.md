@@ -1,3 +1,8 @@
+# 1.9.2
+
+* Set a default segment name for XRay if the `GOVUK_APP_NAME`
+  environment variable is missing, rather than throwing an exception.
+
 # 1.9.1
 
 * Make XRay log missing segments (such as when executing rake tasks)
