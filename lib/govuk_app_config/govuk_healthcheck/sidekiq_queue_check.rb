@@ -41,7 +41,7 @@ module GovukHealthcheck
             thresholds: {
               critical: critical_threshold(queue: name),
               warning: warning_threshold(queue: name),
-            },
+            }.select { |_, val| !(val.to_f.infinite? || val.to_f.nan?) },
           }
         end,
       }

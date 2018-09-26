@@ -51,6 +51,22 @@ RSpec.describe GovukHealthcheck::SidekiqQueueCheck do
     end
   end
 
+  context "NaNs and infinities" do
+    subject { TestQueueCheck.new({ queue: 0 }, Float::INFINITY, Float::NAN) }
+
+    it_behaves_like "a healthcheck"
+
+    its(:status) { is_expected.to eq(:ok) }
+    its(:message) { is_expected.to match(/below the critical and warning thresholds/) }
+    its(:details) do
+      is_expected.to match(
+        queues: {
+          queue: hash_including(value: 0, thresholds: {})
+        }
+      )
+    end
+  end
+
   class TestQueueCheck < GovukHealthcheck::SidekiqQueueCheck
     def initialize(queues, warning_threshold, critical_threshold, name = :test)
       @queues = queues
