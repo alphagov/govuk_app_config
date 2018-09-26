@@ -1,3 +1,5 @@
+# 1.9.3
+
 * Do not report Sidekiq queue thresholds in healthchecks which are
   infinite or NaN.
 
