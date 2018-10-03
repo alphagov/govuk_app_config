@@ -8,9 +8,10 @@ module GovukXRay
   end
 
   def self.start
-    # if aws-sdk is loaded, we want to instrument that too
-    patch = Gem.loaded_specs.has_key?('aws-sdk-core') ?
-              %I[aws_sdk net_http] : %I[net_http]
+    # patching 'aws_sdk' seem to impose a large memory overhead, so
+    # don't do that by default
+    patch = ENV.has_key?('XRAY_PATCH_AWS_SDK') ?
+               %I[aws_sdk net_http] : %I[net_http]
 
     # if there isn't a name set, attempting to record a segment will
     # throw an error
