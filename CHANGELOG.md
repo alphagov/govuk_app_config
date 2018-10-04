@@ -1,3 +1,5 @@
+# 1.10.0
+
 * Only instrument the `aws_sdk` gem with AWS X-Ray if the
   `XRAY_PATCH_AWS_SDK` environment variable is present.
 
