@@ -1,3 +1,5 @@
+# 1.11.0
+
 * Disable X-Ray entirely if the `GOVUK_APP_CONFIG_DISABLE_XRAY`
   environment variable is set.
 
