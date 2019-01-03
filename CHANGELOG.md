@@ -1,9 +1,5 @@
-* Disable a feature if the environment variable
-  `GOVUK_APP_CONFIG_DISABLE_FEATURE` is set.  There are currently two
-  such variables:
-
-  * `GOVUK_APP_CONFIG_DISABLE_LOGGING`
-  * `GOVUK_APP_CONFIG_DISABLE_XRAY`
+* Disable X-Ray entirely if the `GOVUK_APP_CONFIG_DISABLE_XRAY`
+  environment variable is set.
 
 # 1.10.0
 

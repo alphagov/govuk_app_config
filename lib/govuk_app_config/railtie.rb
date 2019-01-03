@@ -5,7 +5,7 @@ module GovukAppConfig
     end
 
     config.before_initialize do
-      GovukLogging.configure if enable_railtie_for?('logging')
+      GovukLogging.configure if Rails.env.production?
     end
 
     config.after_initialize do
