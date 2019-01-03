@@ -1,3 +1,5 @@
+* Fix crash on start due to incorrect method invocation.
+
 # 1.11.0
 
 * Disable X-Ray entirely if the `GOVUK_APP_CONFIG_DISABLE_XRAY`
