@@ -1,3 +1,5 @@
+# 1.11.1
+
 * Fix crash on start due to incorrect method invocation.
 
 # 1.11.0
