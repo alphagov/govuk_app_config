@@ -33,7 +33,7 @@ RSpec.describe GovukAppConfig::Railtie do
   end
 
   describe '#enable_railtie_for?' do
-    context 'GOVUK_APP_CONFIG_DISABLE_name_RAILTIE is unset' do
+    context 'GOVUK_APP_CONFIG_DISABLE_name is unset' do
       it 'returns true if in production' do
         allow(GovukAppConfig::Rails).to receive(:env) { production }
         expect(described_class.enable_railtie_for?('foo')).to eql(true)
@@ -45,16 +45,16 @@ RSpec.describe GovukAppConfig::Railtie do
       end
     end
 
-    context 'GOVUK_APP_CONFIG_DISABLE_name_RAILTIE is set' do
+    context 'GOVUK_APP_CONFIG_DISABLE_name is set' do
       it 'returns false if in production' do
-        ClimateControl.modify GOVUK_APP_CONFIG_DISABLE_FOO_RAILTIE: 'i am set' do
+        ClimateControl.modify GOVUK_APP_CONFIG_DISABLE_FOO: 'i am set' do
           allow(GovukAppConfig::Rails).to receive(:env) { production }
           expect(described_class.enable_railtie_for?('foo')).to eql(false)
         end
       end
 
       it 'returns false if not in production' do
-        ClimateControl.modify GOVUK_APP_CONFIG_DISABLE_FOO_RAILTIE: 'i am set' do
+        ClimateControl.modify GOVUK_APP_CONFIG_DISABLE_FOO: 'i am set' do
           allow(GovukAppConfig::Rails).to receive(:env) { not_production }
           expect(described_class.enable_railtie_for?('foo')).to eql(false)
         end

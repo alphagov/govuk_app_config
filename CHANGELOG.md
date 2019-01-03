@@ -1,9 +1,9 @@
-* Disable a railtie if the environment variable
-  `GOVUK_APP_CONFIG_DISABLE_$NAME_RAILTIE` is set.  There are
-  currently two such variables:
+* Disable a feature if the environment variable
+  `GOVUK_APP_CONFIG_DISABLE_FEATURE` is set.  There are currently two
+  such variables:
 
-  * `GOVUK_APP_CONFIG_DISABLE_LOGGING_RAILTIE`
-  * `GOVUK_APP_CONFIG_DISABLE_XRAY_RAILTIE`
+  * `GOVUK_APP_CONFIG_DISABLE_LOGGING`
+  * `GOVUK_APP_CONFIG_DISABLE_XRAY`
 
 # 1.10.0
 

@@ -13,7 +13,7 @@ module GovukAppConfig
     end
 
     def self.enable_railtie_for?(name)
-      Rails.env.production? && !ENV.has_key?("GOVUK_APP_CONFIG_DISABLE_#{name.upcase}_RAILTIE")
+      Rails.env.production? && !ENV.has_key?("GOVUK_APP_CONFIG_DISABLE_#{name.upcase}")
     end
   end
 end
