@@ -1,3 +1,6 @@
+* Disable X-Ray entirely if the `GOVUK_APP_CONFIG_DISABLE_XRAY`
+  environment variable is set.
+
 # 1.10.0
 
 * Only instrument the `aws_sdk` gem with AWS X-Ray if the
