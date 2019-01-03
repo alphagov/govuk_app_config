@@ -1,3 +1,10 @@
+* Disable a railtie if the environment variable
+  `GOVUK_APP_CONFIG_DISABLE_$NAME_RAILTIE` is set.  There are
+  currently two such variables:
+
+  * `GOVUK_APP_CONFIG_DISABLE_LOGGING_RAILTIE`
+  * `GOVUK_APP_CONFIG_DISABLE_XRAY_RAILTIE`
+
 # 1.10.0
 
 * Only instrument the `aws_sdk` gem with AWS X-Ray if the
