@@ -1,3 +1,7 @@
+# Unreleased
+
+* More consistent log level configuration by default
+
 # 1.12.0
 
 * Make ActiveRecord healthcheck more accurate

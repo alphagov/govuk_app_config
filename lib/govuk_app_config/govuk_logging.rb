@@ -46,7 +46,10 @@ module GovukLogging
     Rails.application.config.logstasher.view_enabled = false
     Rails.application.config.logstasher.job_enabled = false
 
-    Rails.application.config.logstasher.logger = Logger.new($real_stdout)
+    Rails.application.config.logstasher.logger = Logger.new(
+      $real_stdout,
+      level: Rails.logger.level
+    )
     Rails.application.config.logstasher.supress_app_log = true
   end
 end
