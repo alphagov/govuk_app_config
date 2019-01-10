@@ -1,5 +1,6 @@
 # Unreleased
 
+* Configure the GDS API Adapters logger to use logstasher
 * More consistent log level configuration by default
 
 # 1.12.0

@@ -51,5 +51,15 @@ module GovukLogging
       level: Rails.logger.level
     )
     Rails.application.config.logstasher.supress_app_log = true
+
+    if defined?(GdsApi::Base)
+      GdsApi::Base.default_options ||= {}
+
+      # The GDS API Adapters gem logs JSON to describe the requests it
+      # makes and the responses it gets, so direct this to the
+      # logstasher logger
+      GdsApi::Base.default_options[:logger] =
+        Rails.application.config.logstasher.logger
+    end
   end
 end
