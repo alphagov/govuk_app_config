@@ -10,16 +10,6 @@ GovukError.configure do |config|
     GovukStatsd.increment("errbit.errors_occurred")
   }
 
-  config.should_capture = Proc.new { |e|
-    exception_class = e.respond_to?(:original_exception) ? e.original_exception.class : e.class
-    if exception_class.ancestors.any? { |c| c.name =~ /^GdsApi::(HTTPIntermittent|TimedOutException)/ }
-      GovukStatsd.increment("gds_api_adapters.errors.#{e.class.name.demodulize.underscore}")
-      false
-    else
-      true
-    end
-  }
-
   config.silence_ready = !Rails.env.production? if defined?(Rails)
 
   config.excluded_exceptions = [
@@ -34,9 +24,16 @@ GovukError.configure do |config|
     'ActiveJob::DeserializationError',
     'ActiveRecord::RecordNotFound',
     'CGI::Session::CookieStore::TamperedWithCookie',
+    'GdsApi::HTTPIntermittent',
+    'GdsApi::TimedOutException',
     'Mongoid::Errors::DocumentNotFound',
     'Sinatra::NotFound',
   ]
+
+  # This will exclude exceptions that are triggered by one of the ignored
+  # exceptions. For example, when any exception occurs in a template,
+  # Rails will raise a ActionView::Template::Error, instead of the original error.
+  config.inspect_exception_causes_for_exclusion = true
 
   config.transport_failure_callback = Proc.new {
     GovukStatsd.increment("error_reports_failed")
