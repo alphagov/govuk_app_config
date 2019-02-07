@@ -23,9 +23,13 @@ module GovukHealthcheck
     attr_reader :checks
 
     def component_statuses
-      @component_statuses ||= checks.map(&:new).each_with_object({}) do |check, hash|
+      @component_statuses ||= all_components.each_with_object({}) do |check, hash|
         hash[check.name] = build_component_status(check)
       end
+    end
+
+    def all_components
+      checks.map { |check| check.instance_of?(Class) ? check.new : check }
     end
 
     def worst_status

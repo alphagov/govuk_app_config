@@ -63,9 +63,18 @@ RSpec.describe GovukHealthcheck::Checkup do
     expect(response.dig(:checks, :critical_check, :status)).to eq(:ok)
   end
 
+  it "accepts objects (can be initialized)" do
+    response = described_class.new([TestHealthcheck.new]).run
+    expect(response.dig(:checks, :unknown_check, :status)).to eq(:unknown)
+  end
+
   class TestHealthcheck
     def name
       "#{status}_check".to_sym
+    end
+
+    def status
+      :unknown
     end
   end
 
