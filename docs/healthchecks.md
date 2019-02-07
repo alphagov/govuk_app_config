@@ -58,6 +58,14 @@ get "/healthcheck", to: GovukHealthcheck.rack_response(
 )
 ```
 
+It also accepts objects, so classes can be initialized:
+
+```ruby
+get "/healthcheck", to: GovukHealthcheck.rack_response(
+  InitializedCheck.new(:param),
+)
+```
+
 ## Built-in Checks
 
 A convention used when naming these classes is that it should end with `Check`
