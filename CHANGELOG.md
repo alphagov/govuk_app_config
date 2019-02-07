@@ -1,3 +1,7 @@
+# 1.11.3
+
+* Add Initialized healthchecks
+
 # 1.11.2
 
 * Fix crash on start due to incorrect method invocation.
