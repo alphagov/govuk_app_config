@@ -5,7 +5,10 @@ module GovukHealthcheck
     end
 
     def status
-      ::ActiveRecord::Base.connected? ? OK : CRITICAL
+      ::ActiveRecord::Base.connection
+      OK
+    rescue StandardError => e
+      CRITICAL
     end
   end
 end

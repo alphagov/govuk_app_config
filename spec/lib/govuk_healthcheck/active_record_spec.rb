@@ -8,7 +8,7 @@ RSpec.describe GovukHealthcheck::ActiveRecord do
 
   describe ".status" do
     context "when the database is connected" do
-      let(:active_record) { double(:active_record, connected?: true)}
+      let(:active_record) { double(:active_record, connection: true) }
 
       it_behaves_like "a healthcheck"
 
@@ -18,7 +18,11 @@ RSpec.describe GovukHealthcheck::ActiveRecord do
     end
 
     context "when the database is not connected" do
-      let(:active_record) { double(:active_record, connected?: false)}
+      let(:active_record) { double(:active_record, connection: true) }
+
+      before do
+        allow(active_record).to receive(:connection) { raise }
+      end
 
       it_behaves_like "a healthcheck"
 
