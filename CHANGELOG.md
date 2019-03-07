@@ -1,3 +1,7 @@
+# 1.12.0
+
+* Make ActiveRecord healthcheck more accurate
+
 # 1.11.3
 
 * Add Initialized healthchecks
