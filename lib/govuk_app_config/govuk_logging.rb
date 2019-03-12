@@ -20,7 +20,7 @@ module GovukLogging
     $stdout.reopen($stderr)
 
     # Send Rails' logs to STDERR because they're not JSON formatted.
-    Rails.logger = ActiveSupport::TaggedLogging.new(Logger.new($stderr, level: Logger::INFO))
+    Rails.logger = ActiveSupport::TaggedLogging.new(Logger.new($stderr, level: Rails.logger.level))
 
     # Custom that will be added to the Rails request logs
     LogStasher.add_custom_fields do |fields|
@@ -46,7 +46,20 @@ module GovukLogging
     Rails.application.config.logstasher.view_enabled = false
     Rails.application.config.logstasher.job_enabled = false
 
-    Rails.application.config.logstasher.logger = Logger.new($real_stdout)
+    Rails.application.config.logstasher.logger = Logger.new(
+      $real_stdout,
+      level: Rails.logger.level
+    )
     Rails.application.config.logstasher.supress_app_log = true
+
+    if defined?(GdsApi::Base)
+      GdsApi::Base.default_options ||= {}
+
+      # The GDS API Adapters gem logs JSON to describe the requests it
+      # makes and the responses it gets, so direct this to the
+      # logstasher logger
+      GdsApi::Base.default_options[:logger] =
+        Rails.application.config.logstasher.logger
+    end
   end
 end
