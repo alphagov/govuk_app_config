@@ -1,3 +1,8 @@
+# Unreleased
+
+* Remove formating from the Logstasher logger, used by default for the
+  GDS API Adapters logging.
+
 # 1.13.0
 
 * Configure the GDS API Adapters logger to use logstasher

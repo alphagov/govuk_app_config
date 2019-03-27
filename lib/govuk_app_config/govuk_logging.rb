@@ -48,7 +48,10 @@ module GovukLogging
 
     Rails.application.config.logstasher.logger = Logger.new(
       $real_stdout,
-      level: Rails.logger.level
+      level: Rails.logger.level,
+      formatter: proc { |_severity, _datetime, _progname, msg|
+        "#{String === msg ? msg : msg.inspect}\n"
+      }
     )
     Rails.application.config.logstasher.supress_app_log = true
 
