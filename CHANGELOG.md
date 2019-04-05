@@ -1,4 +1,4 @@
-# Unreleased
+# 1.14.0
 
 * Add content security policy support.
 
