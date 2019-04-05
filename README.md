@@ -6,6 +6,7 @@ Adds the basics of a GOV.UK application:
 - Error reporting with Sentry
 - Statsd client for reporting stats
 - Rails logging
+- Content Security Policy generation for frontend apps
 
 ## Installation
 
@@ -114,6 +115,19 @@ check docs](docs/healthchecks.md) for more information on how to use it.
 
 In Rails applications, the application will be configured to send JSON-formatted
 logs to `STDOUT` and unstructed logs to `STDERR`.
+
+## Content Security Policy generation
+
+For frontend apps, configuration can be added to generate and serve a
+content security policy header. The policy is report only when the Rails
+environment is set to "production", and enforced otherwise.
+
+To enable this feature, create a file at `config/initializers/csp.rb` in the
+app with the following content:
+
+```ruby
+GovukContentSecurityPolicy.configure
+```
 
 ## License
 

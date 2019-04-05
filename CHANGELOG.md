@@ -1,3 +1,7 @@
+# Unreleased
+
+* Add content security policy support.
+
 # 1.13.1
 
 * Remove formating from the Logstasher logger, used by default for the
