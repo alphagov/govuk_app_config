@@ -1,3 +1,6 @@
+* Fix the `UNICORN_TIMEOUT` setting, which previously resulted in a
+  crash on start.
+
 # 1.15.0
 
 * Allow configuring the unicorn timeout through the `UNICORN_TIMEOUT`

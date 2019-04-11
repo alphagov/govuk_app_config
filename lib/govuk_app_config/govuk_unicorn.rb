@@ -2,7 +2,7 @@ module GovukUnicorn
   def self.configure(config)
     config.worker_processes Integer(ENV.fetch("UNICORN_WORKER_PROCESSES", 2))
 
-    config.timeout = Integer(ENV.fetch("UNICORN_TIMEOUT", 60))
+    config.timeout Integer(ENV.fetch("UNICORN_TIMEOUT", 60))
 
     if ENV["GOVUK_APP_LOGROOT"]
       config.stdout_path "#{ENV['GOVUK_APP_LOGROOT']}/app.out.log"
