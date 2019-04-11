@@ -1,3 +1,8 @@
+# 1.15.0
+
+* Allow configuring the unicorn timeout through the `UNICORN_TIMEOUT`
+  environment variable (default: 60).
+
 # 1.14.0
 
 * Add content security policy support.
