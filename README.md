@@ -116,7 +116,7 @@ check docs](docs/healthchecks.md) for more information on how to use it.
 In Rails applications, the application will be configured to send JSON-formatted
 logs to `STDOUT` and unstructed logs to `STDERR`.
 
-## Content Security Policy generation
+## Content Security Policy generation
 
 For frontend apps, configuration can be added to generate and serve a
 content security policy header. The policy is report only when the Rails
