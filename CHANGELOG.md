@@ -1,4 +1,4 @@
-# Unreleased
+# 1.16.0
 
 * Add a DoubleClick domain to our content security policy.
 
