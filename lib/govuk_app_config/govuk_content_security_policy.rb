@@ -13,7 +13,7 @@ module GovukContentSecurityPolicy
 
   GOVUK_DOMAINS = "'self' *.publishing.service.gov.uk localhost".freeze
 
-  GOOGLE_ANALYTICS_DOMAINS = "www.google-analytics.com ssl.google-analytics.com".freeze
+  GOOGLE_ANALYTICS_DOMAINS = "www.google-analytics.com ssl.google-analytics.com stats.g.doubleclick.net".freeze
 
   def self.build
     policies = []

@@ -1,3 +1,7 @@
+# Unreleased
+
+* Add a DoubleClick domain to our content security policy.
+
 # 1.15.1
 
 * Fix the `UNICORN_TIMEOUT` setting, which previously resulted in a
