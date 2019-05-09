@@ -1,3 +1,5 @@
+# 1.16.1
+
 * Return Critical status for SidekiqRedis if Redis raises a connection error.
 
 # 1.16.0
