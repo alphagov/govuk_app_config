@@ -1,3 +1,5 @@
+* Return Critical status for SidekiqRedis if Redis raises a connection error.
+
 # 1.16.0
 
 * Add a DoubleClick domain to our content security policy.
