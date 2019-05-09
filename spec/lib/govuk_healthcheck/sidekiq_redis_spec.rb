@@ -4,7 +4,8 @@ require_relative "shared_interface"
 
 RSpec.describe GovukHealthcheck::SidekiqRedis do
   let(:redis_info) { double(:redis_info) }
-  before { stub_const("Sidekiq", double(:sidekiq, redis_info: redis_info)) }
+  let(:sidekiq) { double(:sidekiq, redis_info: redis_info) }
+  before { stub_const("Sidekiq", sidekiq) }
 
   context "when the database is connected" do
     let(:redis_info) { double(:redis_info) }
@@ -22,6 +23,14 @@ RSpec.describe GovukHealthcheck::SidekiqRedis do
     it_behaves_like "a healthcheck"
 
     it "returns CRITICAL" do
+      expect(subject.status).to eq(GovukHealthcheck::CRITICAL)
+    end
+  end
+
+  context "when redis raises a connection error" do
+    it "returns CRITICAL" do
+      allow(sidekiq).to receive(:redis_info).and_raise StandardError
+
       expect(subject.status).to eq(GovukHealthcheck::CRITICAL)
     end
   end
