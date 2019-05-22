@@ -11,7 +11,11 @@ module GovukContentSecurityPolicy
   # - https://csp-evaluator.withgoogle.com
   # - https://cspvalidator.org
 
-  GOVUK_DOMAINS = "'self' *.publishing.service.gov.uk localhost".freeze
+  GOVUK_DOMAINS = [
+    "'self'",
+    '*.publishing.service.gov.uk',
+    "*.#{ENV['GOVUK_APP_DOMAIN_EXTERNAL'] || ENV['GOVUK_APP_DOMAIN'] || 'dev.gov.uk'}"
+  ].uniq.join(" ").freeze
 
   GOOGLE_ANALYTICS_DOMAINS = "www.google-analytics.com ssl.google-analytics.com stats.g.doubleclick.net".freeze
 
@@ -130,9 +134,9 @@ module GovukContentSecurityPolicy
     # AWS Lambda function that filters out junk reports.
     if Rails.env.production?
       reporting = "report-uri https://jhpno0hk6b.execute-api.eu-west-2.amazonaws.com/production"
-      Rails.application.config.action_dispatch.default_headers['Content-Security-Policy-Report-Only'] = GovukContentSecurityPolicy.build + " " + reporting
+      Rails.application.config.action_dispatch.default_headers['Content-Security-Policy-Report-Only'] = self.build + " " + reporting
     else
-      Rails.application.config.action_dispatch.default_headers['Content-Security-Policy'] = GovukContentSecurityPolicy.build
+      Rails.application.config.action_dispatch.default_headers['Content-Security-Policy'] = self.build
     end
   end
 end
