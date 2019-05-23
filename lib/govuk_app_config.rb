@@ -1,5 +1,4 @@
 require "govuk_app_config/version"
-require "govuk_app_config/govuk_content_security_policy"
 require "govuk_app_config/govuk_statsd"
 require "govuk_app_config/govuk_error"
 require "govuk_app_config/govuk_logging"
@@ -9,4 +8,8 @@ require "govuk_app_config/govuk_healthcheck"
 require "govuk_app_config/govuk_unicorn"
 require "govuk_app_config/govuk_xray"
 require "govuk_app_config/configure"
-require "govuk_app_config/railtie" if defined?(Rails)
+
+if defined?(Rails)
+  require "govuk_app_config/railtie"
+  require "govuk_app_config/govuk_content_security_policy"
+end
