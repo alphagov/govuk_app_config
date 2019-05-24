@@ -1,3 +1,8 @@
+# Unreleased
+
+* Use Rails DSL to configure content security policy, allowing apps to modify
+  the policy and use nonce features.
+
 # 1.17.0
 
 * Tweak our CSP to work with 'dev.gov.uk'
