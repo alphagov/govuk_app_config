@@ -21,7 +21,7 @@ module GovukXRay
     XRay.recorder.configure(
       name: name,
       patch: patch,
-      context_missing: 'IGNORE_ERROR',
+      context_missing: 'LOG_ERROR',
       sampling_rules: {
         version: 1,
         default: {

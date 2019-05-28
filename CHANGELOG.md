@@ -1,3 +1,7 @@
+# 1.16.3
+
+* Revert PR #89 - it relies on an unreleased feature of aws-xray-sdk
+
 # 1.16.2
 
 * Don't log Context Missing Errors (`ERROR -- : can not find the current context.`)
