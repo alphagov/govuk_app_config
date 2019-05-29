@@ -1,4 +1,4 @@
-# Unreleased
+# 1.17.0
 
 * Tweak our CSP to work with 'dev.gov.uk'
 
