@@ -1,4 +1,4 @@
-# Unreleased
+# 1.18.0
 
 * Use Rails DSL to configure content security policy, allowing apps to modify
   the policy and use nonce features.
