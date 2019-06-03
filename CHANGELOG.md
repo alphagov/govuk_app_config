@@ -1,3 +1,7 @@
+# 1.18.1
+
+* Fix incorrect report_uri= method usage in content security policy
+
 # 1.18.0
 
 * Use Rails DSL to configure content security policy, allowing apps to modify
