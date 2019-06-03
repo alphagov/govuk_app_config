@@ -72,7 +72,7 @@ module GovukContentSecurityPolicy
     policy.frame_src :self, *GOVUK_DOMAINS, "www.youtube.com" # Allow youtube embeds
 
     # AWS Lambda function that filters out junk reports.
-    policy.report_uri = "https://jhpno0hk6b.execute-api.eu-west-2.amazonaws.com/production" if Rails.env.production?
+    policy.report_uri "https://jhpno0hk6b.execute-api.eu-west-2.amazonaws.com/production" if Rails.env.production?
   end
 
   def self.configure
