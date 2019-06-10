@@ -1,3 +1,8 @@
+# Unreleased
+
+* Use `GOVUK_CSP_REPORT_ONLY` and `GOVUK_CSP_REPORT_URI` to configure
+  content security policy.
+
 # 1.18.1
 
 * Fix incorrect report_uri= method usage in content security policy
