@@ -38,6 +38,7 @@ module GovukContentSecurityPolicy
                       # Allow YouTube Embeds (Govspeak turns YouTube links into embeds)
                       "*.ytimg.com",
                       "www.youtube.com",
+                      "www.youtube-nocookie.com",
                       # Allow all inline scripts until we can conclusively
                       # document all the inline scripts we use,
                       # and there's a better way to filter out junk reports
@@ -69,7 +70,7 @@ module GovukContentSecurityPolicy
     policy.object_src :none
 
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src
-    policy.frame_src :self, *GOVUK_DOMAINS, "www.youtube.com" # Allow youtube embeds
+    policy.frame_src :self, *GOVUK_DOMAINS, "www.youtube.com", "www.youtube-nocookie.com" # Allow youtube embeds
 
     policy.report_uri ENV["GOVUK_CSP_REPORT_URI"] if ENV.include?("GOVUK_CSP_REPORT_URI")
   end
