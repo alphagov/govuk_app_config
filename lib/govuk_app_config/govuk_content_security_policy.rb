@@ -10,7 +10,8 @@ module GovukContentSecurityPolicy
 
   GOVUK_DOMAINS = [
     '*.publishing.service.gov.uk',
-    "*.#{ENV['GOVUK_APP_DOMAIN_EXTERNAL'] || ENV['GOVUK_APP_DOMAIN'] || 'dev.gov.uk'}"
+    "*.#{ENV['GOVUK_APP_DOMAIN_EXTERNAL'] || ENV['GOVUK_APP_DOMAIN'] || 'dev.gov.uk'}",
+    "*.dev.gov.uk"
   ].uniq.freeze
 
   GOOGLE_ANALYTICS_DOMAINS = %w(www.google-analytics.com

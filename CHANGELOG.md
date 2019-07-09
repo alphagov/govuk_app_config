@@ -1,3 +1,5 @@
+* Fix CSP in development
+
 # 1.19.0
 
 * Use `GOVUK_CSP_REPORT_ONLY` and `GOVUK_CSP_REPORT_URI` to configure
