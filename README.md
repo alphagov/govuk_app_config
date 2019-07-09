@@ -119,8 +119,8 @@ logs to `STDOUT` and unstructed logs to `STDERR`.
 ## Content Security Policy generation
 
 For frontend apps, configuration can be added to generate and serve a
-content security policy header. The policy is report only when the Rails
-environment is set to "production", and enforced otherwise.
+content security policy header. The policy is report only when the
+environment variable `GOVUK_CSP_REPORT_ONLY` is set, and enforced otherwise.
 
 To enable this feature, create a file at `config/initializers/csp.rb` in the
 app with the following content:
