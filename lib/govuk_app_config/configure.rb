@@ -1,7 +1,3 @@
-if defined?(Airbrake)
-  raise "This gem isn't compatible with Airbrake. Please remove it from the Gemfile."
-end
-
 GovukError.configure do |config|
   # We're misusing the `should_capture` block here to hook into raven until
   # there's a better way: https://github.com/getsentry/raven-ruby/pull/750
