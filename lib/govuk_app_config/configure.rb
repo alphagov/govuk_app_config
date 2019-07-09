@@ -1,19 +1,7 @@
 GovukError.configure do |config|
-  # We're misusing the `should_capture` block here to hook into raven until
-  # there's a better way: https://github.com/getsentry/raven-ruby/pull/750
-  config.should_capture = Proc.new { |e|
+  config.before_send = Proc.new { |e|
     GovukStatsd.increment("errors_occurred")
-
-    # For backwards compatibility
-    GovukStatsd.increment("errbit.errors_occurred")
-
-    exception_class = e.respond_to?(:original_exception) ? e.original_exception.class : e.class
-    if exception_class.ancestors.any? { |c| c.name =~ /^GdsApi::(HTTPIntermittent|TimedOutException)/ }
-      GovukStatsd.increment("gds_api_adapters.errors.#{e.class.name.demodulize.underscore}")
-      false
-    else
-      true
-    end
+    GovukStatsd.increment("error_types.#{e.class.name.demodulize.underscore}")
   }
 
   config.silence_ready = !Rails.env.production? if defined?(Rails)
@@ -30,9 +18,16 @@ GovukError.configure do |config|
     'ActiveJob::DeserializationError',
     'ActiveRecord::RecordNotFound',
     'CGI::Session::CookieStore::TamperedWithCookie',
+    'GdsApi::HTTPIntermittent',
+    'GdsApi::TimedOutException',
     'Mongoid::Errors::DocumentNotFound',
     'Sinatra::NotFound',
   ]
+
+  # This will exclude exceptions that are triggered by one of the ignored
+  # exceptions. For example, when any exception occurs in a template,
+  # Rails will raise a ActionView::Template::Error, instead of the original error.
+  config.inspect_exception_causes_for_exclusion = true
 
   config.transport_failure_callback = Proc.new {
     GovukStatsd.increment("error_reports_failed")
