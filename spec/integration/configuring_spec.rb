@@ -6,7 +6,7 @@ RSpec.describe 'Requiring govuk_app_config' do
       require 'govuk_app_config'
 
       expect(Raven.configuration.current_environment).to eql('integration-or-somesuch')
-      expect { Raven.configuration.should_capture.call('foo') }.not_to raise_error
+      expect { Raven.configuration.before_send.call('foo') }.not_to raise_error
       expect { Raven.configuration.transport_failure_callback.call('foo') }.not_to raise_error
     end
   end
