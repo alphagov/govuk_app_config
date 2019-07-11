@@ -1,4 +1,9 @@
+# 1.20.0
+
 * Fix CSP in development
+* Add `youtube-nocookie.com` to consent security policy
+* Update dependencies
+* Update error reporting code
 
 # 1.19.0
 
