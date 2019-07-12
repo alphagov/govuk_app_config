@@ -1,3 +1,5 @@
+* Fix regression in error reporting code which caused an error.
+
 # 1.20.0
 
 * Fix CSP in development
