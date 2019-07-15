@@ -1,4 +1,5 @@
 require 'logstasher'
+require 'action_controller'
 
 module GovukLogging
   def self.configure
