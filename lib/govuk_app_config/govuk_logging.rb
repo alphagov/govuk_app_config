@@ -1,6 +1,19 @@
-require 'logstasher'
+require "active_support"
+require "logstash-event"
+require "logstasher"
 
 module GovukLogging
+  class JsonFormatter < ActiveSupport::Logger::SimpleFormatter
+    def call(severity, timestamp, _progname, message)
+      LogStash::Event.new({
+        "@timestamp": timestamp,
+        "@message": String === message ? message : message.inspect,
+        level: severity,
+        tags: %w[log], # For consistency with LogStasher.log
+      }).to_json + "\n"
+    end
+  end
+
   def self.configure
     # Rails applications have 2 outputs types:
     #
@@ -19,8 +32,10 @@ module GovukLogging
     $real_stdout = $stdout.clone
     $stdout.reopen($stderr)
 
-    # Send Rails' logs to STDERR because they're not JSON formatted.
-    Rails.logger = ActiveSupport::TaggedLogging.new(Logger.new($stderr, level: Rails.logger.level))
+    # Use JSON formatted logs for `Rails.logger` calls
+    logger = ActiveSupport::Logger.new($real_stdout, level: Rails.logger.level)
+    logger.formatter = JsonFormatter.new
+    Rails.logger = ActiveSupport::TaggedLogging.new(logger)
 
     # Custom that will be added to the Rails request logs
     LogStasher.add_custom_fields do |fields|
