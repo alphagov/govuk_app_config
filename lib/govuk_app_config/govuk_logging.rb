@@ -1,4 +1,5 @@
 require "active_support"
+require "action_controller"
 require "logstash-event"
 require "logstasher"
 
