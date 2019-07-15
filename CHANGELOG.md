@@ -1,3 +1,7 @@
+# Unreleased
+
+* Send Rails.logger calls to stdout
+
 # 1.20.1
 
 * Fix regression in error reporting code which caused an error.
