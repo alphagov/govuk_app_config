@@ -2,20 +2,16 @@ require 'logstasher'
 
 module GovukLogging
   def self.configure
-    # Rails applications have 2 outputs types:
+    # GOV.UK Rails applications are expected to output JSON to stdout which is
+    # then indexed in a Kibana instance. These log outputs are created by the
+    # logstasher gem.
     #
-    # 1) Structured logging statements like the ones we create with
-    # `Rails.logger.info` and Rails request logging, which we do with the logstasher
-    # gem. These logs are output in JSON and can be read easily by our logging
-    # stack.
+    # Rails applications will typically write other things to stdout such as
+    # `Rails.logger` calls or 'puts' statements. However these are not in a
+    # JSON format which causes problems for the log file parsers.
     #
-    # 2) The second are logs that are outputted when an exception occurs or `puts`
-    # is used directly. This is unstructured text. Often this logging is sent to
-    # STDOUT directly.
-    #
-    # We want to differentiate between the two types. To do this, we direct all log
-    # statements that would _normally_ go to STDOUT to STDERR. This frees up the "real
-    # stdout" for use by our loggers.
+    # To resolve this we've directed stdout to stderr, to cover any Rails
+    # writing. This frees up the normal stdout for the logstasher logs.
     $real_stdout = $stdout.clone
     $stdout.reopen($stderr)
 
