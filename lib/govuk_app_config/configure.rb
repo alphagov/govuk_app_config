@@ -19,7 +19,7 @@ GovukError.configure do |config|
     'ActiveJob::DeserializationError',
     'ActiveRecord::RecordNotFound',
     'CGI::Session::CookieStore::TamperedWithCookie',
-    'GdsApi::HTTPIntermittent',
+    'GdsApi::HTTPIntermittentServerError',
     'GdsApi::TimedOutException',
     'Mongoid::Errors::DocumentNotFound',
     'Sinatra::NotFound',

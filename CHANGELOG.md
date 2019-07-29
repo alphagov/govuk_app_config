@@ -1,3 +1,8 @@
+# Unreleased
+
+* Fix GdsApi::HTTPIntermittentServer errors no longer being filtered from
+  exceptions sent to Sentry.
+
 # 1.20.1
 
 * Fix regression in error reporting code which caused an error.
