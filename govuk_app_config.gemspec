@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "aws-xray-sdk", "~> 0.10.0"
   spec.add_dependency "logstasher", ">= 1.2.2", "< 1.4.0"
-  spec.add_dependency "sentry-raven", ">= 2.7.1", "< 2.10.0"
+  spec.add_dependency "sentry-raven", ">= 2.7.1", "< 2.11.0"
   spec.add_dependency "statsd-ruby", "~> 1.4.0"
   spec.add_dependency "unicorn", ">= 5.4", "< 5.6"
 
