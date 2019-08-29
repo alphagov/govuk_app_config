@@ -22,7 +22,6 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = %w[lib]
 
-  spec.add_dependency "aws-xray-sdk", "~> 0.10.0"
   spec.add_dependency "logstasher", ">= 1.2.2", "< 1.4.0"
   spec.add_dependency "sentry-raven", ">= 2.7.1", "< 2.12.0"
   spec.add_dependency "statsd-ruby", "~> 1.4.0"

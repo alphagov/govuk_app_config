@@ -1,3 +1,3 @@
 module GovukAppConfig
-  VERSION = "1.20.2"
+  VERSION = "2.0.0"
 end
