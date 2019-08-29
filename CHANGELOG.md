@@ -1,3 +1,5 @@
+# 2.0.0
+
 * Remove support for AWS X-Ray.
 
 # 1.20.2
