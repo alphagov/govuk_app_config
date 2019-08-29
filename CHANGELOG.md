@@ -1,3 +1,5 @@
+* Remove support for AWS X-Ray.
+
 # 1.20.2
 
 * Fix GdsApi::HTTPIntermittentServer errors no longer being filtered from
