@@ -1,3 +1,8 @@
+# 2.0.1
+
+* Reorder requires to resolve: "NameError: uninitialized constant
+  GovukAppConfig::Railtie::GovukLogging"
+
 # 2.0.0
 
 * Remove support for AWS X-Ray.
