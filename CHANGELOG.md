@@ -1,3 +1,7 @@
+# 2.0.2
+
+* Add www.gov.uk to CSP list (https://github.com/alphagov/govuk_app_config/pull/129)
+
 # 2.0.1
 
 * Reorder requires to resolve: "NameError: uninitialized constant
