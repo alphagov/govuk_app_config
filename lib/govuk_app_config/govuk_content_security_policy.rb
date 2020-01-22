@@ -41,6 +41,8 @@ module GovukContentSecurityPolicy
                       "*.ytimg.com",
                       "www.youtube.com",
                       "www.youtube-nocookie.com",
+                      # Allow JSONP call to Nuance - HMRC web chat provider
+                      "hmrc-uk.digital.nuance.com",
                       # Allow all inline scripts until we can conclusively
                       # document all the inline scripts we use,
                       # and there's a better way to filter out junk reports
