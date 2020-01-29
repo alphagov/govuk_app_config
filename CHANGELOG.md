@@ -1,6 +1,8 @@
 # 2.0.2
 
 * Add www.gov.uk to CSP list (https://github.com/alphagov/govuk_app_config/pull/129)
+* Add hmrc-uk.digital.nuance.com (Nuance/HMRC Webchat provider) to CSP list (https://github.com/alphagov/govuk_app_config/pull/130)
+
 
 # 2.0.1
 
