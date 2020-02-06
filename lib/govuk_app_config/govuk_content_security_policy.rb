@@ -65,6 +65,10 @@ module GovukContentSecurityPolicy
                        *GOOGLE_ANALYTICS_DOMAINS,
                        # Allow connecting to web chat from HMRC contact pages
                        "www.tax.service.gov.uk",
+                       # Allow JSON call to Nuance - HMRC web chat provider
+                       "hmrc-uk.digital.nuance.com",
+                       # Allow JSON call to klick2contact - HMPO web chat provider
+                       "gov.klick2contact.com",
                        # Allow connecting to Verify to check whether the user is logged in
                        "www.signin.service.gov.uk"
 
