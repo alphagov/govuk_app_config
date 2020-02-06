@@ -1,7 +1,11 @@
+# 2.0.3
+
+* Add hmrc-uk.digital.nuance.com (Nuance/HMRC Webchat provider) and gov.klick2contact.com (HMPO web chat provider) to connect-src CSP list (https://github.com/alphagov/govuk_app_config/pull/133)
+
 # 2.0.2
 
 * Add www.gov.uk to CSP list (https://github.com/alphagov/govuk_app_config/pull/129)
-* Add hmrc-uk.digital.nuance.com (Nuance/HMRC Webchat provider) to CSP list (https://github.com/alphagov/govuk_app_config/pull/130)
+* Add hmrc-uk.digital.nuance.com (Nuance/HMRC Webchat provider) to script-src CSP list (https://github.com/alphagov/govuk_app_config/pull/130)
 
 
 # 2.0.1
