@@ -22,7 +22,7 @@ class CustomCheck
 
   # Optional
   def message
-    "This is an optional custom message"
+    "This is an optional custom message that will show up in the alert in Icinga"
   end
 
   # Optional
