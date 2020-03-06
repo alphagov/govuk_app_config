@@ -21,6 +21,7 @@ GovukError.configure do |config|
     'CGI::Session::CookieStore::TamperedWithCookie',
     'GdsApi::HTTPIntermittentServerError',
     'GdsApi::TimedOutException',
+    'Mime::Type::InvalidMimeType',
     'Mongoid::Errors::DocumentNotFound',
     'Sinatra::NotFound',
   ]
