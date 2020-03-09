@@ -8,16 +8,9 @@ GovukError.configure do |config|
   config.silence_ready = !Rails.env.production? if defined?(Rails)
 
   config.excluded_exceptions = [
-    'AbstractController::ActionNotFound',
-    'ActionController::BadRequest',
-    'ActionController::InvalidAuthenticityToken',
-    'ActionController::ParameterMissing',
-    'ActionController::RoutingError',
     'ActionController::UnknownAction',
-    'ActionController::UnknownHttpMethod',
     'ActionDispatch::RemoteIp::IpSpoofAttackError',
     'ActiveJob::DeserializationError',
-    'ActiveRecord::RecordNotFound',
     'CGI::Session::CookieStore::TamperedWithCookie',
     'GdsApi::HTTPIntermittentServerError',
     'GdsApi::TimedOutException',
