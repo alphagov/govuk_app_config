@@ -1,3 +1,7 @@
+# Unreleased
+
+* Stop exceptions rescued by rails from appearing in Sentry (https://github.com/alphagov/govuk_app_config/pull/138)
+
 # 2.0.3
 
 * Add hmrc-uk.digital.nuance.com (Nuance/HMRC Webchat provider) and gov.klick2contact.com (HMPO web chat provider) to connect-src CSP list (https://github.com/alphagov/govuk_app_config/pull/133)
