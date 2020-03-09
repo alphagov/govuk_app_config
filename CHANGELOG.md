@@ -1,4 +1,4 @@
-# Unreleased
+# 2.1.0
 
 * Stop exceptions rescued by rails from appearing in Sentry (https://github.com/alphagov/govuk_app_config/pull/138)
 
