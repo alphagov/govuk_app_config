@@ -8,9 +8,16 @@ GovukError.configure do |config|
   config.silence_ready = !Rails.env.production? if defined?(Rails)
 
   config.excluded_exceptions = [
+    'AbstractController::ActionNotFound',
+    'ActionController::BadRequest',
+    'ActionController::InvalidAuthenticityToken',
+    'ActionController::ParameterMissing',
+    'ActionController::RoutingError',
     'ActionController::UnknownAction',
+    'ActionController::UnknownHttpMethod',
     'ActionDispatch::RemoteIp::IpSpoofAttackError',
     'ActiveJob::DeserializationError',
+    'ActiveRecord::RecordNotFound',
     'CGI::Session::CookieStore::TamperedWithCookie',
     'GdsApi::HTTPIntermittentServerError',
     'GdsApi::TimedOutException',
@@ -26,8 +33,4 @@ GovukError.configure do |config|
   config.transport_failure_callback = Proc.new {
     GovukStatsd.increment("error_reports_failed")
   }
-
-  # This stops exceptions rescued by rails from appearing in Sentry.
-  # See https://www.rubydoc.info/gems/sentry-raven/1.2.2/Raven%2FConfiguration:rails_report_rescued_exceptions
-  config.rails_report_rescued_exceptions = false
 end
