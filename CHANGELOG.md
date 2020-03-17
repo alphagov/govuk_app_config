@@ -1,3 +1,7 @@
+# Unreleased
+
+* Revert using Sentry option of rails_report_rescued_exceptions (https://github.com/alphagov/govuk_app_config/pull/140)
+
 # 2.1.0
 
 * Stop exceptions rescued by rails from appearing in Sentry (https://github.com/alphagov/govuk_app_config/pull/138)
