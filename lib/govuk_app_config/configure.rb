@@ -8,14 +8,29 @@ GovukError.configure do |config|
   config.silence_ready = !Rails.env.production? if defined?(Rails)
 
   config.excluded_exceptions = [
-    'ActionController::UnknownAction',
-    'ActionDispatch::RemoteIp::IpSpoofAttackError',
-    'ActiveJob::DeserializationError',
-    'CGI::Session::CookieStore::TamperedWithCookie',
-    'GdsApi::HTTPIntermittentServerError',
-    'GdsApi::TimedOutException',
-    'Mongoid::Errors::DocumentNotFound',
-    'Sinatra::NotFound',
+    # default Rails rescue responses
+    "ActionController::RoutingError",
+    "AbstractController::ActionNotFound",
+    "ActionController::MethodNotAllowed",
+    "ActionController::UnknownHttpMethod",
+    "ActionController::NotImplemented",
+    "ActionController::UnknownFormat",
+    "Mime::Type::InvalidMimeType",
+    "ActionController::MissingExactTemplate",
+    "ActionController::InvalidAuthenticityToken",
+    "ActionController::InvalidCrossOriginRequest",
+    "ActionDispatch::Http::Parameters::ParseError",
+    "ActionController::BadRequest",
+    "ActionController::ParameterMissing",
+    "Rack::QueryParser::ParameterTypeError",
+    "Rack::QueryParser::InvalidParameterError",
+    # additional items
+    "ActiveJob::DeserializationError",
+    "CGI::Session::CookieStore::TamperedWithCookie",
+    "GdsApi::HTTPIntermittentServerError",
+    "GdsApi::TimedOutException",
+    "Mongoid::Errors::DocumentNotFound",
+    "Sinatra::NotFound",
   ]
 
   # This will exclude exceptions that are triggered by one of the ignored
@@ -26,8 +41,4 @@ GovukError.configure do |config|
   config.transport_failure_callback = Proc.new {
     GovukStatsd.increment("error_reports_failed")
   }
-
-  # This stops exceptions rescued by rails from appearing in Sentry.
-  # See https://www.rubydoc.info/gems/sentry-raven/1.2.2/Raven%2FConfiguration:rails_report_rescued_exceptions
-  config.rails_report_rescued_exceptions = false
 end
