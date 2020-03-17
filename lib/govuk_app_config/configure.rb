@@ -8,21 +8,29 @@ GovukError.configure do |config|
   config.silence_ready = !Rails.env.production? if defined?(Rails)
 
   config.excluded_exceptions = [
-    'AbstractController::ActionNotFound',
-    'ActionController::BadRequest',
-    'ActionController::InvalidAuthenticityToken',
-    'ActionController::ParameterMissing',
-    'ActionController::RoutingError',
-    'ActionController::UnknownAction',
-    'ActionController::UnknownHttpMethod',
-    'ActionDispatch::RemoteIp::IpSpoofAttackError',
-    'ActiveJob::DeserializationError',
-    'ActiveRecord::RecordNotFound',
-    'CGI::Session::CookieStore::TamperedWithCookie',
-    'GdsApi::HTTPIntermittentServerError',
-    'GdsApi::TimedOutException',
-    'Mongoid::Errors::DocumentNotFound',
-    'Sinatra::NotFound',
+    # default Rails rescue responses
+    "ActionController::RoutingError",
+    "AbstractController::ActionNotFound",
+    "ActionController::MethodNotAllowed",
+    "ActionController::UnknownHttpMethod",
+    "ActionController::NotImplemented",
+    "ActionController::UnknownFormat",
+    "Mime::Type::InvalidMimeType",
+    "ActionController::MissingExactTemplate",
+    "ActionController::InvalidAuthenticityToken",
+    "ActionController::InvalidCrossOriginRequest",
+    "ActionDispatch::Http::Parameters::ParseError",
+    "ActionController::BadRequest",
+    "ActionController::ParameterMissing",
+    "Rack::QueryParser::ParameterTypeError",
+    "Rack::QueryParser::InvalidParameterError",
+    # additional items
+    "ActiveJob::DeserializationError",
+    "CGI::Session::CookieStore::TamperedWithCookie",
+    "GdsApi::HTTPIntermittentServerError",
+    "GdsApi::TimedOutException",
+    "Mongoid::Errors::DocumentNotFound",
+    "Sinatra::NotFound",
   ]
 
   # This will exclude exceptions that are triggered by one of the ignored
