@@ -4,7 +4,7 @@
 
 # 2.1.1
 
-* revert using sentry option of rails_report_rescued_exceptions (https://github.com/alphagov/govuk_app_config/pull/140)
+* Revert using sentry option of rails_report_rescued_exceptions (https://github.com/alphagov/govuk_app_config/pull/140)
 
 # 2.1.0
 
