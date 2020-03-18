@@ -8,7 +8,7 @@ GovukError.configure do |config|
   config.silence_ready = !Rails.env.production? if defined?(Rails)
 
   config.excluded_exceptions = [
-    # default Rails rescue responses
+    # Default ActionDispatch rescue responses
     "ActionController::RoutingError",
     "AbstractController::ActionNotFound",
     "ActionController::MethodNotAllowed",
@@ -24,7 +24,12 @@ GovukError.configure do |config|
     "ActionController::ParameterMissing",
     "Rack::QueryParser::ParameterTypeError",
     "Rack::QueryParser::InvalidParameterError",
-    # additional items
+    # Default ActiveRecord rescue responses
+    "ActiveRecord::RecordNotFound",
+    "ActiveRecord::StaleObjectError",
+    "ActiveRecord::RecordInvalid",
+    "ActiveRecord::RecordNotSaved",
+    # Additional items
     "ActiveJob::DeserializationError",
     "CGI::Session::CookieStore::TamperedWithCookie",
     "GdsApi::HTTPIntermittentServerError",
