@@ -1,4 +1,4 @@
-# Unreleased
+# 2.1.2
 
 * Add missing ActiveRecord rescue_responses (https://github.com/alphagov/govuk_app_config/pull/142)
 
