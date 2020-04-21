@@ -50,7 +50,7 @@ module GovukLogging
         "#{String === msg ? msg : msg.inspect}\n"
       }
     )
-    Rails.application.config.logstasher.supress_app_log = true
+    Rails.application.config.logstasher.suppress_app_log = true
 
     if defined?(GdsApi::Base)
       GdsApi::Base.default_options ||= {}
