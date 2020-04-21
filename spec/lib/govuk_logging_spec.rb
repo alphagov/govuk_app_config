@@ -36,5 +36,11 @@ RSpec.describe GovukLogging do
 
       expect(fake_stdout.read).to match(/test log entry/)
     end
+
+    it 'uses logstash-logger to convert logs to JSON' do
+      GovukLogging.configure
+      Rails.logger.info('foo')
+      expect("FIXME").to eq('{"message":"foo","@timestamp":"2014-05-22T09:37:19.204-07:00","@version":"1","severity":"INFO","host":"[hostname]"}')
+    end
   end
 end
