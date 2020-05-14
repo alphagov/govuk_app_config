@@ -53,5 +53,18 @@ RSpec.describe GovukLogging do
 
       expect($stderr.read).to match(/test default log entry/)
     end
+
+    it 'logs errors in middleware' do
+      allow(Rails.application).to receive(:call).and_raise(Exception.new("some error"))
+
+      GovukLogging.configure
+      middleware = ::ActionDispatch::DebugExceptions.new(Rails.application)
+      begin
+        middleware.call({})
+      rescue Exception
+        $stderr.rewind
+        expect($stderr.read).to match(/some error/)
+      end
+    end
   end
 end
