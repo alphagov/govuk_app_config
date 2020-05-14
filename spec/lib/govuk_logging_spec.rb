@@ -70,7 +70,15 @@ RSpec.describe GovukLogging do
         GovukLogging.configure
         get '/error'
         $stderr.rewind
-        expect($stderr.read).to match(/some error/)
+        lines = $stderr.read.split("\n")
+        expect(lines).to include(/default exception/)
+        error_log_line = lines.find{|log| log.match?(/default exception/) }
+        expect(error_log_line).not_to be_empty
+        expect(error_log_line).to start_with("{")
+        expect(error_log_line).to end_with("}")
+        expect(error_log_line).to match(/"exception_class"\s*:\s*"Exception"/)
+        expect(error_log_line).to match(/"exception_message"\s*:\s*"default exception"/)
+        expect(error_log_line).to match(/"stacktrace"\s*:\s*\["/)
       end
     end
   end

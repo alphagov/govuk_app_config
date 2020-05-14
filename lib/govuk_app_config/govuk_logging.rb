@@ -1,5 +1,6 @@
 require 'logstasher'
 require 'action_controller'
+require_relative 'rails_ext/action_dispatch/debug_exceptions'
 
 module GovukLogging
   def self.configure
@@ -61,5 +62,7 @@ module GovukLogging
       GdsApi::Base.default_options[:logger] =
         Rails.application.config.logstasher.logger
     end
+
+    RailsExt::ActionDispatch.monkey_patch_log_error if RailsExt::ActionDispatch.should_monkey_patch_log_error
   end
 end
