@@ -1,9 +1,15 @@
 require 'spec_helper'
 require 'rails'
 require 'govuk_app_config/govuk_logging'
+require 'rack/test'
 
 RSpec.describe GovukLogging do
-  class DummyLoggingRailsApp < Rails::Application; end
+  class DummyLoggingRailsApp < Rails::Application
+    config.hosts.clear
+    routes.draw do
+      get '/error', to: proc { |env| raise Exception, "default exception" }
+    end
+  end
 
   old_stderr = nil
 
@@ -54,14 +60,15 @@ RSpec.describe GovukLogging do
       expect($stderr.read).to match(/test default log entry/)
     end
 
-    it 'logs errors in middleware' do
-      allow(Rails.application).to receive(:call).and_raise(Exception.new("some error"))
+    describe 'when making requests to the application' do
+      include Rack::Test::Methods
+      def app
+        Rails.application
+      end
 
-      GovukLogging.configure
-      middleware = ::ActionDispatch::DebugExceptions.new(Rails.application)
-      begin
-        middleware.call({})
-      rescue Exception
+      it 'logs errors thrown by the application' do
+        GovukLogging.configure
+        get '/error'
         $stderr.rewind
         expect($stderr.read).to match(/some error/)
       end
