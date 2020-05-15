@@ -63,6 +63,6 @@ module GovukLogging
         Rails.application.config.logstasher.logger
     end
 
-    RailsExt::ActionDispatch.monkey_patch_log_error if RailsExt::ActionDispatch.should_monkey_patch_log_error
+    RailsExt::ActionDispatch.monkey_patch_log_error if RailsExt::ActionDispatch.should_monkey_patch_log_error?
   end
 end

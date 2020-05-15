@@ -3,8 +3,8 @@ require "action_dispatch/middleware/debug_exceptions"
 module GovukLogging
   module RailsExt
     module ActionDispatch
-      def self.should_monkey_patch_log_error
-        empty_instance = ::ActionDispatch::DebugExceptions.new nil
+      def self.should_monkey_patch_log_error?(clazz = ::ActionDispatch::DebugExceptions)
+        empty_instance = clazz.new nil
         target_method = empty_instance.method :log_error
 
         expected_parameters = [%i[req request], %i[req wrapper]]
@@ -26,8 +26,8 @@ module GovukLogging
         false
       end
 
-      def self.monkey_patch_log_error
-        ::ActionDispatch::DebugExceptions.class_eval do
+      def self.monkey_patch_log_error(clazz = ::ActionDispatch::DebugExceptions)
+        clazz.class_eval do
           private
 
           def log_error(request, wrapper)
