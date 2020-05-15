@@ -1,3 +1,7 @@
+# 2.2.0
+
+* Monkey patch `ActionDispatch::DebugExceptions#log_error` so it logs errors on a single line (https://github.com/alphagov/govuk_app_config/pull/147)
+
 # 2.1.2
 
 * Add missing ActiveRecord rescue_responses (https://github.com/alphagov/govuk_app_config/pull/142)
