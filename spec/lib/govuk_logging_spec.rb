@@ -74,11 +74,13 @@ RSpec.describe GovukLogging do
         expect(lines).to include(/default exception/)
         error_log_line = lines.find{|log| log.match?(/default exception/) }
         expect(error_log_line).not_to be_empty
-        expect(error_log_line).to start_with("{")
-        expect(error_log_line).to end_with("}")
-        expect(error_log_line).to match(/"exception_class"\s*:\s*"Exception"/)
-        expect(error_log_line).to match(/"exception_message"\s*:\s*"default exception"/)
-        expect(error_log_line).to match(/"stacktrace"\s*:\s*\["/)
+        error_log_json = JSON.parse(error_log_line)
+        expect(error_log_json).to match(hash_including(
+          "exception_class" => "Exception",
+          "exception_message" => "default exception",
+        ))
+        expect(error_log_json).to have_key("stacktrace")
+        expect(error_log_json["stacktrace"]).to be_a(Array)
       end
     end
   end
