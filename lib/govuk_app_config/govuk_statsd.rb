@@ -1,4 +1,4 @@
-require "statsd"
+require "statsd-ruby-tcp"
 require "forwardable"
 
 module GovukStatsd
@@ -8,7 +8,7 @@ module GovukStatsd
 
   def self.client
     @client ||= begin
-      statsd_client = ::Statsd.new(ENV["GOVUK_STATSD_HOST"] || "localhost", 8125, ENV["GOVUK_STATSD_PROTOCOL"]&.to_sym || :udp)
+      statsd_client = ::StatsdTcp.new(ENV["GOVUK_STATSD_HOST"] || "localhost", 8125, ENV["GOVUK_STATSD_PROTOCOL"]&.to_sym || :udp)
       statsd_client.namespace = ENV["GOVUK_STATSD_PREFIX"].to_s
       statsd_client
     end
