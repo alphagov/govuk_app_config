@@ -16,7 +16,7 @@ RSpec.describe ::GovukLogging::RailsExt::ActionDispatch do
 
     it "should not monkey patch classes which have log_error with different params" do
       class WrongParametersTestClass
-        private
+      private
 
         def log_error(_different, _parameters); end
       end
@@ -25,7 +25,7 @@ RSpec.describe ::GovukLogging::RailsExt::ActionDispatch do
 
     it "should monkey patch classes which have log_error with the same params" do
       class RightParametersTestClass
-        private
+      private
 
         def log_error(request, wrapper); end
       end
