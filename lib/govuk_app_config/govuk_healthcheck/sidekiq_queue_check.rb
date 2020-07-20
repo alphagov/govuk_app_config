@@ -51,11 +51,11 @@ module GovukHealthcheck
       raise "This method must be overriden to be a hash of queue names and data."
     end
 
-    def critical_threshold(queue:)
+    def critical_threshold(queue:) # rubocop:disable Lint/UnusedMethodArgument
       raise "This method must be overriden to be the critical threshold."
     end
 
-    def warning_threshold(queue:)
+    def warning_threshold(queue:) # rubocop:disable Lint/UnusedMethodArgument
       raise "This method must be overriden to be the warning threshold."
     end
   end

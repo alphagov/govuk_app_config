@@ -77,11 +77,11 @@ RSpec.describe GovukHealthcheck::SidekiqQueueCheck do
 
     attr_reader :queues, :name
 
-    def warning_threshold(queue:)
+    def warning_threshold(queue:) # rubocop:disable Lint/UnusedMethodArgument
       @warning_threshold
     end
 
-    def critical_threshold(queue:)
+    def critical_threshold(queue:) # rubocop:disable Lint/UnusedMethodArgument
       @critical_threshold
     end
   end
