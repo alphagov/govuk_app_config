@@ -19,7 +19,6 @@ module GovukLogging
         end
 
         should_monkey_patch
-
       rescue StandardError => ex
         Rails.logger.warn "Failed to detect whether to monkey patch " +
           "::ActionDispatch::DebugExceptions#log_error - #{ex.inspect}"
