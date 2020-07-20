@@ -7,7 +7,7 @@ module GovukHealthcheck
     def status
       ::ActiveRecord::Base.connection
       OK
-    rescue StandardError => e
+    rescue StandardError
       CRITICAL
     end
   end

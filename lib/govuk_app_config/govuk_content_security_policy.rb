@@ -9,15 +9,15 @@ module GovukContentSecurityPolicy
   # - https://cspvalidator.org
 
   GOVUK_DOMAINS = [
-    '*.publishing.service.gov.uk',
+    "*.publishing.service.gov.uk",
     "*.#{ENV['GOVUK_APP_DOMAIN_EXTERNAL'] || ENV['GOVUK_APP_DOMAIN'] || 'dev.gov.uk'}",
     "www.gov.uk",
-    "*.dev.gov.uk"
+    "*.dev.gov.uk",
   ].uniq.freeze
 
-  GOOGLE_ANALYTICS_DOMAINS = %w(www.google-analytics.com
+  GOOGLE_ANALYTICS_DOMAINS = %w[www.google-analytics.com
                                 ssl.google-analytics.com
-                                stats.g.doubleclick.net).freeze
+                                stats.g.doubleclick.net].freeze
 
   def self.build_policy(policy)
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/default-src

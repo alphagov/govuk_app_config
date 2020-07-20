@@ -22,11 +22,11 @@ RSpec.describe GovukHealthcheck::SidekiqQueueLatencyCheck do
   it_behaves_like "a healthcheck"
 
   class TestQueueLatencyCheck < GovukHealthcheck::SidekiqQueueLatencyCheck
-    def warning_threshold(queue:)
+    def warning_threshold(queue:) # rubocop:disable Lint/UnusedMethodArgument
       10
     end
 
-    def critical_threshold(queue:)
+    def critical_threshold(queue:) # rubocop:disable Lint/UnusedMethodArgument
       20
     end
   end

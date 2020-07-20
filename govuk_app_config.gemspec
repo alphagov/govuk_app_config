@@ -1,5 +1,3 @@
-# coding: utf-8
-
 lib = File.expand_path("lib", __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "govuk_app_config/version"
@@ -34,5 +32,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "rspec", "~> 3.9.0"
   spec.add_development_dependency "rspec-its", "~> 1.3.0"
+  spec.add_development_dependency "rubocop-govuk"
   spec.add_development_dependency "webmock"
 end

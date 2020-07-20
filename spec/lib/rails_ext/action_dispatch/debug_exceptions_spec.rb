@@ -1,6 +1,6 @@
-require 'spec_helper'
-require 'rails'
-require 'govuk_app_config/rails_ext/action_dispatch/debug_exceptions'
+require "spec_helper"
+require "rails"
+require "govuk_app_config/rails_ext/action_dispatch/debug_exceptions"
 
 RSpec.describe ::GovukLogging::RailsExt::ActionDispatch do
   describe "#should_monkey_patch_log_error?" do
@@ -11,23 +11,25 @@ RSpec.describe ::GovukLogging::RailsExt::ActionDispatch do
 
     it "should not monkey patch classes which do not have log_error" do
       class NoMethodTestClass; end
-      expect(described_class.should_monkey_patch_log_error? NoMethodTestClass).to be(false)
+      expect(described_class.should_monkey_patch_log_error?(NoMethodTestClass)).to be(false)
     end
 
     it "should not monkey patch classes which have log_error with different params" do
       class WrongParametersTestClass
-        private
+      private
+
         def log_error(_different, _parameters); end
       end
-      expect(described_class.should_monkey_patch_log_error? WrongParametersTestClass).to be(false)
+      expect(described_class.should_monkey_patch_log_error?(WrongParametersTestClass)).to be(false)
     end
 
     it "should monkey patch classes which have log_error with the same params" do
       class RightParametersTestClass
-        private
+      private
+
         def log_error(request, wrapper); end
       end
-      expect(described_class.should_monkey_patch_log_error? RightParametersTestClass).to be(false)
+      expect(described_class.should_monkey_patch_log_error?(RightParametersTestClass)).to be(false)
     end
   end
 
@@ -40,9 +42,7 @@ RSpec.describe ::GovukLogging::RailsExt::ActionDispatch do
 
       expect {
         described_class.monkey_patch_log_error(FakeDebugExceptions)
-      }.to change {
-        instance.method(:log_error)
-      }
+      }.to(change { instance.method(:log_error) })
     end
   end
 end

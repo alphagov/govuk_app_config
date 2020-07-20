@@ -1,6 +1,6 @@
-require 'climate_control'
-require 'rspec/its'
-require 'webmock/rspec'
+require "climate_control"
+require "rspec/its"
+require "webmock/rspec"
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|

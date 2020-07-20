@@ -1,6 +1,6 @@
-require 'logstasher'
-require 'action_controller'
-require_relative 'rails_ext/action_dispatch/debug_exceptions'
+require "logstasher"
+require "action_controller"
+require_relative "rails_ext/action_dispatch/debug_exceptions"
 
 module GovukLogging
   def self.configure
@@ -14,8 +14,11 @@ module GovukLogging
     #
     # To resolve this we've directed stdout to stderr, to cover any Rails
     # writing. This frees up the normal stdout for the logstasher logs.
+
+    # rubocop:disable Style/GlobalVars
     $real_stdout = $stdout.clone
     $stdout.reopen($stderr)
+    # rubocop:enable Style/GlobalVars
 
     # Send Rails' logs to STDERR because they're not JSON formatted.
     Rails.logger = ActiveSupport::TaggedLogging.new(Logger.new($stderr, level: Rails.logger.level))
@@ -23,7 +26,7 @@ module GovukLogging
     # Custom that will be added to the Rails request logs
     LogStasher.add_custom_fields do |fields|
       # Mirrors Nginx request logging, e.g GET /path/here HTTP/1.1
-      fields[:request] = "#{request.request_method} #{request.fullpath} #{request.headers["SERVER_PROTOCOL"]}"
+      fields[:request] = "#{request.request_method} #{request.fullpath} #{request.headers['SERVER_PROTOCOL']}"
 
       # Pass request Id to logging
       fields[:govuk_request_id] = request.headers["GOVUK-Request-Id"]
@@ -45,11 +48,11 @@ module GovukLogging
     Rails.application.config.logstasher.job_enabled = false
 
     Rails.application.config.logstasher.logger = Logger.new(
-      $real_stdout,
+      $real_stdout, # rubocop:disable Style/GlobalVars
       level: Rails.logger.level,
       formatter: proc { |_severity, _datetime, _progname, msg|
-        "#{String === msg ? msg : msg.inspect}\n"
-      }
+        "#{msg.is_a?(String) ? msg : msg.inspect}\n"
+      },
     )
     Rails.application.config.logstasher.suppress_app_log = true
 

@@ -1,5 +1,5 @@
 GovukError.configure do |config|
-  config.before_send = Proc.new { |e|
+  config.before_send = proc { |e|
     GovukStatsd.increment("errors_occurred")
     GovukStatsd.increment("error_types.#{e.class.name.demodulize.underscore}")
     e
@@ -43,7 +43,7 @@ GovukError.configure do |config|
   # Rails will raise a ActionView::Template::Error, instead of the original error.
   config.inspect_exception_causes_for_exclusion = true
 
-  config.transport_failure_callback = Proc.new {
+  config.transport_failure_callback = proc {
     GovukStatsd.increment("error_reports_failed")
   }
 end

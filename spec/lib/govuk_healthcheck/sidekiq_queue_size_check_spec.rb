@@ -16,11 +16,11 @@ RSpec.describe GovukHealthcheck::SidekiqQueueSizeCheck do
   it_behaves_like "a healthcheck"
 
   class TestQueueSizeCheck < GovukHealthcheck::SidekiqQueueSizeCheck
-    def warning_threshold(queue:)
+    def warning_threshold(queue:) # rubocop:disable Lint/UnusedMethodArgument
       100
     end
 
-    def critical_threshold(queue:)
+    def critical_threshold(queue:) # rubocop:disable Lint/UnusedMethodArgument
       200
     end
   end
