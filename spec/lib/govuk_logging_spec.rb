@@ -72,7 +72,7 @@ RSpec.describe GovukLogging do
         $stderr.rewind
         lines = $stderr.read.split("\n")
         expect(lines).to include(/default exception/)
-        error_log_line = lines.find{ |log| log.match?(/default exception/) }
+        error_log_line = lines.find { |log| log.match?(/default exception/) }
         expect(error_log_line).not_to be_empty
         error_log_json = JSON.parse(error_log_line)
         expect(error_log_json).to match(hash_including(
