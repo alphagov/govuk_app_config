@@ -49,7 +49,7 @@ module GovukLogging
       level: Rails.logger.level,
       formatter: proc { |_severity, _datetime, _progname, msg|
         "#{String === msg ? msg : msg.inspect}\n"
-      }
+      },
     )
     Rails.application.config.logstasher.suppress_app_log = true
 

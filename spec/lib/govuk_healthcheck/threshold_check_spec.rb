@@ -12,7 +12,7 @@ RSpec.describe GovukHealthcheck::ThresholdCheck do
     its(:message) { is_expected.to match(/below the critical and warning thresholds/) }
     its(:details) do
       is_expected.to match(
-        hash_including(value: 0, thresholds: { warning: 10, critical: 20 })
+        hash_including(value: 0, thresholds: { warning: 10, critical: 20 }),
       )
     end
   end
@@ -26,7 +26,7 @@ RSpec.describe GovukHealthcheck::ThresholdCheck do
     its(:message) { is_expected.to match(/above the warning threshold/) }
     its(:details) do
       is_expected.to match(
-        hash_including(value: 11, thresholds: { warning: 10, critical: 20 })
+        hash_including(value: 11, thresholds: { warning: 10, critical: 20 }),
       )
     end
   end
@@ -40,7 +40,7 @@ RSpec.describe GovukHealthcheck::ThresholdCheck do
     its(:message) { is_expected.to match(/above the critical threshold/) }
     its(:details) do
       is_expected.to match(
-        hash_including(value: 21, thresholds: { warning: 10, critical: 20 })
+        hash_including(value: 21, thresholds: { warning: 10, critical: 20 }),
       )
     end
   end
