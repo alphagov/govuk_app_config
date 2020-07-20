@@ -3,7 +3,7 @@ require "govuk_app_config/govuk_healthcheck"
 require_relative "shared_interface"
 
 RSpec.describe GovukHealthcheck::ActiveRecord do
-  let(:active_record) { double(:active_record, connected?: true)}
+  let(:active_record) { double(:active_record, connected?: true) }
   before { stub_const("ActiveRecord::Base", active_record) }
 
   describe ".status" do

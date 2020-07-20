@@ -43,7 +43,7 @@ module GovukHealthcheck
     end
 
     def status?(status)
-      component_statuses.values.any? {|s| s[:status] == status }
+      component_statuses.values.any? { |s| s[:status] == status }
     end
 
     def build_component_status(check)
