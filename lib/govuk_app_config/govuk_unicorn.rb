@@ -11,6 +11,7 @@ module GovukUnicorn
 
     config.before_exec do |server|
       next unless ENV["GOVUK_APP_ROOT"]
+
       ENV["BUNDLE_GEMFILE"] = "#{ENV['GOVUK_APP_ROOT']}/Gemfile"
     end
 
