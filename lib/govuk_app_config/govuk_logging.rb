@@ -51,7 +51,7 @@ module GovukLogging
       $real_stdout, # rubocop:disable Style/GlobalVars
       level: Rails.logger.level,
       formatter: proc { |_severity, _datetime, _progname, msg|
-        "#{String === msg ? msg : msg.inspect}\n"
+        "#{msg.is_a?(String) ? msg : msg.inspect}\n"
       },
     )
     Rails.application.config.logstasher.suppress_app_log = true
