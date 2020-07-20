@@ -13,14 +13,14 @@ module GovukLogging
         should_monkey_patch = actual_parameters == expected_parameters
 
         unless should_monkey_patch
-          Rails.logger.warn "Refused to monkey patch ::ActionDispatch::DebugExceptions#log_error - " +
-            "signatures do not match. " +
+          Rails.logger.warn "Refused to monkey patch ::ActionDispatch::DebugExceptions#log_error - " \
+            "signatures do not match. " \
             "Expected #{expected_parameters}, but got #{actual_parameters}"
         end
 
         should_monkey_patch
       rescue StandardError => ex
-        Rails.logger.warn "Failed to detect whether to monkey patch " +
+        Rails.logger.warn "Failed to detect whether to monkey patch " \
           "::ActionDispatch::DebugExceptions#log_error - #{ex.inspect}"
         false
       end
