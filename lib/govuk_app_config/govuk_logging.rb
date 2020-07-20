@@ -14,8 +14,11 @@ module GovukLogging
     #
     # To resolve this we've directed stdout to stderr, to cover any Rails
     # writing. This frees up the normal stdout for the logstasher logs.
+
+    # rubocop:disable Style/GlobalVars
     $real_stdout = $stdout.clone
     $stdout.reopen($stderr)
+    # rubocop:enable Style/GlobalVars
 
     # Send Rails' logs to STDERR because they're not JSON formatted.
     Rails.logger = ActiveSupport::TaggedLogging.new(Logger.new($stderr, level: Rails.logger.level))
@@ -45,7 +48,7 @@ module GovukLogging
     Rails.application.config.logstasher.job_enabled = false
 
     Rails.application.config.logstasher.logger = Logger.new(
-      $real_stdout,
+      $real_stdout, # rubocop:disable Style/GlobalVars
       level: Rails.logger.level,
       formatter: proc { |_severity, _datetime, _progname, msg|
         "#{String === msg ? msg : msg.inspect}\n"
