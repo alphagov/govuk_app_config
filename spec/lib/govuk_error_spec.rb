@@ -16,7 +16,7 @@ RSpec.describe GovukError do
 
       GovukError.notify(StandardError.new, parameters: "Something")
 
-      expect(Raven).to have_received(:capture_exception).with(StandardError.new, extra: { parameters: "Something"})
+      expect(Raven).to have_received(:capture_exception).with(StandardError.new, extra: { parameters: "Something" })
     end
   end
 end

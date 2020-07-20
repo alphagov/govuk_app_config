@@ -13,7 +13,7 @@ module GovukHealthcheck
     proc do
       [
         200,
-        {"Content-Type" => "application/json"},
+        { "Content-Type" => "application/json" },
         [JSON.dump(healthcheck(checks))],
       ]
     end
