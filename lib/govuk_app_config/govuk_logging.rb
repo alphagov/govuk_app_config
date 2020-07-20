@@ -1,6 +1,6 @@
-require 'logstasher'
-require 'action_controller'
-require_relative 'rails_ext/action_dispatch/debug_exceptions'
+require "logstasher"
+require "action_controller"
+require_relative "rails_ext/action_dispatch/debug_exceptions"
 
 module GovukLogging
   def self.configure

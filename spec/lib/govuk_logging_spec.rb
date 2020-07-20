@@ -1,13 +1,13 @@
-require 'spec_helper'
-require 'rails'
-require 'govuk_app_config/govuk_logging'
-require 'rack/test'
+require "spec_helper"
+require "rails"
+require "govuk_app_config/govuk_logging"
+require "rack/test"
 
 RSpec.describe GovukLogging do
   class DummyLoggingRailsApp < Rails::Application
     config.hosts.clear
     routes.draw do
-      get '/error', to: proc { |env| raise Exception, "default exception" }
+      get "/error", to: proc { |env| raise Exception, "default exception" }
     end
   end
 
@@ -28,47 +28,47 @@ RSpec.describe GovukLogging do
     $stderr = old_stderr
   end
 
-  describe '.configure' do
-    it 'enables logstasher' do
+  describe ".configure" do
+    it "enables logstasher" do
       Rails.application.config.logstasher.enabled = false
       expect { GovukLogging.configure }
         .to change { Rails.application.config.logstasher.enabled }
         .to(true)
     end
 
-    it 'initialises a logstasher logger using the rails logger level' do
+    it "initialises a logstasher logger using the rails logger level" do
       GovukLogging.configure
       expect(Rails.application.config.logstasher.logger.level)
         .to eq(info_log_level)
     end
 
-    it 'can write to logstasher log' do
+    it "can write to logstasher log" do
       GovukLogging.configure
       logger = Rails.application.config.logstasher.logger
-      logger.info('test log entry')
+      logger.info("test log entry")
       fake_stdout.rewind
 
       expect(fake_stdout.read).to match(/test log entry/)
     end
 
-    it 'can write to default rails logger' do
+    it "can write to default rails logger" do
       GovukLogging.configure
       logger = Rails.logger
-      logger.info('test default log entry')
+      logger.info("test default log entry")
       $stderr.rewind
 
       expect($stderr.read).to match(/test default log entry/)
     end
 
-    describe 'when making requests to the application' do
+    describe "when making requests to the application" do
       include Rack::Test::Methods
       def app
         Rails.application
       end
 
-      it 'logs errors thrown by the application' do
+      it "logs errors thrown by the application" do
         GovukLogging.configure
-        get '/error'
+        get "/error"
         $stderr.rewind
         lines = $stderr.read.split("\n")
         expect(lines).to include(/default exception/)

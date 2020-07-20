@@ -1,6 +1,6 @@
-require 'spec_helper'
-require 'rails'
-require 'govuk_app_config/rails_ext/action_dispatch/debug_exceptions'
+require "spec_helper"
+require "rails"
+require "govuk_app_config/rails_ext/action_dispatch/debug_exceptions"
 
 RSpec.describe ::GovukLogging::RailsExt::ActionDispatch do
   describe "#should_monkey_patch_log_error?" do
