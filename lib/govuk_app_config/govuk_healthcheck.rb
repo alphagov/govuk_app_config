@@ -14,7 +14,7 @@ module GovukHealthcheck
       [
         200,
         {"Content-Type" => "application/json"},
-        [JSON.dump(healthcheck(checks))]
+        [JSON.dump(healthcheck(checks))],
       ]
     end
   end
