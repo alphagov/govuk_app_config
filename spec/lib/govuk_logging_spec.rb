@@ -7,7 +7,7 @@ RSpec.describe GovukLogging do
   class DummyLoggingRailsApp < Rails::Application
     config.hosts.clear
     routes.draw do
-      get "/error", to: proc { |env| raise Exception, "default exception" }
+      get "/error", to: proc { |_env| raise Exception, "default exception" }
     end
   end
 

@@ -9,7 +9,7 @@ module GovukUnicorn
       config.stderr_path "#{ENV['GOVUK_APP_LOGROOT']}/app.err.log"
     end
 
-    config.before_exec do |server|
+    config.before_exec do |_server|
       next unless ENV["GOVUK_APP_ROOT"]
 
       ENV["BUNDLE_GEMFILE"] = "#{ENV['GOVUK_APP_ROOT']}/Gemfile"
