@@ -15,9 +15,9 @@ module GovukContentSecurityPolicy
     "*.dev.gov.uk",
   ].uniq.freeze
 
-  GOOGLE_ANALYTICS_DOMAINS = %w(www.google-analytics.com
+  GOOGLE_ANALYTICS_DOMAINS = %w[www.google-analytics.com
                                 ssl.google-analytics.com
-                                stats.g.doubleclick.net).freeze
+                                stats.g.doubleclick.net].freeze
 
   def self.build_policy(policy)
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/default-src
