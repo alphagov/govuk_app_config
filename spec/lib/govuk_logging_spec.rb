@@ -76,8 +76,8 @@ RSpec.describe GovukLogging do
         expect(error_log_line).not_to be_empty
         error_log_json = JSON.parse(error_log_line)
         expect(error_log_json).to match(hash_including(
-          "exception_class" => "Exception",
-          "exception_message" => "default exception",
+                                          "exception_class" => "Exception",
+                                          "exception_message" => "default exception",
         ))
         expect(error_log_json).to have_key("stacktrace")
         expect(error_log_json["stacktrace"]).to be_a(Array)
