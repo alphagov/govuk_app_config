@@ -1,4 +1,6 @@
-* Fix linting issues
+# 2.2.1
+
+* Fix linting issues (https://github.com/alphagov/govuk_app_config/pull/149)
 
 # 2.2.0
 
