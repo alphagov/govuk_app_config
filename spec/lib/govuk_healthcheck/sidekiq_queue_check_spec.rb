@@ -13,7 +13,7 @@ RSpec.describe GovukHealthcheck::SidekiqQueueCheck do
     its(:details) do
       is_expected.to match(
         queues: {
-          queue: hash_including(value: 0, thresholds: { warning: 10, critical: 20 })
+          queue: hash_including(value: 0, thresholds: { warning: 10, critical: 20 }),
         },
       )
     end
@@ -29,7 +29,7 @@ RSpec.describe GovukHealthcheck::SidekiqQueueCheck do
     its(:details) do
       is_expected.to match(
         queues: {
-          queue: hash_including(value: 11, thresholds: { warning: 10, critical: 20 })
+          queue: hash_including(value: 11, thresholds: { warning: 10, critical: 20 }),
         },
       )
     end
@@ -45,7 +45,7 @@ RSpec.describe GovukHealthcheck::SidekiqQueueCheck do
     its(:details) do
       is_expected.to match(
         queues: {
-          queue: hash_including(value: 21, thresholds: { warning: 10, critical: 20 })
+          queue: hash_including(value: 21, thresholds: { warning: 10, critical: 20 }),
         },
       )
     end
@@ -61,7 +61,7 @@ RSpec.describe GovukHealthcheck::SidekiqQueueCheck do
     its(:details) do
       is_expected.to match(
         queues: {
-          queue: hash_including(value: 0, thresholds: {})
+          queue: hash_including(value: 0, thresholds: {}),
         },
       )
     end
