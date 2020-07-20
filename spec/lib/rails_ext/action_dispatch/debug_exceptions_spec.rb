@@ -42,9 +42,7 @@ RSpec.describe ::GovukLogging::RailsExt::ActionDispatch do
 
       expect {
         described_class.monkey_patch_log_error(FakeDebugExceptions)
-      }.to change {
-        instance.method(:log_error)
-      }
+      }.to(change { instance.method(:log_error) })
     end
   end
 end
