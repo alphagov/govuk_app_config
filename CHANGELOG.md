@@ -1,5 +1,5 @@
-# Unreleased
-  
+# 2.2.2
+
 * Add www.googletagmanager.com and www.gstatic.com to Content Security Policy (https://github.com/alphagov/govuk_app_config/pull/153)
 
 # 2.2.1
