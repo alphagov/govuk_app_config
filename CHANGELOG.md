@@ -1,3 +1,7 @@
+# Unreleased
+  
+* Add www.googletagmanager.com and www.gstatic.com to Content Security Policy (https://github.com/alphagov/govuk_app_config/pull/153)
+
 # 2.2.1
 
 * Fix linting issues (https://github.com/alphagov/govuk_app_config/pull/149)
