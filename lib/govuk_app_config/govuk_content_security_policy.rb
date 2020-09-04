@@ -20,6 +20,8 @@ module GovukContentSecurityPolicy
                                 stats.g.doubleclick.net
                                 www.googletagmanager.com].freeze
 
+  GOOGLE_STATIC_DOMAINS = %w[www.gstatic.com].freeze
+
   def self.build_policy(policy)
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/default-src
     policy.default_src :https, :self, *GOVUK_DOMAINS
@@ -36,6 +38,7 @@ module GovukContentSecurityPolicy
     policy.script_src :self,
                       *GOVUK_DOMAINS,
                       *GOOGLE_ANALYTICS_DOMAINS,
+                      *GOOGLE_STATIC_DOMAINS,
                       # Allow JSONP call to Verify to check whether the user is logged in
                       "www.signin.service.gov.uk",
                       # Allow YouTube Embeds (Govspeak turns YouTube links into embeds)
@@ -52,6 +55,7 @@ module GovukContentSecurityPolicy
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src
     policy.style_src :self,
                      *GOVUK_DOMAINS,
+                     *GOOGLE_STATIC_DOMAINS,
                      # We use the `style=""` attribute on some HTML elements
                      :unsafe_inline
 
