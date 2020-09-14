@@ -1,3 +1,7 @@
+# 2.3.0
+
+* Remove unused SidekiqQueueSizeCheck healthcheck base class
+
 # 2.2.2
 
 * Add www.googletagmanager.com and www.gstatic.com to Content Security Policy (https://github.com/alphagov/govuk_app_config/pull/153)

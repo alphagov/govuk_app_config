@@ -128,24 +128,6 @@ class MySidekiqQueueLatencyCheck < GovukHealthcheck::SidekiqQueueLatencyCheck
 end
 ```
 
-### `SidekiqQueueSizeCheck`
-
-This class is the basis for a check which compares the Sidekiq queue sizes
-with warning or critical thresholds.
-
-```ruby
-class MySidekiqQueueSizeCheck < GovukHealthcheck::SidekiqQueueSizeCheck
-  def warning_threshold(queue:)
-    # the warning threshold for a particular queue
-  end
-
-  def critical_threshold(queue:)
-    # the critical threshold for a particular queue
-  end
-end
-```
-
-
 ### `SidekiqRetrySizeCheck`
 
 Similar to `SidekiqQueueSizeCheck`, this class is the basis for a check which

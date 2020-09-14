@@ -4,7 +4,6 @@ require "govuk_app_config/govuk_healthcheck/sidekiq_redis"
 require "govuk_app_config/govuk_healthcheck/threshold_check"
 require "govuk_app_config/govuk_healthcheck/sidekiq_queue_check"
 require "govuk_app_config/govuk_healthcheck/sidekiq_queue_latency_check"
-require "govuk_app_config/govuk_healthcheck/sidekiq_queue_size_check"
 require "govuk_app_config/govuk_healthcheck/sidekiq_retry_size_check"
 require "json"
 
