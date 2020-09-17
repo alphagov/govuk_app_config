@@ -258,7 +258,7 @@
 * Add Unicorn (our web server) as a dependency
 * Use version [2.7.0 of the Sentry client][sentry-270].
 * Set up logging configuration for Rails applications.
-* Don't send `ActionController::BadRequest`  to Sentry
+* Don't send `ActionController::BadRequest` to Sentry
 
 [sentry-270]: https://github.com/getsentry/raven-ruby/commit/ef623824cb0a8a2f60be5fb7e12f80454da54fd7
 
