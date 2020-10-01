@@ -2,6 +2,8 @@ require "govuk_app_config/govuk_error/govuk_data_sync"
 
 module GovukError
   class ConfigureDefaults < SimpleDelegator
+    attr_accessor :data_sync_excluded_exceptions
+
     def initialize(config)
       super
 
@@ -56,9 +58,12 @@ module GovukError
       }
 
       data_sync = GovukDataSync.new(ENV["GOVUK_DATA_SYNC_PERIOD"])
+      @data_sync_excluded_exceptions = ["PG::Error"]
       config.should_capture = lambda do |error_or_event|
-        exception_chain = Raven::Utils::ExceptionCauseChain.exception_to_array(error_or_event)
-        data_sync_ignored_error = exception_chain.any? { |exception| exception.class.to_s == "PG::Error" }
+        data_sync_ignored_error = data_sync_excluded_exceptions.any? do |exception_to_ignore|
+          exception_chain = Raven::Utils::ExceptionCauseChain.exception_to_array(error_or_event)
+          exception_chain.any? { |exception| exception.class.to_s == exception_to_ignore }
+        end
 
         if !data_sync.in_progress?
           true

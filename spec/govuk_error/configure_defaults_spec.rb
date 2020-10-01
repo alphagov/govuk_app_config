@@ -79,5 +79,14 @@ RSpec.describe GovukError::ConfigureDefaults do
         expect(client.should_capture.call(StandardError.new)).to eq(true)
       end
     end
+
+    it "should ignore errors that have been added to data_sync_excluded_exceptions, if they occurred during the data sync" do
+      client = GovukError::ConfigureDefaults.new(Raven.configuration)
+      client.data_sync_excluded_exceptions << "StandardError"
+
+      travel_to(Time.current.change(hour: 23)) do
+        expect(client.should_capture.call(StandardError.new)).to eq(false)
+      end
+    end
   end
 end
