@@ -6,6 +6,7 @@ module GovukError
 
     def initialize(config)
       super
+
       config.current_environment = ENV["SENTRY_CURRENT_ENV"]
 
       config.before_send = proc { |e|
@@ -58,8 +59,11 @@ module GovukError
 
       @data_sync = GovukDataSync.new(ENV["GOVUK_DATA_SYNC_PERIOD"])
       config.should_capture = lambda do |error_or_event|
-        data_sync_ignored_error = error_or_event.class.to_s == "PG::Error" ||
-          (error_or_event.respond_to?(:cause) && error_or_event.cause.class.to_s == "PG::Error")
+        exception_chain = Raven::Utils::ExceptionCauseChain.exception_to_array(error_or_event)
+        data_sync_ignored_error = exception_chain.reduce(false) do |memo, exception|
+          memo || (exception.class.to_s == "PG::Error" ||
+                     exception.respond_to?(:cause) && exception.cause.class.to_s == "PG::Error")
+        end
 
         if !data_sync.in_progress?
           true

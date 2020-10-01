@@ -57,12 +57,23 @@ RSpec.describe GovukError::ConfigureDefaults do
       expect(should_capture(error: PG::Error.new, data_sync_in_progress: false)).to eq(true)
     end
 
-    it "ignores PostgreSQL errors that occur during the data sync time window" do
-      expect(should_capture(error: PG::Error.new, data_sync_in_progress: true)).to eq(false)
-    end
+    context "during the data sync time window" do
+      let(:data_sync_in_progress) { true }
 
-    it "captures non-PostgreSQL errors that occur during the data sync time window" do
-      expect(should_capture(error: StandardError.new, data_sync_in_progress: true)).to eq(true)
+      it "ignores PostgreSQL errors" do
+        expect(should_capture(error: PG::Error.new, data_sync_in_progress: data_sync_in_progress)).to eq(false)
+      end
+
+      it "ignores PostgreSQL errors that have deep exception cause chains" do
+        pg_error = double("Caused by PG::Error", class: "PG::Error")
+        exception = double("Exception 1", cause: double("Exception 2", cause: pg_error))
+        allow(pg_error).to receive(:cause)
+        expect(should_capture(error: exception, data_sync_in_progress: data_sync_in_progress)).to eq(false)
+      end
+
+      it "captures non-PostgreSQL errors" do
+        expect(should_capture(error: StandardError.new, data_sync_in_progress: data_sync_in_progress)).to eq(true)
+      end
     end
 
     def should_capture(error:, data_sync_in_progress:)
