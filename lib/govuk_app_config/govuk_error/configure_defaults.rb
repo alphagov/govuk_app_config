@@ -1,6 +1,7 @@
 module GovukError
-  class ConfigureDefaults
+  class ConfigureDefaults < SimpleDelegator
     def initialize(config)
+      super
       config.before_send = proc { |e|
         GovukStatsd.increment("errors_occurred")
         GovukStatsd.increment("error_types.#{e.class.name.demodulize.underscore}")
