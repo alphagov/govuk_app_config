@@ -1,6 +1,7 @@
 require "spec_helper"
 require "sentry-raven"
 require "govuk_app_config/govuk_error/configuration"
+require "govuk_app_config/govuk_error/configure_defaults"
 
 RSpec.describe GovukError::Configuration do
   describe ".silence_ready" do

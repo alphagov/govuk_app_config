@@ -33,8 +33,11 @@ RSpec.describe GovukError::ConfigureDefaults do
   end
 
   describe ".should_capture" do
-    # mock the PG::Error class so we don't have to pull it in
-    module PG; class Error; end; end
+    before :each do
+      allow(GovukDataSync).to receive(:new) { govuk_data_sync_instance }
+    end
+
+    let!(:govuk_data_sync_instance) { double("GovukDataSync instance") }
 
     it "passes the 'GOVUK_DATA_SYNC_PERIOD' ENV variable to GovukDataSync, at startup" do
       time_period = "22:30-8:30"
@@ -45,43 +48,49 @@ RSpec.describe GovukError::ConfigureDefaults do
     end
 
     it "calls GovukDataSync's .in_progress? method to determine if it should capture error" do
-      govuk_data_sync_instance = double("GovukDataSync instance")
-      allow(GovukDataSync).to receive(:new) { govuk_data_sync_instance }
       expect(govuk_data_sync_instance).to receive(:in_progress?)
 
       client = GovukError::ConfigureDefaults.new(Raven.configuration)
       client.should_capture.call(nil)
     end
 
-    it "captures PostgreSQL errors that occur outside of the data sync time window" do
-      expect(should_capture(error: PG::Error.new, data_sync_in_progress: false)).to eq(true)
+    context "outside the data sync time window" do
+      before { allow(govuk_data_sync_instance).to receive(:in_progress?) { false } }
+
+      it "captures PostgreSQL errors" do
+        pg_error = double("PG::Error", class: "PG::Error")
+        client = GovukError::ConfigureDefaults.new(Raven.configuration)
+        expect(client.should_capture.call(pg_error)).to eq(true)
+      end
     end
 
     context "during the data sync time window" do
-      let(:data_sync_in_progress) { true }
+      before { allow(govuk_data_sync_instance).to receive(:in_progress?) { true } }
 
       it "ignores PostgreSQL errors" do
-        expect(should_capture(error: PG::Error.new, data_sync_in_progress: data_sync_in_progress)).to eq(false)
+        pg_error = double("PG::Error", class: "PG::Error")
+        client = GovukError::ConfigureDefaults.new(Raven.configuration)
+        expect(client.should_capture.call(pg_error)).to eq(false)
       end
 
       it "ignores PostgreSQL errors that have deep exception cause chains" do
         pg_error = double("Caused by PG::Error", class: "PG::Error")
         exception = double("Exception 1", cause: double("Exception 2", cause: pg_error))
         allow(pg_error).to receive(:cause)
-        expect(should_capture(error: exception, data_sync_in_progress: data_sync_in_progress)).to eq(false)
+        client = GovukError::ConfigureDefaults.new(Raven.configuration)
+        expect(client.should_capture.call(exception)).to eq(false)
       end
 
       it "captures non-PostgreSQL errors" do
-        expect(should_capture(error: StandardError.new, data_sync_in_progress: data_sync_in_progress)).to eq(true)
+        client = GovukError::ConfigureDefaults.new(Raven.configuration)
+        expect(client.should_capture.call(StandardError.new)).to eq(true)
       end
-    end
 
-    def should_capture(error:, data_sync_in_progress:)
-      govuk_data_sync_instance = double("GovukDataSync instance", in_progress?: data_sync_in_progress)
-      allow(GovukDataSync).to receive(:new) { govuk_data_sync_instance }
-
-      client = GovukError::ConfigureDefaults.new(Raven.configuration)
-      client.should_capture.call(error)
+      it "ignores non-PostgreSQL errors that have been added to data_sync_excluded_exceptions" do
+        client = GovukError::ConfigureDefaults.new(Raven.configuration)
+        client.data_sync_excluded_exceptions << "StandardError"
+        expect(client.should_capture.call(StandardError.new)).to eq(false)
+      end
     end
   end
 end
