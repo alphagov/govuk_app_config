@@ -47,5 +47,13 @@ class DefaultConfiguration
     config.transport_failure_callback = proc {
       GovukStatsd.increment("error_reports_failed")
     }
+
+    config.should_capture = lambda do |error_or_event|
+      data_sync_ignored_error = error_or_event.is_a?(PG::Error) ||
+        (error_or_event.respond_to?(:cause) && error_or_event.cause.is_a?(PG::Error))
+      data_sync_time = Time.now.hour >= 22 || Time.now.hour < 8
+
+      !(data_sync_ignored_error && data_sync_time)
+    end
   end
 end
