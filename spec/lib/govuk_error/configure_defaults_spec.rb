@@ -7,8 +7,10 @@ RSpec.describe GovukError::ConfigureDefaults do
   describe ".silence_ready" do
     it "is not set if we are not in a Rails environment" do
       hide_const("Rails")
-      client = GovukError::ConfigureDefaults.new(Raven.configuration)
-      expect(client.silence_ready).to eq(nil)
+      ClimateControl.modify GOVUK_DATA_SYNC_PERIOD: "21:00-1:00" do
+        client = GovukError::ConfigureDefaults.new(Raven.configuration)
+        expect(client.silence_ready).to eq(nil)
+      end
     end
 
     # @TODO - these fail because `defined?(Rails)` returns `nil` for some reason.
