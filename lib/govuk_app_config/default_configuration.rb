@@ -1,3 +1,5 @@
+require "govuk_app_config/govuk_data_sync"
+
 class DefaultConfiguration
   def initialize(config)
     config.before_send = proc { |e|
@@ -48,12 +50,17 @@ class DefaultConfiguration
       GovukStatsd.increment("error_reports_failed")
     }
 
+    data_sync = GovukDataSync.new(ENV["GOVUK_DATA_SYNC_PERIOD"])
+
     config.should_capture = lambda do |error_or_event|
       data_sync_ignored_error = error_or_event.is_a?(PG::Error) ||
         (error_or_event.respond_to?(:cause) && error_or_event.cause.is_a?(PG::Error))
-      data_sync_time = Time.now.hour >= 22 || Time.now.hour < 8
 
-      !(data_sync_ignored_error && data_sync_time)
+      if !data_sync.in_progress?
+        true
+      else
+        !data_sync_ignored_error
+      end
     end
   end
 end
