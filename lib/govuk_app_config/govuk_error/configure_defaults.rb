@@ -58,8 +58,8 @@ module GovukError
 
       @data_sync = GovukDataSync.new(ENV["GOVUK_DATA_SYNC_PERIOD"])
       config.should_capture = lambda do |error_or_event|
-        data_sync_ignored_error = error_or_event.is_a?(PG::Error) ||
-          (error_or_event.respond_to?(:cause) && error_or_event.cause.is_a?(PG::Error))
+        data_sync_ignored_error = error_or_event.class.to_s == "PG::Error" ||
+          (error_or_event.respond_to?(:cause) && error_or_event.cause.class.to_s == "PG::Error")
 
         if !data_sync.in_progress?
           true
