@@ -19,4 +19,13 @@ RSpec.describe GovukError do
       expect(Raven).to have_received(:capture_exception).with(StandardError.new, extra: { parameters: "Something" })
     end
   end
+
+  describe ".configure" do
+    it "configures Raven via the RavenDelegator" do
+      mock_raven_delegator = double("RavenDelegator")
+      allow(GovukError::RavenDelegator).to receive(:new) { mock_raven_delegator }
+      expect(mock_raven_delegator).to receive(:foo)
+      GovukError.configure(&:foo)
+    end
+  end
 end
