@@ -49,6 +49,16 @@ RSpec.describe GovukError::ConfigureDefaults do
       end
     end
 
+    it "should ignore exceptions whose underlying cause is a PostgreSQL error, during the data sync" do
+      pg_error = double("Caused by PG::Error", class: "PG::Error")
+      exception = double("Exception 1", cause: double("Exception 2", cause: pg_error))
+      allow(pg_error).to receive(:cause)
+      client = GovukError::ConfigureDefaults.new(Raven.configuration)
+      travel_to(Time.current.change(hour: 23)) do
+        expect(client.should_capture.call(exception)).to eq(false)
+      end
+    end
+
     it "should capture PostgreSQL errors that occur outside the data sync" do
       pg_error = double("PG::Error", class: "PG::Error")
       client = GovukError::ConfigureDefaults.new(Raven.configuration)
