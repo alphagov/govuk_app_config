@@ -1,3 +1,5 @@
+require "govuk_app_config/govuk_error/govuk_data_sync"
+
 module GovukError
   class ConfigureDefaults < SimpleDelegator
     def initialize(config)
@@ -53,12 +55,16 @@ module GovukError
         GovukStatsd.increment("error_reports_failed")
       }
 
+      data_sync = GovukDataSync.new(ENV["GOVUK_DATA_SYNC_PERIOD"])
       config.should_capture = lambda do |error_or_event|
         exception_chain = Raven::Utils::ExceptionCauseChain.exception_to_array(error_or_event)
         data_sync_ignored_error = exception_chain.any? { |exception| exception.class.to_s == "PG::Error" }
-        data_sync_time = Time.now.hour >= 22 || Time.now.hour < 8
 
-        !(data_sync_ignored_error && data_sync_time)
+        if !data_sync.in_progress?
+          true
+        else
+          !data_sync_ignored_error
+        end
       end
     end
   end

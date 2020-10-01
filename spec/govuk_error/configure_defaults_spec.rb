@@ -4,6 +4,12 @@ require "sentry-raven"
 require "govuk_app_config/govuk_error/configure_defaults"
 
 RSpec.describe GovukError::ConfigureDefaults do
+  around do |example|
+    ClimateControl.modify GOVUK_DATA_SYNC_PERIOD: "22:00-08:00" do
+      example.run
+    end
+  end
+
   describe ".initialize" do
     it "delegates to the passed object if it doesn't have the method defined" do
       delegated_object = double("Raven.configuration").as_null_object
