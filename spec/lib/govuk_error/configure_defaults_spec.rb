@@ -1,12 +1,13 @@
 require "spec_helper"
+require "rails"
 require "sentry-raven"
-require "govuk_app_config/govuk_error/configuration"
+require "govuk_app_config/govuk_error/configure_defaults"
 
-RSpec.describe GovukError::Configuration do
+RSpec.describe GovukError::ConfigureDefaults do
   describe ".silence_ready" do
     it "is not set if we are not in a Rails environment" do
       hide_const("Rails")
-      client = GovukError::Configuration.new(Raven.configuration)
+      client = GovukError::ConfigureDefaults.new(Raven.configuration)
       expect(client.silence_ready).to eq(nil)
     end
 
@@ -16,16 +17,16 @@ RSpec.describe GovukError::Configuration do
     # context "we are in a Rails environment" do
     #   let!(:cached_rails_env) { Rails.env }
     #   after { Rails.env = cached_rails_env }
-
+    #
     #   it "is false in production" do
     #     Rails.env = "production"
-    #     client = GovukError::Configuration.new(Raven.configuration)
+    #     client = GovukError::ConfigureDefaults.new(Raven.configuration)
     #     expect(client.silence_ready).to eq(false)
     #   end
-
+    #
     #   it "is true when not in production" do
     #     Rails.env = "development"
-    #     client = GovukError::Configuration.new(Raven.configuration)
+    #     client = GovukError::ConfigureDefaults.new(Raven.configuration)
     #     expect(client.silence_ready).to eq(true)
     #   end
     # end
@@ -39,7 +40,7 @@ RSpec.describe GovukError::Configuration do
       time_period = "22:30-8:30"
       ClimateControl.modify GOVUK_DATA_SYNC_PERIOD: time_period do
         expect(GovukDataSync).to receive(:new).with(time_period)
-        GovukError::Configuration.new(Raven.configuration)
+        GovukError::ConfigureDefaults.new(Raven.configuration)
       end
     end
 
@@ -48,7 +49,7 @@ RSpec.describe GovukError::Configuration do
       allow(GovukDataSync).to receive(:new) { govuk_data_sync_instance }
       expect(govuk_data_sync_instance).to receive(:in_progress?)
 
-      client = GovukError::Configuration.new(Raven.configuration)
+      client = GovukError::ConfigureDefaults.new(Raven.configuration)
       client.should_capture.call(nil)
     end
 
@@ -68,7 +69,7 @@ RSpec.describe GovukError::Configuration do
       govuk_data_sync_instance = double("GovukDataSync instance", in_progress?: data_sync_in_progress)
       allow(GovukDataSync).to receive(:new) { govuk_data_sync_instance }
 
-      client = GovukError::Configuration.new(Raven.configuration)
+      client = GovukError::ConfigureDefaults.new(Raven.configuration)
       client.should_capture.call(error)
     end
   end

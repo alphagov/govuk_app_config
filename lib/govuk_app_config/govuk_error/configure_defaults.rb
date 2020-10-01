@@ -1,21 +1,22 @@
+require "govuk_app_config/govuk_data_sync"
+
 module GovukError
-  class Configuration < SimpleDelegator
+  class ConfigureDefaults < SimpleDelegator
     attr_reader :data_sync
 
-    def initialize(_raven_configuration_instance)
+    def initialize(config)
       super
+      config.current_environment = ENV["SENTRY_CURRENT_ENV"]
 
-      self.current_environment = ENV["SENTRY_CURRENT_ENV"]
-
-      self.before_send = proc { |e|
+      config.before_send = proc { |e|
         GovukStatsd.increment("errors_occurred")
         GovukStatsd.increment("error_types.#{e.class.name.demodulize.underscore}")
         e
       }
 
-      self.silence_ready = !Rails.env.production? if defined?(Rails)
+      config.silence_ready = !Rails.env.production? if defined?(Rails)
 
-      self.excluded_exceptions = [
+      config.excluded_exceptions = [
         # Default ActionDispatch rescue responses
         "ActionController::RoutingError",
         "AbstractController::ActionNotFound",
@@ -49,17 +50,17 @@ module GovukError
       # This will exclude exceptions that are triggered by one of the ignored
       # exceptions. For example, when any exception occurs in a template,
       # Rails will raise a ActionView::Template::Error, instead of the original error.
-      self.inspect_exception_causes_for_exclusion = true
+      config.inspect_exception_causes_for_exclusion = true
 
-      self.transport_failure_callback = proc {
+      config.transport_failure_callback = proc {
         GovukStatsd.increment("error_reports_failed")
       }
 
       @data_sync = GovukDataSync.new(ENV["GOVUK_DATA_SYNC_PERIOD"])
-      self.should_capture = lambda do |error_or_event|
+      config.should_capture = lambda do |error_or_event|
         data_sync_ignored_error = error_or_event.is_a?(PG::Error) ||
           (error_or_event.respond_to?(:cause) && error_or_event.cause.is_a?(PG::Error))
-  
+
         if !data_sync.in_progress?
           true
         else
