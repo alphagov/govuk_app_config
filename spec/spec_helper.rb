@@ -7,6 +7,17 @@ require "webmock/rspec"
 RSpec.configure do |config|
   config.include(ActiveSupport::Testing::TimeHelpers)
 
+  # rubocop:disable Style/GlobalVars
+  config.before :all do
+    $cached_raven = Raven.configuration
+    Raven.configuration = $cached_raven.clone
+  end
+
+  config.after :all do
+    Raven.configuration = $cached_raven
+  end
+  # rubocop:enable Style/GlobalVars
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
