@@ -1,4 +1,5 @@
 require "sentry-raven"
+require "govuk_app_config/govuk_error/configuration"
 require "govuk_app_config/govuk_statsd"
 
 module GovukError
@@ -11,9 +12,11 @@ module GovukError
     Raven.capture_exception(exception_or_message, args)
   end
 
+  def self.init
+    @raven_configuration = Configuration.new(Raven.configuration)
+  end
+
   def self.configure
-    Raven.configure do |config|
-      yield(config)
-    end
+    yield @raven_configuration
   end
 end
