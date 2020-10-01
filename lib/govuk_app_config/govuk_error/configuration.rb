@@ -56,7 +56,24 @@ module GovukError
       }
 
       @data_sync = GovukDataSync.new(ENV["GOVUK_DATA_SYNC_PERIOD"])
-      self.should_capture = lambda do |error_or_event|
+      self.should_capture = nil
+    end
+  
+    def should_capture=(closure)
+      if closure.nil?
+        super(default_should_capture)
+      else
+        combined = lambda do |error_or_event|
+          (default_should_capture.call(error_or_event) && closure.call(error_or_event))
+        end
+        super(combined)
+      end
+    end
+  
+  private
+  
+    def default_should_capture
+      lambda do |error_or_event|
         data_sync_ignored_error = error_or_event.is_a?(PG::Error) ||
           (error_or_event.respond_to?(:cause) && error_or_event.cause.is_a?(PG::Error))
   

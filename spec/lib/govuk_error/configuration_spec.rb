@@ -72,4 +72,22 @@ RSpec.describe GovukError::Configuration do
       client.should_capture.call(error)
     end
   end
+
+  describe ".should_capture=" do
+    it "Allows apps to add their own `should_capture` callback, that is evaluated alongside the default. If both return `true`, then we should capture, but if either returns `false`, then we shouldn't." do
+      # mock the PG::Error class so we don't have to pull it in
+      module PG; class Error; end; end
+      class CustomErrorToIgnore < StandardError; end
+
+      allow(GovukDataSync).to receive(:new) { double("GovukDataSync instance", in_progress?: true) }
+      raven_configurator = GovukError::Configuration.new(Raven.configuration)
+      raven_configurator.should_capture = lambda do |error_or_event|
+        !error_or_event.is_a?(CustomErrorToIgnore)
+      end
+
+      expect(raven_configurator.should_capture.call(PG::Error.new)).to eq(false)
+      expect(raven_configurator.should_capture.call(CustomErrorToIgnore.new)).to eq(false)
+      expect(raven_configurator.should_capture.call(StandardError.new)).to eq(true)
+    end
+  end
 end
