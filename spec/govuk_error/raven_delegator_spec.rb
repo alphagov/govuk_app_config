@@ -18,47 +18,30 @@ RSpec.describe GovukError::RavenDelegator do
       end
     end
 
-    let(:raven_delegator) do
-      client = GovukError::RavenDelegator.new(Raven.configuration)
-      client.data_sync_excluded_exceptions << "PG::Error"
-      client
-    end
+    let(:raven_delegator) { GovukError::RavenDelegator.new(Raven.configuration) }
 
-    it "should ignore PostgreSQL errors that occur during the data sync" do
-      pg_error = double("PG::Error", class: "PG::Error")
-      travel_to(Time.current.change(hour: 23)) do
-        expect(raven_delegator.should_capture.call(pg_error)).to eq(false)
-      end
-    end
-
-    it "should ignore exceptions whose underlying cause is a PostgreSQL error, during the data sync" do
-      pg_error = double("Caused by PG::Error", class: "PG::Error")
-      exception = double("Exception 1", cause: double("Exception 2", cause: pg_error))
-      allow(pg_error).to receive(:cause)
-      travel_to(Time.current.change(hour: 23)) do
-        expect(raven_delegator.should_capture.call(exception)).to eq(false)
-      end
-    end
-
-    it "should capture PostgreSQL errors that occur outside the data sync" do
-      pg_error = double("PG::Error", class: "PG::Error")
-      travel_to(Time.current.change(hour: 18)) do
-        expect(raven_delegator.should_capture.call(pg_error)).to eq(true)
-      end
-    end
-
-    it "should capture non-PostgreSQL errors that occur during the data sync" do
+    it "should capture errors that occur during the data sync" do
       travel_to(Time.current.change(hour: 23)) do
         expect(raven_delegator.should_capture.call(StandardError.new)).to eq(true)
       end
     end
 
     it "should ignore errors that have been added to data_sync_excluded_exceptions, if they occurred during the data sync" do
-      client = raven_delegator
-      client.data_sync_excluded_exceptions << "StandardError"
+      raven_delegator.data_sync_excluded_exceptions << "StandardError"
 
       travel_to(Time.current.change(hour: 23)) do
-        expect(client.should_capture.call(StandardError.new)).to eq(false)
+        expect(raven_delegator.should_capture.call(StandardError.new)).to eq(false)
+      end
+    end
+
+    it "should ignore exceptions whose underlying cause is an ignorable error, if it occurred during the data sync" do
+      pg_error = double("Caused by PG::Error", class: "PG::Error")
+      allow(pg_error).to receive(:cause)
+      exception = double("Exception 1", cause: double("Exception 2", cause: pg_error))
+
+      raven_delegator.data_sync_excluded_exceptions << pg_error.class
+      travel_to(Time.current.change(hour: 23)) do
+        expect(raven_delegator.should_capture.call(exception)).to eq(false)
       end
     end
   end
