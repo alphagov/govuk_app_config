@@ -1,7 +1,7 @@
 require "govuk_app_config/govuk_error/govuk_data_sync"
 
 module GovukError
-  class RavenDelegator < SimpleDelegator
+  class Configuration < SimpleDelegator
     attr_reader :data_sync
     attr_accessor :data_sync_excluded_exceptions
 

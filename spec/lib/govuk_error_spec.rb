@@ -21,10 +21,10 @@ RSpec.describe GovukError do
   end
 
   describe ".configure" do
-    it "configures Raven via the RavenDelegator" do
-      mock_raven_delegator = double("RavenDelegator")
-      allow(GovukError::RavenDelegator).to receive(:new) { mock_raven_delegator }
-      expect(mock_raven_delegator).to receive(:foo)
+    it "configures Raven via the Configuration" do
+      mock_configuration = double("Configuration")
+      allow(GovukError::Configuration).to receive(:new) { mock_configuration }
+      expect(mock_configuration).to receive(:foo)
       GovukError.configure(&:foo)
     end
   end
