@@ -27,7 +27,7 @@ module GovukLogging
 
       def self.monkey_patch_log_error(clazz = ::ActionDispatch::DebugExceptions)
         clazz.class_eval do
-        private
+          private
 
           def log_error(request, wrapper)
             logger = logger(request)
