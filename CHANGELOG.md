@@ -1,3 +1,8 @@
+# 2.4.0
+
+* Add new GovukHealthcheck::Mongoid check
+* Add new GovukHealthcheck::RailsCache check
+
 # 2.3.0
 
 * Remove unused SidekiqQueueSizeCheck healthcheck base class
