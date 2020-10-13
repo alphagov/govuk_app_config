@@ -1,6 +1,7 @@
 require "govuk_app_config/govuk_healthcheck/checkup"
 require "govuk_app_config/govuk_healthcheck/active_record"
 require "govuk_app_config/govuk_healthcheck/mongoid"
+require "govuk_app_config/govuk_healthcheck/rails_cache"
 require "govuk_app_config/govuk_healthcheck/sidekiq_redis"
 require "govuk_app_config/govuk_healthcheck/threshold_check"
 require "govuk_app_config/govuk_healthcheck/sidekiq_queue_check"
