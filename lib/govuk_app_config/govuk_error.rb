@@ -13,6 +13,7 @@ module GovukError
   end
 
   def self.configure
-    yield Configuration.new(Raven.configuration)
+    @configuration ||= Configuration.new(Raven.configuration)
+    yield @configuration
   end
 end

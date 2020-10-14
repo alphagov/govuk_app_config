@@ -22,10 +22,8 @@ RSpec.describe GovukError do
 
   describe ".configure" do
     it "configures Raven via the Configuration" do
-      mock_configuration = double("Configuration")
-      allow(GovukError::Configuration).to receive(:new) { mock_configuration }
-      expect(mock_configuration).to receive(:foo)
-      GovukError.configure(&:foo)
+      expect { |b| GovukError.configure(&b) }
+        .to yield_with_args(instance_of(GovukError::Configuration))
     end
   end
 end
