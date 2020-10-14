@@ -73,6 +73,15 @@ if it must be subclassed to work, but a concrete class which works on its own
 doesn't need that suffix. You should aim to follow this convention in your own
 apps, ideally putting custom health checks into a `Healthcheck` module.
 
+### `RailsCache`
+
+This checks that the Rails cache store, such as Memcached, is acessible by
+writing and reading back a cache entry called "healthcheck-cache".
+
+### `Mongoid`
+
+This checks that the app has a connection to its Mongo database via Mongoid.
+
 ### `SidekiqRedis`
 
 This checks that the app has a connection to Redis via Sidekiq.
