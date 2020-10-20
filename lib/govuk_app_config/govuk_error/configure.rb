@@ -43,6 +43,15 @@ GovukError.configure do |config|
   # Rails will raise a ActionView::Template::Error, instead of the original error.
   config.inspect_exception_causes_for_exclusion = true
 
+  # List of exceptions to ignore if they take place during the data sync.
+  # Some errors are transient in nature, e.g. PostgreSQL databases being
+  # unavailable, and add little value. In fact, their presence can greatly
+  # increase the number of errors being sent and risk genuine errors being
+  # rate-limited by Sentry.
+  config.data_sync_excluded_exceptions = [
+    "PG::Error",
+  ]
+
   config.transport_failure_callback = proc {
     GovukStatsd.increment("error_reports_failed")
   }

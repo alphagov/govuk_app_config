@@ -19,4 +19,11 @@ RSpec.describe GovukError do
       expect(Raven).to have_received(:capture_exception).with(StandardError.new, extra: { parameters: "Something" })
     end
   end
+
+  describe ".configure" do
+    it "configures Raven via the Configuration" do
+      expect { |b| GovukError.configure(&b) }
+        .to yield_with_args(instance_of(GovukError::Configuration))
+    end
+  end
 end

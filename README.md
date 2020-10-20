@@ -89,6 +89,27 @@ GovukError.configure do |config|
 end
 ```
 
+And you can exclude errors from being reported if they occur during the nightly data sync (on integration and staging):
+
+```ruby
+GovukError.configure do |config|
+  config.data_sync_excluded_exceptions << "PG::Error"
+end
+```
+
+Finally, you can pass your own callback to evaluate whether or not to capture the exception.
+Note that if an exception is on the `excluded_exceptions` list, or on the `data_sync_excluded_exceptions`
+and occurs at the time of a data sync, then it will be excluded even if the custom
+`should_capture` callback returns `true`.
+
+```ruby
+GovukError.configure do |config|
+  config.should_capture = lambda do |error_or_event|
+    error_or_event == "do capture"
+  end
+end
+```
+
 `GovukError.configure` has the same options as the Sentry client, Raven. See [the Raven docs for all configuration options](https://docs.sentry.io/clients/ruby/config).
 
 ## Statsd

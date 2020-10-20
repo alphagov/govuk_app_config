@@ -25,6 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "statsd-ruby", "~> 1.4.0"
   spec.add_dependency "unicorn", ">= 5.4", "< 5.8"
 
+  spec.add_development_dependency "byebug"
   spec.add_development_dependency "climate_control"
   spec.add_development_dependency "rack-test", "~> 1.1.0"
   spec.add_development_dependency "rails", "~> 6"

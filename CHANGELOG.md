@@ -1,3 +1,7 @@
+# 2.5.0
+
+* Use delegator pattern for `GovukError.configure`, to allow custom `should_capture` (https://github.com/alphagov/govuk_app_config/pull/160)
+
 # 2.4.1
 
 * Bump 'sentry-raven' to 3.1.1 to improve grouping of errors (https://github.com/alphagov/govuk_app_config/pull/162)
