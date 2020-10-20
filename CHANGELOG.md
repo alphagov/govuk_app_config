@@ -1,11 +1,14 @@
+# 2.4.1
+
+* Bump 'sentry-raven' to 3.1.1 to improve grouping of errors (https://github.com/alphagov/govuk_app_config/pull/162)
+
 # 2.4.0
 
-* Add new GovukHealthcheck::Mongoid check
-* Add new GovukHealthcheck::RailsCache check
+* Add new GovukHealthcheck::Mongoid and GovukHealthcheck::RailsCache health checks (https://github.com/alphagov/govuk_app_config/pull/161)
 
 # 2.3.0
 
-* Remove unused SidekiqQueueSizeCheck healthcheck base class
+* Remove unused SidekiqQueueSizeCheck healthcheck base class (https://github.com/alphagov/govuk_app_config/pull/156)
 
 # 2.2.2
 
