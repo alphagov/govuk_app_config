@@ -7,6 +7,11 @@ GovukError.configure do |config|
 
   config.silence_ready = !Rails.env.production? if defined?(Rails)
 
+  config.before_send = lambda { |event, hint|
+    event.fingerprint = GovukError::CustomFingerprint.sample(event)
+    event
+  }
+
   config.excluded_exceptions = [
     # Default ActionDispatch rescue responses
     "ActionController::RoutingError",
