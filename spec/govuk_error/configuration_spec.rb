@@ -12,36 +12,75 @@ RSpec.describe GovukError::Configuration do
   end
 
   describe ".should_capture" do
-    around do |example|
-      ClimateControl.modify GOVUK_DATA_SYNC_PERIOD: "22:00-08:00" do
-        example.run
-      end
-    end
-
     let(:configuration) { GovukError::Configuration.new(Raven.configuration) }
 
-    it "should capture errors that occur during the data sync" do
-      travel_to(Time.current.change(hour: 23)) do
+    context "during the data sync" do
+      around do |example|
+        ClimateControl.modify GOVUK_DATA_SYNC_PERIOD: "22:00-08:00" do
+          travel_to(Time.current.change(hour: 23)) do
+            example.run
+          end
+        end
+      end
+
+      it "should capture errors by default" do
         expect(configuration.should_capture.call(StandardError.new)).to eq(true)
       end
-    end
 
-    it "should ignore errors that have been added to data_sync_excluded_exceptions, if they occurred during the data sync" do
-      configuration.data_sync_excluded_exceptions << "StandardError"
+      it "should ignore errors that have been added as a string to data_sync_excluded_exceptions" do
+        configuration.data_sync_excluded_exceptions << "StandardError"
 
-      travel_to(Time.current.change(hour: 23)) do
         expect(configuration.should_capture.call(StandardError.new)).to eq(false)
+      end
+
+      it "should ignore errors that have been added as a class to data_sync_excluded_exceptions" do
+        configuration.data_sync_excluded_exceptions << StandardError
+
+        expect(configuration.should_capture.call(StandardError.new)).to eq(false)
+      end
+
+      it "should ignore errors whose underlying cause is an exception in data_sync_excluded_exceptions" do
+        stub_const("ErrorWeCareAbout", Class.new(StandardError))
+        stub_const("SomeOtherError", Class.new(StandardError))
+        configuration.data_sync_excluded_exceptions << "ErrorWeCareAbout"
+
+        chained_exception = nil
+        begin
+          begin
+            raise ErrorWeCareAbout
+          rescue ErrorWeCareAbout
+            raise SomeOtherError
+          end
+        rescue SomeOtherError => e
+          chained_exception = e
+        end
+
+        expect(chained_exception).to be_an_instance_of(SomeOtherError)
+        expect(configuration.should_capture.call(chained_exception)).to eq(false)
+      end
+
+      it "should ignore errors that are subclasses of an exception in data_sync_excluded_exceptions" do
+        stub_const("SomeClass", Class.new(StandardError))
+        stub_const("SomeInheritedClass", Class.new(SomeClass))
+
+        configuration.data_sync_excluded_exceptions << "SomeClass"
+        expect(configuration.should_capture.call(SomeInheritedClass.new)).to eq(false)
       end
     end
 
-    it "should ignore exceptions whose underlying cause is an ignorable error, if it occurred during the data sync" do
-      pg_error = double("Caused by PG::Error", class: "PG::Error")
-      allow(pg_error).to receive(:cause)
-      exception = double("Exception 1", cause: double("Exception 2", cause: pg_error))
+    context "outside of the data sync" do
+      around do |example|
+        ClimateControl.modify GOVUK_DATA_SYNC_PERIOD: "22:00-08:00" do
+          travel_to(Time.current.change(hour: 21)) do
+            example.run
+          end
+        end
+      end
 
-      configuration.data_sync_excluded_exceptions << "PG::Error"
-      travel_to(Time.current.change(hour: 23)) do
-        expect(configuration.should_capture.call(exception)).to eq(false)
+      it "should capture errors even if they are in the list of data_sync_excluded_exceptions" do
+        configuration.data_sync_excluded_exceptions << "StandardError"
+
+        expect(configuration.should_capture.call(StandardError.new)).to eq(true)
       end
     end
   end
