@@ -1,3 +1,7 @@
+# 2.5.1
+
+* Increase scope of `data_sync_excluded_exceptions` so that it includes subclasses (https://github.com/alphagov/govuk_app_config/pull/165)
+
 # 2.5.0
 
 * Use delegator pattern for `GovukError.configure`, to allow custom `should_capture` (https://github.com/alphagov/govuk_app_config/pull/160)
