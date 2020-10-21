@@ -35,13 +35,34 @@ RSpec.describe GovukError::Configuration do
     end
 
     it "should ignore exceptions whose underlying cause is an ignorable error, if it occurred during the data sync" do
-      pg_error = double("Caused by PG::Error", class: "PG::Error")
-      allow(pg_error).to receive(:cause)
-      exception = double("Exception 1", cause: double("Exception 2", cause: pg_error))
+      stub_const("ErrorWeCareAbout", Class.new(StandardError))
+      stub_const("SomeOtherError", Class.new(StandardError))
+      configuration.data_sync_excluded_exceptions << "ErrorWeCareAbout"
 
-      configuration.data_sync_excluded_exceptions << "PG::Error"
+      chained_exception = nil
+      begin
+        begin
+          raise ErrorWeCareAbout
+        rescue ErrorWeCareAbout
+          raise SomeOtherError
+        end
+      rescue SomeOtherError => e
+        chained_exception = e
+      end
+
       travel_to(Time.current.change(hour: 23)) do
-        expect(configuration.should_capture.call(exception)).to eq(false)
+        expect(chained_exception).to be_an_instance_of(SomeOtherError)
+        expect(configuration.should_capture.call(chained_exception)).to eq(false)
+      end
+    end
+
+    it "should ignore exceptions that are subclasses of an ignorable error, if it occurred durying the data sync" do
+      stub_const("SomeClass", Class.new(StandardError))
+      stub_const("SomeInheritedClass", Class.new(SomeClass))
+
+      configuration.data_sync_excluded_exceptions << "SomeClass"
+      travel_to(Time.current.change(hour: 23)) do
+        expect(configuration.should_capture.call(SomeInheritedClass.new)).to eq(false)
       end
     end
   end
