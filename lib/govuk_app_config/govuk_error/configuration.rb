@@ -25,7 +25,7 @@ module GovukError
     def ignore_excluded_exceptions_in_data_sync
       lambda { |error_or_event|
         data_sync_ignored_error = data_sync_excluded_exceptions.any? do |exception_to_ignore|
-          exception_to_ignore = Object.const_get(exception_to_ignore)
+          exception_to_ignore = Object.const_get(exception_to_ignore) unless exception_to_ignore.is_a?(Module)
           exception_chain = Raven::Utils::ExceptionCauseChain.exception_to_array(error_or_event)
           exception_chain.any? { |exception| exception.is_a?(exception_to_ignore) }
         rescue NameError

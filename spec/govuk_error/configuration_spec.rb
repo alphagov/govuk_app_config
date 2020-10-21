@@ -27,8 +27,14 @@ RSpec.describe GovukError::Configuration do
         expect(configuration.should_capture.call(StandardError.new)).to eq(true)
       end
 
-      it "should ignore errors that have been added to data_sync_excluded_exceptions" do
+      it "should ignore errors that have been added as a string to data_sync_excluded_exceptions" do
         configuration.data_sync_excluded_exceptions << "StandardError"
+
+        expect(configuration.should_capture.call(StandardError.new)).to eq(false)
+      end
+
+      it "should ignore errors that have been added as a class to data_sync_excluded_exceptions" do
+        configuration.data_sync_excluded_exceptions << StandardError
 
         expect(configuration.should_capture.call(StandardError.new)).to eq(false)
       end
