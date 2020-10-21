@@ -12,56 +12,52 @@ RSpec.describe GovukError::Configuration do
   end
 
   describe ".should_capture" do
-    around do |example|
-      ClimateControl.modify GOVUK_DATA_SYNC_PERIOD: "22:00-08:00" do
-        example.run
+    context "during the data sync" do
+      around do |example|
+        ClimateControl.modify GOVUK_DATA_SYNC_PERIOD: "22:00-08:00" do
+          travel_to(Time.current.change(hour: 23)) do
+            example.run
+          end
+        end
       end
-    end
 
-    let(:configuration) { GovukError::Configuration.new(Raven.configuration) }
+      let(:configuration) { GovukError::Configuration.new(Raven.configuration) }
 
-    it "should capture errors that occur during the data sync" do
-      travel_to(Time.current.change(hour: 23)) do
+      it "should capture errors by default" do
         expect(configuration.should_capture.call(StandardError.new)).to eq(true)
       end
-    end
 
-    it "should ignore errors that have been added to data_sync_excluded_exceptions, if they occurred during the data sync" do
-      configuration.data_sync_excluded_exceptions << "StandardError"
+      it "should ignore errors that have been added to data_sync_excluded_exceptions" do
+        configuration.data_sync_excluded_exceptions << "StandardError"
 
-      travel_to(Time.current.change(hour: 23)) do
         expect(configuration.should_capture.call(StandardError.new)).to eq(false)
       end
-    end
 
-    it "should ignore exceptions whose underlying cause is an ignorable error, if it occurred during the data sync" do
-      stub_const("ErrorWeCareAbout", Class.new(StandardError))
-      stub_const("SomeOtherError", Class.new(StandardError))
-      configuration.data_sync_excluded_exceptions << "ErrorWeCareAbout"
+      it "should ignore errors whose underlying cause is an exception in data_sync_excluded_exceptions" do
+        stub_const("ErrorWeCareAbout", Class.new(StandardError))
+        stub_const("SomeOtherError", Class.new(StandardError))
+        configuration.data_sync_excluded_exceptions << "ErrorWeCareAbout"
 
-      chained_exception = nil
-      begin
+        chained_exception = nil
         begin
-          raise ErrorWeCareAbout
-        rescue ErrorWeCareAbout
-          raise SomeOtherError
+          begin
+            raise ErrorWeCareAbout
+          rescue ErrorWeCareAbout
+            raise SomeOtherError
+          end
+        rescue SomeOtherError => e
+          chained_exception = e
         end
-      rescue SomeOtherError => e
-        chained_exception = e
-      end
 
-      travel_to(Time.current.change(hour: 23)) do
         expect(chained_exception).to be_an_instance_of(SomeOtherError)
         expect(configuration.should_capture.call(chained_exception)).to eq(false)
       end
-    end
 
-    it "should ignore exceptions that are subclasses of an ignorable error, if it occurred durying the data sync" do
-      stub_const("SomeClass", Class.new(StandardError))
-      stub_const("SomeInheritedClass", Class.new(SomeClass))
+      it "should ignore errors that are subclasses of an exception in data_sync_excluded_exceptions" do
+        stub_const("SomeClass", Class.new(StandardError))
+        stub_const("SomeInheritedClass", Class.new(SomeClass))
 
-      configuration.data_sync_excluded_exceptions << "SomeClass"
-      travel_to(Time.current.change(hour: 23)) do
+        configuration.data_sync_excluded_exceptions << "SomeClass"
         expect(configuration.should_capture.call(SomeInheritedClass.new)).to eq(false)
       end
     end
