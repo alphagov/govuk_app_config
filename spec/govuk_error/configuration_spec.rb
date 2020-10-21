@@ -12,6 +12,8 @@ RSpec.describe GovukError::Configuration do
   end
 
   describe ".should_capture" do
+    let(:configuration) { GovukError::Configuration.new(Raven.configuration) }
+
     context "during the data sync" do
       around do |example|
         ClimateControl.modify GOVUK_DATA_SYNC_PERIOD: "22:00-08:00" do
@@ -20,8 +22,6 @@ RSpec.describe GovukError::Configuration do
           end
         end
       end
-
-      let(:configuration) { GovukError::Configuration.new(Raven.configuration) }
 
       it "should capture errors by default" do
         expect(configuration.should_capture.call(StandardError.new)).to eq(true)
@@ -59,6 +59,22 @@ RSpec.describe GovukError::Configuration do
 
         configuration.data_sync_excluded_exceptions << "SomeClass"
         expect(configuration.should_capture.call(SomeInheritedClass.new)).to eq(false)
+      end
+    end
+
+    context "outside of the data sync" do
+      around do |example|
+        ClimateControl.modify GOVUK_DATA_SYNC_PERIOD: "22:00-08:00" do
+          travel_to(Time.current.change(hour: 21)) do
+            example.run
+          end
+        end
+      end
+
+      it "should capture errors even if they are in the list of data_sync_excluded_exceptions" do
+        configuration.data_sync_excluded_exceptions << "StandardError"
+
+        expect(configuration.should_capture.call(StandardError.new)).to eq(true)
       end
     end
   end
