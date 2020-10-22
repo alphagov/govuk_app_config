@@ -1,3 +1,4 @@
+require "delegate"
 require "govuk_app_config/govuk_error/govuk_data_sync"
 
 module GovukError

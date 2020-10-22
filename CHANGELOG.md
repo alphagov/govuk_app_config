@@ -1,3 +1,7 @@
+# 2.5.2
+
+* Fix govuk_app_config in Ruby 2.7 environments by explicitly requiring the 'delegate' library (https://github.com/alphagov/govuk_app_config/pull/167)
+
 # 2.5.1
 
 * Increase scope of `data_sync_excluded_exceptions` so that it includes subclasses (https://github.com/alphagov/govuk_app_config/pull/165)
