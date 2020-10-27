@@ -14,9 +14,24 @@ RSpec.describe GovukError::Configuration do
   describe ".should_capture" do
     let(:configuration) { GovukError::Configuration.new(Raven.configuration) }
 
+    it "ignores errors if they happen in an environment we don't care about" do
+      ClimateControl.modify SENTRY_CURRENT_ENV: "some-temporary-environment" do
+        configuration.active_sentry_environments << "production"
+        expect(configuration.should_capture.call(StandardError.new)).to eq(false)
+      end
+    end
+
+    it "captures errors if they happen in an environment we care about" do
+      ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
+        configuration.active_sentry_environments << "production"
+        expect(configuration.should_capture.call(StandardError.new)).to eq(true)
+      end
+    end
+
     context "during the data sync" do
       around do |example|
-        ClimateControl.modify GOVUK_DATA_SYNC_PERIOD: "22:00-08:00" do
+        ClimateControl.modify SENTRY_CURRENT_ENV: "production", GOVUK_DATA_SYNC_PERIOD: "22:00-08:00" do
+          configuration.active_sentry_environments << "production"
           travel_to(Time.current.change(hour: 23)) do
             example.run
           end
@@ -70,7 +85,8 @@ RSpec.describe GovukError::Configuration do
 
     context "outside of the data sync" do
       around do |example|
-        ClimateControl.modify GOVUK_DATA_SYNC_PERIOD: "22:00-08:00" do
+        ClimateControl.modify SENTRY_CURRENT_ENV: "production", GOVUK_DATA_SYNC_PERIOD: "22:00-08:00" do
+          configuration.active_sentry_environments << "production"
           travel_to(Time.current.change(hour: 21)) do
             example.run
           end
@@ -87,13 +103,16 @@ RSpec.describe GovukError::Configuration do
 
   describe ".should_capture=" do
     it "Allows apps to add their own `should_capture` callback, that is evaluated alongside the default. If both return `true`, then we should capture, but if either returns `false`, then we shouldn't." do
-      raven_configurator = GovukError::Configuration.new(Raven.configuration)
-      raven_configurator.should_capture = lambda do |error_or_event|
-        error_or_event == "do capture"
-      end
+      ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
+        raven_configurator = GovukError::Configuration.new(Raven.configuration)
+        raven_configurator.active_sentry_environments << "production"
+        raven_configurator.should_capture = lambda do |error_or_event|
+          error_or_event == "do capture"
+        end
 
-      expect(raven_configurator.should_capture.call("do capture")).to eq(true)
-      expect(raven_configurator.should_capture.call("don't capture")).to eq(false)
+        expect(raven_configurator.should_capture.call("do capture")).to eq(true)
+        expect(raven_configurator.should_capture.call("don't capture")).to eq(false)
+      end
     end
   end
 end

@@ -7,6 +7,16 @@ GovukError.configure do |config|
 
   config.silence_ready = !Rails.env.production? if defined?(Rails)
 
+  # These are the environments (described by the `SENTRY_CURRENT_ENV`
+  # ENV variable) where we want to capture Sentry errors. If
+  # `SENTRY_CURRENT_ENV` isn't in this list, or isn't defined, then
+  # don't capture the error.
+  config.active_sentry_environments = %w[
+    integration-blue-aws
+    staging
+    production
+  ]
+
   config.excluded_exceptions = [
     # Default ActionDispatch rescue responses
     "ActionController::RoutingError",
