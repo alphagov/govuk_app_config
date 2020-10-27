@@ -51,7 +51,7 @@ If you include `govuk_app_config` in your `Gemfile`, Rails' autoloading mechanis
 Your app will have to have the following environment variables set:
 
 - `SENTRY_DSN` - the [Data Source Name (DSN)][dsn] for Sentry
-- `SENTRY_CURRENT_ENV` - production, staging or integration
+- `SENTRY_CURRENT_ENV` - e.g. "production". Make sure it is [configured to be active](#active-sentry-environments).
 - `GOVUK_STATSD_PREFIX` - a Statsd prefix like `govuk.apps.application-name.hostname`
 
 [dsn]: https://docs.sentry.io/quickstart/#about-the-dsn
@@ -77,6 +77,18 @@ GovukError.notify(
   level: "debug", # debug, info, warning, error, fatal
   tags: { key: "value" } # Tags to index with this event. Must be a mapping of strings.
 )
+```
+
+### Active Sentry environments
+
+GovukError will only send errors to Sentry if your `SENTRY_CURRENT_ENV` matches one of the 'active environments' in the [default configuration](https://github.com/alphagov/govuk_app_config/blob/master/lib/govuk_app_config/govuk_error/configure.rb). This is to prevent temporary test environments from flooding our Sentry account with errors.
+
+You can add your environment to the list of active Sentry environments like so:
+
+```ruby
+GovukError.configure do |config|
+  config.active_sentry_environments << "my-test-environment"
+end
 ```
 
 ### Error configuration
