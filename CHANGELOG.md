@@ -1,3 +1,7 @@
+# 2.6.0
+
+* Ignore errors that occur in temporary environments (adds `active_sentry_environments` config) (https://github.com/alphagov/govuk_app_config/pull/168)
+
 # 2.5.2
 
 * Fix govuk_app_config in Ruby 2.7 environments by explicitly requiring the 'delegate' library (https://github.com/alphagov/govuk_app_config/pull/167)
