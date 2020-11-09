@@ -46,6 +46,7 @@ GovukError.configure do |config|
     "GdsApi::TimedOutException",
     "Mongoid::Errors::DocumentNotFound",
     "Sinatra::NotFound",
+    "Slimmer::IntermittentRetrievalError",
   ]
 
   # This will exclude exceptions that are triggered by one of the ignored
