@@ -1,3 +1,7 @@
+# 2.8.0
+
+* Turn off redundant RemoteIp middleware for all apps
+
 # 2.7.0
 
 * Ignore intermittent template retrieval errors from Slimmer
