@@ -28,7 +28,7 @@ module GovukError
     end
 
     def in_progress?
-      from.present? && to.present? && in_time_range?(from, to)
+      !from.nil? && !to.nil? && in_time_range?(from, to)
     end
 
   private
