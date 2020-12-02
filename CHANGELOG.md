@@ -1,3 +1,7 @@
+# 2.7.1
+
+* Fix broken data sync error handling for non-Rails apps
+
 # 2.7.0
 
 * Ignore intermittent template retrieval errors from Slimmer
