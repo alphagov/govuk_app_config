@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = %w[lib]
 
-  spec.add_dependency "logstasher", ">= 1.2.2", "< 1.4.0"
+  spec.add_dependency "logstasher", ">= 1.2.2", "< 2.2.0"
   spec.add_dependency "sentry-raven", "~> 3.1.1"
   spec.add_dependency "statsd-ruby", "~> 1.4.0"
   spec.add_dependency "unicorn", ">= 5.4", "< 5.8"
