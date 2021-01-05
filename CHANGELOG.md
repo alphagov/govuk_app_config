@@ -1,3 +1,8 @@
+# 2.8.1
+
+* Add `GdsApi::ContentStore::ItemNotFound` to `data_sync_excluded_exceptions` (https://github.com/alphagov/govuk_app_config/pull/178)
+* Dependabot bumps to allow latest versions of logstasher ([#177](https://github.com/alphagov/govuk_app_config/pull/177)) and unicorn ([#175](https://github.com/alphagov/govuk_app_config/pull/175))
+
 # 2.8.0
 
 * Adds govuk_app_config version to every Sentry call (https://github.com/alphagov/govuk_app_config/pull/174)
