@@ -1,3 +1,7 @@
+# 2.8.0
+
+* Adds govuk_app_config version to every Sentry call (https://github.com/alphagov/govuk_app_config/pull/174)
+
 # 2.7.1
 
 * Fix broken data sync error handling for non-Rails apps
