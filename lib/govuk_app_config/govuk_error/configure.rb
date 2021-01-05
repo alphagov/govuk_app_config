@@ -61,6 +61,7 @@ GovukError.configure do |config|
   # rate-limited by Sentry.
   config.data_sync_excluded_exceptions = [
     "PG::Error",
+    "GdsApi::ContentStore::ItemNotFound",
   ]
 
   config.transport_failure_callback = proc {
