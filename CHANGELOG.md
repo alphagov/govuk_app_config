@@ -1,3 +1,7 @@
+# Unreleased
+
+* Add new Redis healthcheck and relevant tests (https://github.com/alphagov/govuk_app_config/pull/183)
+
 # 2.8.2
 
 * Allow apps to configure the host and protocol for Statsd ([#180](https://github.com/alphagov/govuk_app_config/pull/180))
