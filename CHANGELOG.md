@@ -1,4 +1,4 @@
-# Unreleased
+# 2.8.3
 
 * Add new Redis healthcheck and relevant tests (https://github.com/alphagov/govuk_app_config/pull/183)
 
