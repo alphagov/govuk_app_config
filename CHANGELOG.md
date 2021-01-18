@@ -1,6 +1,10 @@
+# 2.8.4
+
+* Ensure Redis healthcheck avoids potential race condition ([#185](https://github.com/alphagov/govuk_app_config/pull/185))
+
 # 2.8.3
 
-* Add new Redis healthcheck and relevant tests (https://github.com/alphagov/govuk_app_config/pull/183)
+* Add new Redis healthcheck and relevant tests ([#183](https://github.com/alphagov/govuk_app_config/pull/183))
 
 # 2.8.2
 
