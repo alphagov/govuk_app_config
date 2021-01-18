@@ -1,3 +1,5 @@
+require "securerandom"
+
 module GovukHealthcheck
   class Redis
     def name
@@ -7,9 +9,11 @@ module GovukHealthcheck
     def status
       client = ::Redis.new
 
-      client.set("healthcheck", "val")
-      client.get("healthcheck")
-      client.del("healthcheck")
+      key = "healthcheck-#{SecureRandom.hex}"
+
+      client.set(key, "val")
+      client.get(key)
+      client.del(key)
 
       client.close
 

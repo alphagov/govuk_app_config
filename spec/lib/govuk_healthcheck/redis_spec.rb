@@ -9,12 +9,13 @@ RSpec.describe GovukHealthcheck::Redis do
   before do
     stub_const("Redis", redis)
     allow(redis).to receive(:new).and_return(redis_client)
+    allow(SecureRandom).to receive(:hex).and_return("abc")
   end
 
   context "when the database is connected" do
     before do
       allow(redis_client)
-        .to receive(:set).with("healthcheck", anything)
+        .to receive(:set).with("healthcheck-abc", anything)
     end
 
     it_behaves_like "a healthcheck"
@@ -27,7 +28,7 @@ RSpec.describe GovukHealthcheck::Redis do
   context "when the database is not connected" do
     before do
       allow(redis_client)
-        .to receive(:set).with("healthcheck", anything)
+        .to receive(:set).with("healthcheck-abc", anything)
         .and_raise("error")
     end
 
