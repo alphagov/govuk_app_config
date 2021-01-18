@@ -1,7 +1,7 @@
 module GovukHealthcheck
   class Redis
     def name
-      :redis
+      :redis_connectivity
     end
 
     def status
