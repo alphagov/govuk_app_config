@@ -1,4 +1,4 @@
-# Unreleased
+# 2.8.4
 
 * Ensure Redis healthcheck avoids potential race condition ([#185](https://github.com/alphagov/govuk_app_config/pull/185))
 
