@@ -1,3 +1,7 @@
+# 2.9.0
+
+* Add GovukI18n module with custom plural rules ([##187](https://github.com/alphagov/govuk_app_config/pull/187))
+
 # 2.8.4
 
 * Ensure Redis healthcheck avoids potential race condition ([#185](https://github.com/alphagov/govuk_app_config/pull/185))
