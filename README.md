@@ -162,6 +162,10 @@ app with the following content:
 GovukContentSecurityPolicy.configure
 ```
 
+## i18n rules 
+
+Some frontend apps support languages that are not defined in the i18n gem. This provides them with our own custom rules for these languages.
+
 ## License
 
 [MIT License](LICENSE.md)
