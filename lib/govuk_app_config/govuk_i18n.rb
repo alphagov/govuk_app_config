@@ -1,5 +1,5 @@
 module GovukI18n
-  def plurals
+  def self.plurals
     {
       # Dari - this isn't an iso code. Probably should be 'prs' as per ISO 639-3.
       dr: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
