@@ -32,7 +32,10 @@ module GovukContentSecurityPolicy
                    *GOVUK_DOMAINS,
                    *GOOGLE_ANALYTICS_DOMAINS, # Tracking pixels
                    # Some content still links to an old domain we used to use
-                   "assets.digital.cabinet-office.gov.uk"
+                   "assets.digital.cabinet-office.gov.uk",
+                   # Allow images to be loaded for Speedcurve's LUX - used for
+                   # getting real user metrics on GOV.UK
+                   "lux.speedcurve.com"
 
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src
     policy.script_src :self,
