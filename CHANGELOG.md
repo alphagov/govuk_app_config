@@ -1,10 +1,13 @@
+# 2.10.0
+* Allow LUX domain on img-src policy ([#191](https://github.com/alphagov/govuk_app_config/pull/191))
+
 # 2.9.1
 
-* Fixes bug in GovukI18n introduced in the last version ([##189](https://github.com/alphagov/govuk_app_config/pull/189))
+* Fixes bug in GovukI18n introduced in the last version ([#189](https://github.com/alphagov/govuk_app_config/pull/189))
 
 # 2.9.0
 
-* Add GovukI18n module with custom plural rules ([##187](https://github.com/alphagov/govuk_app_config/pull/187))
+* Add GovukI18n module with custom plural rules ([#187](https://github.com/alphagov/govuk_app_config/pull/187))
 
 # 2.8.4
 
