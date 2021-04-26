@@ -1,3 +1,7 @@
+# unreleased
+
+* BREAKING: Implement RFC 141 - remove unsuitable healthchecks and return a 500 on healthcheck failure ([#193](https://github.com/alphagov/govuk_app_config/pull/193))
+
 # 2.10.0
 * Allow LUX domain on img-src policy ([#191](https://github.com/alphagov/govuk_app_config/pull/191))
 
