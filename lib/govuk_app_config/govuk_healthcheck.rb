@@ -13,10 +13,11 @@ require "json"
 module GovukHealthcheck
   def self.rack_response(*checks)
     proc do
+      checkup = healthcheck(checks)
       [
-        200,
+        checkup[:status] == :ok ? 200 : 500,
         { "Content-Type" => "application/json" },
-        [JSON.dump(healthcheck(checks))],
+        [JSON.dump(checkup)],
       ]
     end
   end
