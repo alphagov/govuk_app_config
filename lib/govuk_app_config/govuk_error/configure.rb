@@ -1,10 +1,4 @@
 GovukError.configure do |config|
-  config.before_send = proc { |e|
-    GovukStatsd.increment("errors_occurred")
-    GovukStatsd.increment("error_types.#{e.class.name.demodulize.underscore}")
-    e
-  }
-
   config.silence_ready = !Rails.env.production? if defined?(Rails)
 
   # These are the environments (described by the `SENTRY_CURRENT_ENV`
