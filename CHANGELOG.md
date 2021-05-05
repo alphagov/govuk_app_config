@@ -1,3 +1,7 @@
+# 3.1.0
+
+- Remove support for `should_capture` callbacks in favour of `before_send` ([#196](https://github.com/alphagov/govuk_app_config/pull/196))
+
 # 3.0.0
 
 * BREAKING: Implement RFC 141 - remove unsuitable healthchecks and return a 500 on healthcheck failure ([#193](https://github.com/alphagov/govuk_app_config/pull/193))
