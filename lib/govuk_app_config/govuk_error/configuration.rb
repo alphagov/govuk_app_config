@@ -12,14 +12,12 @@ module GovukError
       @data_sync = GovukDataSync.new(ENV["GOVUK_DATA_SYNC_PERIOD"])
       self.active_sentry_environments = []
       self.data_sync_excluded_exceptions = []
-      self.before_send = lambda do |error_or_event, hint|
-        (ignore_exceptions_based_on_env_and_data_sync.call(error_or_event, hint) && increment_govuk_statsd_counters.call(error_or_event, hint))
-      end
+      self.before_send = default_before_send_actions
     end
 
     def before_send=(closure)
       combined = lambda do |error_or_event, hint|
-        (ignore_exceptions_based_on_env_and_data_sync.call(error_or_event, hint) && increment_govuk_statsd_counters.call(error_or_event, hint) && closure.call(error_or_event, hint))
+        default_before_send_actions.call(error_or_event, hint) && closure.call(error_or_event, hint)
       end
 
       super(combined)
@@ -60,6 +58,12 @@ module GovukError
         GovukStatsd.increment("error_types.#{error_or_event.class.name.demodulize.underscore}")
         error_or_event
       }
+    end
+
+    def default_before_send_actions
+      lambda do |error_or_event, hint|
+        (ignore_exceptions_based_on_env_and_data_sync.call(error_or_event, hint) && increment_govuk_statsd_counters.call(error_or_event, hint))
+      end
     end
   end
 end
