@@ -17,7 +17,7 @@ RSpec.describe GovukError::Configuration do
     it "ignores errors if they happen in an environment we don't care about" do
       ClimateControl.modify SENTRY_CURRENT_ENV: "some-temporary-environment" do
         configuration.active_sentry_environments << "production"
-        expect(configuration.before_send.call(StandardError.new)).to be_falsy
+        expect(configuration.before_send.call(StandardError.new)).to be_nil
       end
     end
 
@@ -45,13 +45,13 @@ RSpec.describe GovukError::Configuration do
       it "should ignore errors that have been added as a string to data_sync_excluded_exceptions" do
         configuration.data_sync_excluded_exceptions << "StandardError"
 
-        expect(configuration.before_send.call(StandardError.new)).to be_falsy
+        expect(configuration.before_send.call(StandardError.new)).to be_nil
       end
 
       it "should ignore errors that have been added as a class to data_sync_excluded_exceptions" do
         configuration.data_sync_excluded_exceptions << StandardError
 
-        expect(configuration.before_send.call(StandardError.new)).to be_falsy
+        expect(configuration.before_send.call(StandardError.new)).to be_nil
       end
 
       it "should ignore errors whose underlying cause is an exception in data_sync_excluded_exceptions" do
@@ -71,7 +71,7 @@ RSpec.describe GovukError::Configuration do
         end
 
         expect(chained_exception).to be_an_instance_of(SomeOtherError)
-        expect(configuration.before_send.call(chained_exception)).to be_falsy
+        expect(configuration.before_send.call(chained_exception)).to be_nil
       end
 
       it "should ignore errors that are subclasses of an exception in data_sync_excluded_exceptions" do
@@ -79,7 +79,7 @@ RSpec.describe GovukError::Configuration do
         stub_const("SomeInheritedClass", Class.new(SomeClass))
 
         configuration.data_sync_excluded_exceptions << "SomeClass"
-        expect(configuration.before_send.call(SomeInheritedClass.new)).to be_falsy
+        expect(configuration.before_send.call(SomeInheritedClass.new)).to be_nil
       end
     end
 
@@ -146,7 +146,7 @@ RSpec.describe GovukError::Configuration do
         end
 
         expect(raven_configurator.before_send.call("do capture")).to be_truthy
-        expect(raven_configurator.before_send.call("don't capture", {})).to be_falsy
+        expect(raven_configurator.before_send.call("don't capture", {})).to be false
       end
     end
   end
