@@ -12,12 +12,13 @@ module GovukError
       @data_sync = GovukDataSync.new(ENV["GOVUK_DATA_SYNC_PERIOD"])
       self.active_sentry_environments = []
       self.data_sync_excluded_exceptions = []
-      self.before_send = default_before_send_actions
+      self.before_send = ->(error_or_event,hint){ error_or_event }
     end
 
     def before_send=(closure)
       combined = lambda do |error_or_event, hint|
-        default_before_send_actions.call(error_or_event, hint) && closure.call(error_or_event, hint)
+        default_before_send_actions.call(error_or_event, hint) && 
+          closure.call(error_or_event, hint)
       end
 
       super(combined)
