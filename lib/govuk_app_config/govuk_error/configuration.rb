@@ -12,7 +12,7 @@ module GovukError
       @data_sync = GovukDataSync.new(ENV["GOVUK_DATA_SYNC_PERIOD"])
       self.active_sentry_environments = []
       self.data_sync_excluded_exceptions = []
-      self.before_send = ->(error_or_event, _hint) { error_or_event }
+      super.before_send = default_before_send_actions
     end
 
     def before_send=(closure)
