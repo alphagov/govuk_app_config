@@ -133,6 +133,36 @@ RSpec.describe GovukError::Configuration do
         end
       end
     end
+
+    context "when the before_send lambda has been overridden twice, the first does not take effect" do
+      before { stub_const("GovukStatsd", double(Module)) }
+      it "increments the appropriate counters" do
+        ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
+          configuration.active_sentry_environments << "production"
+          expect(GovukStatsd).to receive(:increment).exactly(1).times.with("errors_occurred")
+          expect(GovukStatsd).to receive(:increment).exactly(1).times.with("error_types.standard_error")
+          expect(GovukStatsd).not_to receive(:increment).with("does_not_happen")
+          expect(GovukStatsd).to receive(:increment).exactly(1).times.with("hello_world")
+
+          def test_closure_1
+            lambda do |_error_or_event, _hint|
+              GovukStatsd.increment("does_not_happen")
+            end
+          end
+
+          def test_closure_2
+            lambda do |_error_or_event, _hint|
+              GovukStatsd.increment("hello_world")
+            end
+          end
+
+          configuration.before_send = test_closure_1
+          configuration.before_send = test_closure_2
+
+          configuration.before_send.call(StandardError.new)
+        end
+      end
+    end
   end
 
   describe ".before_send=" do
