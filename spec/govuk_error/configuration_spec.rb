@@ -121,8 +121,9 @@ RSpec.describe GovukError::Configuration do
           expect(GovukStatsd).to receive(:increment).exactly(1).times.with("error_types.standard_error")
           expect(GovukStatsd).to receive(:increment).exactly(1).times.with("hello_world")
 
-          configuration.before_send = lambda do |_error_or_event, _hint|
+          configuration.before_send = lambda do |error_or_event, _hint|
             GovukStatsd.increment("hello_world")
+            error_or_event
           end
 
           configuration.before_send.call(StandardError.new)
@@ -130,21 +131,23 @@ RSpec.describe GovukError::Configuration do
       end
     end
 
-    context "when the before_send lambda has been overridden twice, the first does not take effect" do
+    context "when the before_send lambda has been overridden several times, all take effect" do
       before { stub_const("GovukStatsd", double(Module)) }
       it "increments the appropriate counters" do
         ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
           configuration.active_sentry_environments << "production"
           expect(GovukStatsd).to receive(:increment).exactly(1).times.with("errors_occurred")
           expect(GovukStatsd).to receive(:increment).exactly(1).times.with("error_types.standard_error")
-          expect(GovukStatsd).not_to receive(:increment).with("does_not_happen")
           expect(GovukStatsd).to receive(:increment).exactly(1).times.with("hello_world")
+          expect(GovukStatsd).to receive(:increment).exactly(1).times.with("hello_world_again")
 
-          configuration.before_send = lambda do |_error_or_event, _hint|
-            GovukStatsd.increment("does_not_happen")
-          end
-          configuration.before_send = lambda do |_error_or_event, _hint|
+          configuration.before_send = lambda do |error_or_event, _hint|
             GovukStatsd.increment("hello_world")
+            error_or_event
+          end
+          configuration.before_send = lambda do |error_or_event, _hint|
+            GovukStatsd.increment("hello_world_again")
+            error_or_event
           end
 
           configuration.before_send.call(StandardError.new)
@@ -159,11 +162,26 @@ RSpec.describe GovukError::Configuration do
         raven_configurator = GovukError::Configuration.new(Raven.configuration)
         raven_configurator.active_sentry_environments << "production"
         raven_configurator.before_send = lambda do |error_or_event, _hint|
-          error_or_event == "do capture"
+          error_or_event if error_or_event == "do capture"
         end
 
         expect(raven_configurator.before_send.call("do capture")).to be_truthy
-        expect(raven_configurator.before_send.call("don't capture", {})).to be false
+        expect(raven_configurator.before_send.call("don't capture", {})).to be_nil
+      end
+    end
+
+    it "does not increment the counters if the callback returns nil" do
+      ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
+        raven_configurator = GovukError::Configuration.new(Raven.configuration)
+        raven_configurator.active_sentry_environments << "production"
+        raven_configurator.before_send = lambda do |_error_or_event, _hint|
+          nil
+        end
+
+        expect(GovukStatsd).not_to receive(:increment).with("errors_occurred")
+        expect(GovukStatsd).not_to receive(:increment).with("error_types.standard_error")
+
+        raven_configurator.before_send.call(StandardError.new)
       end
     end
   end

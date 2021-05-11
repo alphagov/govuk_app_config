@@ -12,16 +12,15 @@ module GovukError
       @data_sync = GovukDataSync.new(ENV["GOVUK_DATA_SYNC_PERIOD"])
       self.active_sentry_environments = []
       self.data_sync_excluded_exceptions = []
-      super.before_send = default_before_send_actions
+      @before_send_callbacks = [
+        ignore_exceptions_based_on_env_and_data_sync,
+        increment_govuk_statsd_counters,
+      ]
+      super.before_send = run_before_send_callbacks
     end
 
     def before_send=(closure)
-      combined = lambda do |error_or_event, hint|
-        default_before_send_actions.call(error_or_event, hint) &&
-          closure.call(error_or_event, hint)
-      end
-
-      super(combined)
+      @before_send_callbacks.insert(-2, closure)
     end
 
   protected
@@ -61,9 +60,12 @@ module GovukError
       }
     end
 
-    def default_before_send_actions
+    def run_before_send_callbacks
       lambda do |error_or_event, hint|
-        (ignore_exceptions_based_on_env_and_data_sync.call(error_or_event, hint) && increment_govuk_statsd_counters.call(error_or_event, hint))
+        @before_send_callbacks.each do |callback|
+          break if callback.call(error_or_event, hint).nil?
+        end
+        error_or_event
       end
     end
   end
