@@ -121,13 +121,9 @@ RSpec.describe GovukError::Configuration do
           expect(GovukStatsd).to receive(:increment).exactly(1).times.with("error_types.standard_error")
           expect(GovukStatsd).to receive(:increment).exactly(1).times.with("hello_world")
 
-          def test_closure
-            lambda do |_error_or_event, _hint|
-              GovukStatsd.increment("hello_world")
-            end
+          configuration.before_send = lambda do |_error_or_event, _hint|
+            GovukStatsd.increment("hello_world")
           end
-
-          configuration.before_send = test_closure
 
           configuration.before_send.call(StandardError.new)
         end
@@ -144,20 +140,12 @@ RSpec.describe GovukError::Configuration do
           expect(GovukStatsd).not_to receive(:increment).with("does_not_happen")
           expect(GovukStatsd).to receive(:increment).exactly(1).times.with("hello_world")
 
-          def test_closure_1
-            lambda do |_error_or_event, _hint|
-              GovukStatsd.increment("does_not_happen")
-            end
+          configuration.before_send = lambda do |_error_or_event, _hint|
+            GovukStatsd.increment("does_not_happen")
           end
-
-          def test_closure_2
-            lambda do |_error_or_event, _hint|
-              GovukStatsd.increment("hello_world")
-            end
+          configuration.before_send = lambda do |_error_or_event, _hint|
+            GovukStatsd.increment("hello_world")
           end
-
-          configuration.before_send = test_closure_1
-          configuration.before_send = test_closure_2
 
           configuration.before_send.call(StandardError.new)
         end
