@@ -101,30 +101,29 @@ RSpec.describe GovukError::Configuration do
     end
 
     context "when the before_send lambda has not been overridden" do
-      before { stub_const('GovukStatsd', double(Module)) }
+      before { stub_const("GovukStatsd", double(Module)) }
       it "increments the appropriate counters" do
         ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
           configuration.active_sentry_environments << "production"
-          expect(GovukStatsd).to receive(:increment).exactly(1).times.with('errors_occurred')
-          expect(GovukStatsd).to receive(:increment).exactly(1).times.with('error_types.standard_error')
+          expect(GovukStatsd).to receive(:increment).exactly(1).times.with("errors_occurred")
+          expect(GovukStatsd).to receive(:increment).exactly(1).times.with("error_types.standard_error")
           configuration.before_send.call(StandardError.new)
         end
       end
     end
 
     context "when the before_send lambda has been overridden" do
-      before { stub_const('GovukStatsd', double(Module)) }
+      before { stub_const("GovukStatsd", double(Module)) }
       it "increments the appropriate counters" do
         ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
           configuration.active_sentry_environments << "production"
-          expect(GovukStatsd).to receive(:increment).exactly(1).times.with('errors_occurred')
-          expect(GovukStatsd).to receive(:increment).exactly(1).times.with('error_types.standard_error')
-          expect(GovukStatsd).to receive(:increment).exactly(1).times.with('hello_world')
-
+          expect(GovukStatsd).to receive(:increment).exactly(1).times.with("errors_occurred")
+          expect(GovukStatsd).to receive(:increment).exactly(1).times.with("error_types.standard_error")
+          expect(GovukStatsd).to receive(:increment).exactly(1).times.with("hello_world")
 
           def test_closure
-            lambda do |error_or_event, hint|
-              GovukStatsd.increment('hello_world')
+            lambda do |_error_or_event, _hint|
+              GovukStatsd.increment("hello_world")
             end
           end
 
