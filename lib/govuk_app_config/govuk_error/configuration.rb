@@ -62,10 +62,12 @@ module GovukError
 
     def run_before_send_callbacks
       lambda do |error_or_event, hint|
+        result = error_or_event
         @before_send_callbacks.each do |callback|
-          break if callback.call(error_or_event, hint).nil?
+          result = callback.call(error_or_event, hint)
+          break if result.nil?
         end
-        error_or_event
+        result
       end
     end
   end
