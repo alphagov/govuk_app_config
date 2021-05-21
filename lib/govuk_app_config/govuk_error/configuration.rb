@@ -39,7 +39,7 @@ module GovukError
         rescue NameError
           # the exception type represented by the exception_to_ignore string
           # doesn't even exist in this environment, so won't be found in the chain
-          nil
+          false
         end
 
         error_or_event unless data_sync.in_progress? && data_sync_ignored_error
