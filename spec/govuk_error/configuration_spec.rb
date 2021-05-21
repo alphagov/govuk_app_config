@@ -16,7 +16,13 @@ RSpec.describe GovukError::Configuration do
   end
 
   describe ".before_send" do
-    let(:configuration) { GovukError::Configuration.new(Raven.configuration) }
+    let(:configuration) do
+      configuration = GovukError::Configuration.new(Raven.configuration)
+      configuration.before_send = lambda { |error_or_event, _hint|
+        error_or_event
+      }
+      configuration
+    end
 
     it "ignores errors if they happen in an environment we don't care about" do
       ClimateControl.modify SENTRY_CURRENT_ENV: "some-temporary-environment" do

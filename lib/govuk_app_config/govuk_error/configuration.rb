@@ -17,11 +17,11 @@ module GovukError
         ignore_excluded_exceptions_in_data_sync,
         increment_govuk_statsd_counters,
       ]
-      super.before_send = run_before_send_callbacks
     end
 
     def before_send=(closure)
       @before_send_callbacks.insert(-2, closure)
+      super(run_before_send_callbacks)
     end
 
   protected
