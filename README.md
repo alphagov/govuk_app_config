@@ -112,12 +112,12 @@ end
 Finally, you can pass your own callback to evaluate whether or not to capture the exception.
 Note that if an exception is on the `excluded_exceptions` list, or on the `data_sync_excluded_exceptions`
 and occurs at the time of a data sync, then it will be excluded even if the custom
-`should_capture` callback returns `true`.
+`before_send` callback doesn't return `nil`.
 
 ```ruby
 GovukError.configure do |config|
-  config.should_capture = lambda do |error_or_event|
-    error_or_event == "do capture"
+  config.before_send = lambda do |error_or_event|
+    error_or_event == "do capture" ? error_or_event : nil
   end
 end
 ```
