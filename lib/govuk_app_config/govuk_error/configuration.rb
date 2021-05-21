@@ -17,11 +17,11 @@ module GovukError
         ignore_excluded_exceptions_in_data_sync,
         increment_govuk_statsd_counters,
       ]
-      super.before_send = run_before_send_callbacks
     end
 
     def before_send=(closure)
       @before_send_callbacks.insert(-2, closure)
+      super(run_before_send_callbacks)
     end
 
   protected
@@ -39,7 +39,7 @@ module GovukError
         rescue NameError
           # the exception type represented by the exception_to_ignore string
           # doesn't even exist in this environment, so won't be found in the chain
-          nil
+          false
         end
 
         error_or_event unless data_sync.in_progress? && data_sync_ignored_error

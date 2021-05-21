@@ -1,3 +1,7 @@
+# 3.1.1
+
+- Fix the new before_send behaviour & tests, and add documentation ([#197](https://github.com/alphagov/govuk_app_config/pull/197))
+
 # 3.1.0
 
 - Remove support for `should_capture` callbacks in favour of `before_send` ([#196](https://github.com/alphagov/govuk_app_config/pull/196))

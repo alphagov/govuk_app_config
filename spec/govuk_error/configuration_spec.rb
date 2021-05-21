@@ -3,6 +3,10 @@ require "sentry-raven"
 require "govuk_app_config/govuk_error/configuration"
 
 RSpec.describe GovukError::Configuration do
+  before :each do
+    stub_const("GovukStatsd", double(Module, increment: nil))
+  end
+
   describe ".initialize" do
     it "delegates to the passed object if it doesn't have the method defined" do
       delegated_object = double("Raven.configuration").as_null_object
@@ -12,7 +16,13 @@ RSpec.describe GovukError::Configuration do
   end
 
   describe ".before_send" do
-    let(:configuration) { GovukError::Configuration.new(Raven.configuration) }
+    let(:configuration) do
+      configuration = GovukError::Configuration.new(Raven.configuration)
+      configuration.before_send = lambda { |error_or_event, _hint|
+        error_or_event
+      }
+      configuration
+    end
 
     it "ignores errors if they happen in an environment we don't care about" do
       ClimateControl.modify SENTRY_CURRENT_ENV: "some-temporary-environment" do
@@ -101,7 +111,6 @@ RSpec.describe GovukError::Configuration do
     end
 
     context "when the before_send lambda has not been overridden" do
-      before { stub_const("GovukStatsd", double(Module)) }
       it "increments the appropriate counters" do
         ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
           configuration.active_sentry_environments << "production"
@@ -113,7 +122,6 @@ RSpec.describe GovukError::Configuration do
     end
 
     context "when the before_send lambda has been overridden" do
-      before { stub_const("GovukStatsd", double(Module)) }
       it "increments the appropriate counters" do
         ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
           configuration.active_sentry_environments << "production"
@@ -132,7 +140,6 @@ RSpec.describe GovukError::Configuration do
     end
 
     context "when the before_send lambda has been overridden several times, all take effect" do
-      before { stub_const("GovukStatsd", double(Module)) }
       it "increments the appropriate counters" do
         ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
           configuration.active_sentry_environments << "production"
