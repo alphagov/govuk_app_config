@@ -1,5 +1,5 @@
 require "spec_helper"
-require "sentry-raven"
+require "sentry-ruby"
 require "govuk_app_config/govuk_error/configuration"
 
 RSpec.describe GovukError::Configuration do

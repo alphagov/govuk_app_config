@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = %w[lib]
 
   spec.add_dependency "logstasher", ">= 1.2.2", "< 2.2.0"
-  spec.add_dependency "sentry-raven", "~> 3.1.1"
+  spec.add_dependency "sentry-ruby", "~> 4.5.0"
   spec.add_dependency "statsd-ruby", "~> 1.5.0"
   spec.add_dependency "unicorn", ">= 5.4", "< 5.9"
 
