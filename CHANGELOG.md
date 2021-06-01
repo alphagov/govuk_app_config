@@ -1,3 +1,7 @@
+# 3.1.2
+
+- Attempt to fix the `before_send` behaviour for errors which occur during the data sync ([#198](https://github.com/alphagov/govuk_app_config/pull/198))
+
 # 3.1.1
 
 - Fix the new before_send behaviour & tests, and add documentation ([#197](https://github.com/alphagov/govuk_app_config/pull/197))
