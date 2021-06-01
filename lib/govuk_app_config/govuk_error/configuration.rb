@@ -6,7 +6,7 @@ module GovukError
     attr_reader :data_sync, :sentry_environment
     attr_accessor :active_sentry_environments, :data_sync_excluded_exceptions
 
-    def initialize(_raven_configuration)
+    def initialize(_sentry_configuration)
       super
       @sentry_environment = ENV["SENTRY_CURRENT_ENV"]
       @data_sync = GovukDataSync.new(ENV["GOVUK_DATA_SYNC_PERIOD"])
@@ -34,7 +34,7 @@ module GovukError
       lambda { |error_or_event, _hint|
         data_sync_ignored_error = data_sync_excluded_exceptions.any? do |exception_to_ignore|
           exception_to_ignore = Object.const_get(exception_to_ignore) unless exception_to_ignore.is_a?(Module)
-          exception_chain = Raven::Utils::ExceptionCauseChain.exception_to_array(error_or_event)
+          exception_chain = Sentry::Utils::ExceptionCauseChain.exception_to_array(error_or_event)
           exception_chain.any? { |exception| exception.is_a?(exception_to_ignore) }
         rescue NameError
           # the exception type represented by the exception_to_ignore string

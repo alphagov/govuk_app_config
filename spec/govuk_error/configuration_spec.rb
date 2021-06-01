@@ -9,7 +9,7 @@ RSpec.describe GovukError::Configuration do
 
   describe ".initialize" do
     it "delegates to the passed object if it doesn't have the method defined" do
-      delegated_object = double("Raven.configuration").as_null_object
+      delegated_object = double("Sentry::Configuration.new").as_null_object
       expect(delegated_object).to receive(:some_method)
       GovukError::Configuration.new(delegated_object).some_method
     end
@@ -17,7 +17,7 @@ RSpec.describe GovukError::Configuration do
 
   describe ".before_send" do
     let(:configuration) do
-      configuration = GovukError::Configuration.new(Raven.configuration)
+      configuration = GovukError::Configuration.new(Sentry::Configuration.new)
       configuration.before_send = lambda { |error_or_event, _hint|
         error_or_event
       }
@@ -166,29 +166,29 @@ RSpec.describe GovukError::Configuration do
   describe ".before_send=" do
     it "Allows apps to add their own `before_send` callback, that is evaluated alongside the default. If all return their parameter, then the chain continues, but if any returns `nil`, then it ends and the error is dropped" do
       ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
-        raven_configurator = GovukError::Configuration.new(Raven.configuration)
-        raven_configurator.active_sentry_environments << "production"
-        raven_configurator.before_send = lambda do |error_or_event, _hint|
+        sentry_configurator = GovukError::Configuration.new(Sentry::Configuration.new)
+        sentry_configurator.active_sentry_environments << "production"
+        sentry_configurator.before_send = lambda do |error_or_event, _hint|
           error_or_event if error_or_event == "do capture"
         end
 
-        expect(raven_configurator.before_send.call("do capture")).to be_truthy
-        expect(raven_configurator.before_send.call("don't capture", {})).to be_nil
+        expect(sentry_configurator.before_send.call("do capture")).to be_truthy
+        expect(sentry_configurator.before_send.call("don't capture", {})).to be_nil
       end
     end
 
     it "does not increment the counters if the callback returns nil" do
       ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
-        raven_configurator = GovukError::Configuration.new(Raven.configuration)
-        raven_configurator.active_sentry_environments << "production"
-        raven_configurator.before_send = lambda do |_error_or_event, _hint|
+        sentry_configurator = GovukError::Configuration.new(Sentry::Configuration.new)
+        sentry_configurator.active_sentry_environments << "production"
+        sentry_configurator.before_send = lambda do |_error_or_event, _hint|
           nil
         end
 
         expect(GovukStatsd).not_to receive(:increment).with("errors_occurred")
         expect(GovukStatsd).not_to receive(:increment).with("error_types.standard_error")
 
-        raven_configurator.before_send.call(StandardError.new)
+        sentry_configurator.before_send.call(StandardError.new)
       end
     end
   end
