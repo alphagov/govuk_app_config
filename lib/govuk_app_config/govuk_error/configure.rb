@@ -55,6 +55,8 @@ GovukError.configure do |config|
   # rate-limited by Sentry.
   config.data_sync_excluded_exceptions = [
     "PG::Error",
+    "PG::UndefinedTable",
+    "ActiveRecord::StatementInvalid",
     "GdsApi::ContentStore::ItemNotFound",
   ]
 
