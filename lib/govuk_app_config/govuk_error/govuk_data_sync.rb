@@ -3,14 +3,8 @@ require "time"
 module GovukError
   class GovukDataSync
     class MalformedDataSyncPeriod < RuntimeError
-      attr_reader :invalid_value
-
       def initialize(invalid_value)
-        @invalid_value = invalid_value
-      end
-
-      def message
-        "\"#{invalid_value}\" is not a valid value (should be of form '22:00-03:00')."
+        super("\"#{invalid_value}\" is not a valid value (should be of form '22:00-03:00').")
       end
     end
 
