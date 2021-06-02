@@ -4,12 +4,16 @@ require "govuk_app_config/govuk_logging"
 require "rack/test"
 
 RSpec.describe GovukLogging do
-  class DummyLoggingRailsApp < Rails::Application
-    config.hosts.clear
-    routes.draw do
-      get "/error", to: proc { |_env| raise StandardError, "default exception" }
-    end
+  before do
+    stub_const("DummyLoggingRailsApp", Class.new(Rails::Application) do
+      config.hosts.clear
+      routes.draw do
+        get "/error", to: proc { |_env| raise StandardError, "default exception" }
+      end
+    end)
   end
+
+  after { Rails.application = nil }
 
   old_stderr = nil
 
@@ -62,6 +66,7 @@ RSpec.describe GovukLogging do
 
     describe "when making requests to the application" do
       include Rack::Test::Methods
+
       def app
         Rails.application
       end
