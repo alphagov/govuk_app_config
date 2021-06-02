@@ -3,7 +3,11 @@ require "rails"
 require "govuk_app_config/govuk_content_security_policy"
 
 RSpec.describe GovukContentSecurityPolicy do
-  class DummyCspRailsApp < Rails::Application; end
+  before do
+    stub_const("DummyCspRailsApp", Class.new(Rails::Application))
+  end
+
+  after { Rails.application = nil }
 
   describe ".configure" do
     it "creates a policy" do

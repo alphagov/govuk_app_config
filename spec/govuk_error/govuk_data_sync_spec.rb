@@ -47,9 +47,7 @@ RSpec.describe GovukError::GovukDataSync do
     end
   end
 
-  def at(time)
-    travel_to(Time.current.change(time)) do
-      yield
-    end
+  def at(time, &block)
+    travel_to(Time.current.change(time), &block)
   end
 end

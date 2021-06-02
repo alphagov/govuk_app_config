@@ -10,38 +10,34 @@ RSpec.describe ::GovukLogging::RailsExt::ActionDispatch do
     end
 
     it "should not monkey patch classes which do not have log_error" do
-      class NoMethodTestClass; end
-      expect(described_class.should_monkey_patch_log_error?(NoMethodTestClass)).to be(false)
+      no_method_test_class = Class.new
+      expect(described_class.should_monkey_patch_log_error?(no_method_test_class)).to be(false)
     end
 
     it "should not monkey patch classes which have log_error with different params" do
-      class WrongParametersTestClass
-      private
-
+      wrong_parameters_test_class = Class.new do
         def log_error(_different, _parameters); end
       end
-      expect(described_class.should_monkey_patch_log_error?(WrongParametersTestClass)).to be(false)
+      expect(described_class.should_monkey_patch_log_error?(wrong_parameters_test_class)).to be(false)
     end
 
     it "should monkey patch classes which have log_error with the same params" do
-      class RightParametersTestClass
-      private
-
+      right_parameters_test_class = Class.new do
         def log_error(request, wrapper); end
       end
-      expect(described_class.should_monkey_patch_log_error?(RightParametersTestClass)).to be(false)
+      expect(described_class.should_monkey_patch_log_error?(right_parameters_test_class)).to be(false)
     end
   end
 
   describe "#monkey_patch_log_error" do
     it "should replace the private log_error method" do
-      class FakeDebugExceptions
+      fake_debug_exceptions = Class.new do
         def log_error(request, wrapper); end
       end
-      instance = FakeDebugExceptions.new
+      instance = fake_debug_exceptions.new
 
       expect {
-        described_class.monkey_patch_log_error(FakeDebugExceptions)
+        described_class.monkey_patch_log_error(fake_debug_exceptions)
       }.to(change { instance.method(:log_error) })
     end
   end
