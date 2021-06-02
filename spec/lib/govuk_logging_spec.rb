@@ -7,7 +7,7 @@ RSpec.describe GovukLogging do
   class DummyLoggingRailsApp < Rails::Application
     config.hosts.clear
     routes.draw do
-      get "/error", to: proc { |_env| raise Exception, "default exception" }
+      get "/error", to: proc { |_env| raise StandardError, "default exception" }
     end
   end
 
@@ -76,7 +76,7 @@ RSpec.describe GovukLogging do
         expect(error_log_line).not_to be_empty
         error_log_json = JSON.parse(error_log_line)
         expect(error_log_json).to match(hash_including(
-                                          "exception_class" => "Exception",
+                                          "exception_class" => "StandardError",
                                           "exception_message" => "default exception",
                                         ))
         expect(error_log_json).to have_key("stacktrace")
