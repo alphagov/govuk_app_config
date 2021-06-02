@@ -2,11 +2,79 @@ require "spec_helper"
 require "govuk_app_config/govuk_healthcheck"
 
 RSpec.describe GovukHealthcheck::Checkup do
-  let(:ok_check) { OkTestHealthcheck }
-  let(:warning_check) { WarningTestHealthcheck }
-  let(:critical_check) { CriticalTestHealthcheck }
-  let(:disabled_critical_check) { DisabledCriticalHealthcheck }
-  let(:exception_check) { ExceptionHealthcheck }
+  let(:test_healthcheck) do
+    Class.new do
+      def name
+        "#{status}_check".to_sym
+      end
+
+      def status
+        :unknown
+      end
+    end
+  end
+
+  let(:ok_check) do
+    Class.new(test_healthcheck) do
+      def status
+        :ok
+      end
+    end
+  end
+
+  let(:ok_check_with_message) do
+    Class.new(ok_check) do
+      def message
+        "This is a custom message"
+      end
+    end
+  end
+
+  let(:ok_check_with_details) do
+    Class.new(ok_check) do
+      def details
+        {
+          extra: "This is an extra detail",
+        }
+      end
+    end
+  end
+
+  let(:warning_check) do
+    Class.new(test_healthcheck) do
+      def status
+        :warning
+      end
+    end
+  end
+
+  let(:critical_check) do
+    Class.new(test_healthcheck) do
+      def status
+        :critical
+      end
+    end
+  end
+
+  let(:disabled_critical_check) do
+    Class.new(critical_check) do
+      def enabled?
+        false
+      end
+    end
+  end
+
+  let(:exception_check) do
+    Class.new do
+      def name
+        :exception_check
+      end
+
+      def status
+        raise "something bad happened"
+      end
+    end
+  end
 
   it "sets the overall status to the worse component status" do
     expect(described_class.new([ok_check]).run[:status]).to eq(GovukHealthcheck::OK)
@@ -39,12 +107,12 @@ RSpec.describe GovukHealthcheck::Checkup do
   end
 
   it "puts the details at the top level of each check" do
-    response = described_class.new([OkTestHealthcheckWithDetails]).run
+    response = described_class.new([ok_check_with_details]).run
     expect(response.dig(:checks, :ok_check, :extra)).to eq("This is an extra detail")
   end
 
   it "adds the message to the check's top level if it supplies one" do
-    response = described_class.new([OkTestHealthcheckWithMessage]).run
+    response = described_class.new([ok_check_with_message]).run
     expect(response.dig(:checks, :ok_check, :message)).to eq("This is a custom message")
   end
 
@@ -54,75 +122,17 @@ RSpec.describe GovukHealthcheck::Checkup do
   end
 
   it "sets the message of disabled checks" do
-    response = described_class.new([DisabledCriticalHealthcheck]).run
+    response = described_class.new([disabled_critical_check]).run
     expect(response.dig(:checks, :critical_check, :message)).to eq("currently disabled")
   end
 
   it "sets the status of disabled checks to ok" do
-    response = described_class.new([DisabledCriticalHealthcheck]).run
+    response = described_class.new([disabled_critical_check]).run
     expect(response.dig(:checks, :critical_check, :status)).to eq(:ok)
   end
 
   it "accepts objects (can be initialized)" do
-    response = described_class.new([TestHealthcheck.new]).run
+    response = described_class.new([test_healthcheck.new]).run
     expect(response.dig(:checks, :unknown_check, :status)).to eq(:unknown)
-  end
-
-  class TestHealthcheck
-    def name
-      "#{status}_check".to_sym
-    end
-
-    def status
-      :unknown
-    end
-  end
-
-  class OkTestHealthcheck < TestHealthcheck
-    def status
-      :ok
-    end
-  end
-
-  class WarningTestHealthcheck < TestHealthcheck
-    def status
-      :warning
-    end
-  end
-
-  class CriticalTestHealthcheck < TestHealthcheck
-    def status
-      :critical
-    end
-  end
-
-  class OkTestHealthcheckWithMessage < OkTestHealthcheck
-    def message
-      "This is a custom message"
-    end
-  end
-
-  class OkTestHealthcheckWithDetails < OkTestHealthcheck
-    def details
-      {
-        extra: "This is an extra detail",
-      }
-    end
-  end
-
-  class DisabledCriticalHealthcheck < CriticalTestHealthcheck
-    def enabled?
-      false
-    end
-  end
-
-  class ExceptionHealthcheck
-    def name
-      :exception_check
-    end
-
-    def status
-      raise "something bad happened"
-    end
   end
 end
