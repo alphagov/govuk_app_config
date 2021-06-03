@@ -24,7 +24,7 @@ RSpec.describe GovukError do
 
       GovukError.notify(StandardError.new, parameters: "Something")
 
-      expect(Sentry).to have_received(:capture_exception).with(StandardError.new, hash_including(tags: { govuk_app_config_version: /^[0-9.]+$/ }))
+      expect(Sentry).to have_received(:capture_exception).with(StandardError.new, hash_including(tags: { govuk_app_config_version: /^[0-9]\.[0-9]\.[0-9](?:\.pre\.[0-9]+)?$/ }))
     end
   end
 
