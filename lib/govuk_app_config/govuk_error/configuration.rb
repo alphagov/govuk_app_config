@@ -50,7 +50,7 @@ module GovukError
       lambda { |event, hint|
         if hint[:exception]
           GovukStatsd.increment("errors_occurred")
-          GovukStatsd.increment("error_types.#{hint[:exception].class.name.demodulize.underscore}")
+          GovukStatsd.increment("error_types.#{hint[:exception].class.name.split('::').last.underscore}")
         end
         event
       }
