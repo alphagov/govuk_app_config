@@ -27,7 +27,7 @@ RSpec.describe GovukError::Configuration do
     it "ignores errors if they happen in an environment we don't care about" do
       ClimateControl.modify SENTRY_CURRENT_ENV: "some-temporary-environment" do
         configuration.active_sentry_environments << "production"
-        sentry_client = send_event_to_sentry(StandardError.new, configuration)
+        sentry_client = send_exception_to_sentry(StandardError.new, configuration)
         expect(sentry_client.transport.events).to be_empty
       end
     end
@@ -35,8 +35,20 @@ RSpec.describe GovukError::Configuration do
     it "captures errors if they happen in an environment we care about" do
       ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
         configuration.active_sentry_environments << "production"
-        sentry_client = send_event_to_sentry(StandardError.new, configuration)
+        sentry_client = send_exception_to_sentry(StandardError.new, configuration)
         expect(sentry_client.transport.events.count).to eq(1)
+      end
+    end
+
+    it "allows string messages to be sent (rather than exceptions)" do
+      ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
+        configuration.active_sentry_environments << "production"
+        configuration.data_sync_excluded_exceptions << "SomeError"
+        sentry_client = Sentry::Client.new(optimise_configuration_for_testing(configuration))
+        sentry_hub = Sentry::Hub.new(sentry_client, Sentry::Scope.new)
+
+        expect { sentry_hub.capture_message("foo") }
+          .to change { sentry_client.transport.events.count }.by(1)
       end
     end
 
@@ -51,21 +63,21 @@ RSpec.describe GovukError::Configuration do
       end
 
       it "should capture errors by default" do
-        sentry_client = send_event_to_sentry(StandardError.new, configuration)
+        sentry_client = send_exception_to_sentry(StandardError.new, configuration)
         expect(sentry_client.transport.events.count).to eq(1)
       end
 
       it "should ignore errors that have been added as a string to data_sync_excluded_exceptions" do
         configuration.data_sync_excluded_exceptions << "StandardError"
 
-        sentry_client = send_event_to_sentry(StandardError.new, configuration)
+        sentry_client = send_exception_to_sentry(StandardError.new, configuration)
         expect(sentry_client.transport.events).to be_empty
       end
 
       it "should ignore errors that have been added as a class to data_sync_excluded_exceptions" do
         configuration.data_sync_excluded_exceptions << StandardError
 
-        sentry_client = send_event_to_sentry(StandardError.new, configuration)
+        sentry_client = send_exception_to_sentry(StandardError.new, configuration)
         expect(sentry_client.transport.events).to be_empty
       end
 
@@ -86,7 +98,7 @@ RSpec.describe GovukError::Configuration do
         end
 
         expect(chained_exception).to be_an_instance_of(SomeOtherError)
-        sentry_client = send_event_to_sentry(chained_exception, configuration)
+        sentry_client = send_exception_to_sentry(chained_exception, configuration)
         expect(sentry_client.transport.events).to be_empty
       end
 
@@ -95,7 +107,7 @@ RSpec.describe GovukError::Configuration do
         stub_const("SomeInheritedClass", Class.new(SomeClass))
 
         configuration.data_sync_excluded_exceptions << "SomeClass"
-        sentry_client = send_event_to_sentry(SomeInheritedClass.new, configuration)
+        sentry_client = send_exception_to_sentry(SomeInheritedClass.new, configuration)
         expect(sentry_client.transport.events).to be_empty
       end
     end
@@ -113,7 +125,7 @@ RSpec.describe GovukError::Configuration do
       it "should capture errors even if they are in the list of data_sync_excluded_exceptions" do
         configuration.data_sync_excluded_exceptions << "StandardError"
 
-        sentry_client = send_event_to_sentry(StandardError.new, configuration)
+        sentry_client = send_exception_to_sentry(StandardError.new, configuration)
         expect(sentry_client.transport.events.count).to eq(1)
       end
     end
@@ -124,7 +136,7 @@ RSpec.describe GovukError::Configuration do
           configuration.active_sentry_environments << "production"
           expect(GovukStatsd).to receive(:increment).exactly(1).times.with("errors_occurred")
           expect(GovukStatsd).to receive(:increment).exactly(1).times.with("error_types.standard_error")
-          send_event_to_sentry(StandardError.new, configuration)
+          send_exception_to_sentry(StandardError.new, configuration)
         end
       end
     end
@@ -142,7 +154,7 @@ RSpec.describe GovukError::Configuration do
             error_or_event
           end
 
-          send_event_to_sentry(StandardError.new, configuration)
+          send_exception_to_sentry(StandardError.new, configuration)
         end
       end
     end
@@ -165,7 +177,7 @@ RSpec.describe GovukError::Configuration do
             error_or_event
           end
 
-          send_event_to_sentry(StandardError.new, configuration)
+          send_exception_to_sentry(StandardError.new, configuration)
         end
       end
     end
@@ -181,9 +193,9 @@ RSpec.describe GovukError::Configuration do
           event if hint[:exception].is_a?(CustomError)
         end
 
-        sentry_client = send_event_to_sentry(CustomError.new, sentry_configurator)
+        sentry_client = send_exception_to_sentry(CustomError.new, sentry_configurator)
         expect(sentry_client.transport.events.count).to eq(1)
-        sentry_client = send_event_to_sentry(StandardError.new, sentry_configurator)
+        sentry_client = send_exception_to_sentry(StandardError.new, sentry_configurator)
         expect(sentry_client.transport.events).to be_empty
       end
     end
@@ -199,19 +211,23 @@ RSpec.describe GovukError::Configuration do
         expect(GovukStatsd).not_to receive(:increment).with("errors_occurred")
         expect(GovukStatsd).not_to receive(:increment).with("error_types.standard_error")
 
-        send_event_to_sentry(StandardError.new, sentry_configurator)
+        send_exception_to_sentry(StandardError.new, sentry_configurator)
       end
     end
   end
 
-  def send_event_to_sentry(event, configuration)
+  def send_exception_to_sentry(event, configuration)
+    sentry_client = Sentry::Client.new(optimise_configuration_for_testing(configuration))
+    sentry_hub = Sentry::Hub.new(sentry_client, Sentry::Scope.new)
+    sentry_hub.send(:capture_exception, event)
+    sentry_client
+  end
+
+  def optimise_configuration_for_testing(configuration)
     # prevent the sending happening in a separate worker, which would cause async results
     configuration.background_worker_threads = 0
     # force configuration to allow sending
     allow(configuration).to receive(:sending_allowed?).and_return(true)
-    sentry_client = Sentry::Client.new(configuration)
-    sentry_hub = Sentry::Hub.new(sentry_client, Sentry::Scope.new)
-    sentry_hub.send(:capture_exception, event)
-    sentry_client
+    configuration
   end
 end
