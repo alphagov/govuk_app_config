@@ -61,8 +61,4 @@ GovukError.configure do |config|
   config.before_send = lambda { |error_or_event, _hint|
     error_or_event
   }
-
-  config.transport_failure_callback = proc {
-    GovukStatsd.increment("error_reports_failed")
-  }
 end
