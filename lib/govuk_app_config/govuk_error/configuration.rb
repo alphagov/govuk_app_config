@@ -48,8 +48,10 @@ module GovukError
 
     def increment_govuk_statsd_counters
       lambda { |event, hint|
-        GovukStatsd.increment("errors_occurred")
-        GovukStatsd.increment("error_types.#{hint[:exception].class.name.demodulize.underscore}")
+        if hint[:exception]
+          GovukStatsd.increment("errors_occurred")
+          GovukStatsd.increment("error_types.#{hint[:exception].class.name.demodulize.underscore}")
+        end
         event
       }
     end

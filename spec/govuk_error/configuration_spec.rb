@@ -181,6 +181,21 @@ RSpec.describe GovukError::Configuration do
         end
       end
     end
+
+    context "when a message rather than an exception is sent to Sentry" do
+      it "does not increment the error counters" do
+        ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
+          configuration.active_sentry_environments << "production"
+          sentry_client = Sentry::Client.new(optimise_configuration_for_testing(configuration))
+          sentry_hub = Sentry::Hub.new(sentry_client, Sentry::Scope.new)
+
+          expect(GovukStatsd).to receive(:increment).exactly(0).times
+          expect(GovukStatsd).to receive(:increment).exactly(0).times
+
+          sentry_hub.capture_message("foo")
+        end
+      end
+    end
   end
 
   describe ".before_send=" do
