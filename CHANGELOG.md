@@ -1,9 +1,13 @@
-# 4.0.0.pre-2
+# 4.0.0.pre.3
+
+- Include [sentry-rails](https://github.com/getsentry/sentry-ruby/tree/master/sentry-rails) by default ([#203](https://github.com/alphagov/govuk_app_config/pull/203)).
+
+# 4.0.0.pre.2
 
 - Fix default Sentry configuration ([#202](https://github.com/alphagov/govuk_app_config/pull/202)).
 - BREAKING: this means no more `silence_ready` or `transport_failure_callback` options.
 
-# 4.0.0.pre-1
+# 4.0.0.pre.1
 
 - BREAKING: upgrades Sentry gem from `sentry-raven` to `sentry-ruby` ([#199](https://github.com/alphagov/govuk_app_config/pull/199)). There is a **[migration guide](https://docs.sentry.io/platforms/ruby/migration/)** you should follow before upgrading to this version of govuk_app_config.
 - This release also fixes the `data_sync_excluded_exceptions` behaviour that has been broken since v3.1.0.

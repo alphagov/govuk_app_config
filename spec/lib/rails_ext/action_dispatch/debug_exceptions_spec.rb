@@ -9,6 +9,10 @@ RSpec.describe ::GovukLogging::RailsExt::ActionDispatch do
       allow(Rails.logger).to receive(:warn)
     end
 
+    after do
+      Rails.logger = nil
+    end
+
     it "should not monkey patch classes which do not have log_error" do
       no_method_test_class = Class.new
       expect(described_class.should_monkey_patch_log_error?(no_method_test_class)).to be(false)
