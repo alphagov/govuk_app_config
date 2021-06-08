@@ -87,7 +87,7 @@ You can add your environment to the list of active Sentry environments like so:
 
 ```ruby
 GovukError.configure do |config|
-  config.active_sentry_environments << "my-test-environment"
+  config.enabled_environments << "my-test-environment"
 end
 ```
 

@@ -3,17 +3,14 @@ require "govuk_app_config/govuk_error/govuk_data_sync"
 
 module GovukError
   class Configuration < SimpleDelegator
-    attr_reader :data_sync, :sentry_environment
-    attr_accessor :active_sentry_environments, :data_sync_excluded_exceptions
+    attr_reader :data_sync
+    attr_accessor :data_sync_excluded_exceptions
 
     def initialize(_sentry_configuration)
       super
-      @sentry_environment = ENV["SENTRY_CURRENT_ENV"]
       @data_sync = GovukDataSync.new(ENV["GOVUK_DATA_SYNC_PERIOD"])
-      self.active_sentry_environments = []
       self.data_sync_excluded_exceptions = []
       @before_send_callbacks = [
-        ignore_exceptions_if_not_in_active_sentry_env,
         ignore_excluded_exceptions_in_data_sync,
         increment_govuk_statsd_counters,
       ]
@@ -25,10 +22,6 @@ module GovukError
     end
 
   protected
-
-    def ignore_exceptions_if_not_in_active_sentry_env
-      ->(event, _hint) { event if active_sentry_environments.include?(sentry_environment) }
-    end
 
     def ignore_excluded_exceptions_in_data_sync
       lambda { |event, hint|

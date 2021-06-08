@@ -3,7 +3,7 @@ GovukError.configure do |config|
   # ENV variable) where we want to capture Sentry errors. If
   # `SENTRY_CURRENT_ENV` isn't in this list, or isn't defined, then
   # don't capture the error.
-  config.active_sentry_environments = %w[
+  config.enabled_environments = %w[
     integration-blue-aws
     staging
     production
