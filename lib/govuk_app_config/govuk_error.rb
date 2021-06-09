@@ -25,9 +25,10 @@ module GovukError
   def self.init
     Sentry.init do |config|
       # system configuration properties, required for Sentry to work
-      config.dsn = @configuration.dsn.instance_variable_get(:@raw_value)
-      config.background_worker_threads = @configuration.background_worker_threads
-      config.transport.transport_class = @configuration.transport.transport_class
+      # ^ though probably only in our tests
+      # config.dsn = @configuration.dsn.instance_variable_get(:@raw_value)
+      # config.background_worker_threads = @configuration.background_worker_threads
+      # config.transport.transport_class = @configuration.transport.transport_class
 
       # actual configuration - make sure this is in sync with govuk_error/configure.rb
       config.before_send = @configuration.before_send
