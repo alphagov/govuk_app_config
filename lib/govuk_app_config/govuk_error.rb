@@ -18,7 +18,9 @@ module GovukError
   end
 
   def self.configure
-    @configuration ||= Configuration.new(Sentry::Configuration.new)
-    yield @configuration
+    Sentry.init do |sentry_config|
+      config = Configuration.new(sentry_config)
+      yield config if block_given?
+    end
   end
 end
