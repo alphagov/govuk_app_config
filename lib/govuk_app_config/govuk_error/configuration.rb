@@ -17,6 +17,67 @@ module GovukError
         ignore_excluded_exceptions_in_data_sync,
         increment_govuk_statsd_counters,
       ]
+
+      set_up_defaults
+    end
+
+    def set_up_defaults
+      self.active_sentry_environments = %w[
+        integration-blue-aws
+        staging
+        production
+      ]
+
+      self.excluded_exceptions = [
+        # Default ActionDispatch rescue responses
+        "ActionController::RoutingError",
+        "AbstractController::ActionNotFound",
+        "ActionController::MethodNotAllowed",
+        "ActionController::UnknownHttpMethod",
+        "ActionController::NotImplemented",
+        "ActionController::UnknownFormat",
+        "Mime::Type::InvalidMimeType",
+        "ActionController::MissingExactTemplate",
+        "ActionController::InvalidAuthenticityToken",
+        "ActionController::InvalidCrossOriginRequest",
+        "ActionDispatch::Http::Parameters::ParseError",
+        "ActionController::BadRequest",
+        "ActionController::ParameterMissing",
+        "Rack::QueryParser::ParameterTypeError",
+        "Rack::QueryParser::InvalidParameterError",
+        # Default ActiveRecord rescue responses
+        "ActiveRecord::RecordNotFound",
+        "ActiveRecord::StaleObjectError",
+        "ActiveRecord::RecordInvalid",
+        "ActiveRecord::RecordNotSaved",
+        # Additional items
+        "ActiveJob::DeserializationError",
+        "CGI::Session::CookieStore::TamperedWithCookie",
+        "GdsApi::HTTPIntermittentServerError",
+        "GdsApi::TimedOutException",
+        "Mongoid::Errors::DocumentNotFound",
+        "Sinatra::NotFound",
+        "Slimmer::IntermittentRetrievalError",
+      ]
+
+      # This will exclude exceptions that are triggered by one of the ignored
+      # exceptions. For example, when any exception occurs in a template,
+      # Rails will raise a ActionView::Template::Error, instead of the original error.
+      self.inspect_exception_causes_for_exclusion = true
+
+      # List of exceptions to ignore if they take place during the data sync.
+      # Some errors are transient in nature, e.g. PostgreSQL databases being
+      # unavailable, and add little value. In fact, their presence can greatly
+      # increase the number of errors being sent and risk genuine errors being
+      # rate-limited by Sentry.
+      self.data_sync_excluded_exceptions = [
+        "PG::Error",
+        "GdsApi::ContentStore::ItemNotFound",
+      ]
+
+      self.before_send = lambda { |error_or_event, _hint|
+        error_or_event
+      }
     end
 
     def before_send=(closure)

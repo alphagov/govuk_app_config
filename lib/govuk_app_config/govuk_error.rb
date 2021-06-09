@@ -17,8 +17,16 @@ module GovukError
     Sentry.capture_exception(exception_or_message, args)
   end
 
+  def self.is_configured?
+    Sentry.get_current_client != nil
+  end
+
   def self.configure
-    @configuration ||= Configuration.new(Sentry::Configuration.new)
-    yield @configuration
+    raise "Already initialised!" if is_configured?
+
+    Sentry.init do |sentry_config|
+      config = Configuration.new(sentry_config)
+      yield config if block_given?
+    end
   end
 end
