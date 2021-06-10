@@ -1,3 +1,9 @@
+# 4.0.0.pre.4
+
+- Fix Sentry client initialisation ([#205](https://github.com/alphagov/govuk_app_config/pull/205)).
+- BREAKING: non-Rails apps will need to manually call `GovukError.configure` in order to initialise Sentry.
+- BREAKING: `GovukError.configure` can only be called once by the downstream application.
+
 # 4.0.0.pre.3
 
 - Include [sentry-rails](https://github.com/getsentry/sentry-ruby/tree/master/sentry-rails) by default ([#203](https://github.com/alphagov/govuk_app_config/pull/203)).
