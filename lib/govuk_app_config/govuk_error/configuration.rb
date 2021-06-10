@@ -3,20 +3,82 @@ require "govuk_app_config/govuk_error/govuk_data_sync"
 
 module GovukError
   class Configuration < SimpleDelegator
-    attr_reader :data_sync, :sentry_environment
-    attr_accessor :active_sentry_environments, :data_sync_excluded_exceptions
+    attr_reader :data_sync
+    attr_accessor :data_sync_excluded_exceptions
 
     def initialize(_sentry_configuration)
       super
-      @sentry_environment = ENV["SENTRY_CURRENT_ENV"]
       @data_sync = GovukDataSync.new(ENV["GOVUK_DATA_SYNC_PERIOD"])
-      self.active_sentry_environments = []
-      self.data_sync_excluded_exceptions = []
+      set_up_defaults
+    end
+
+    def set_up_defaults
+      # These are the environments (described by the `SENTRY_CURRENT_ENV`
+      # ENV variable) where we want to capture Sentry errors. If
+      # `SENTRY_CURRENT_ENV` isn't in this list, or isn't defined, then
+      # don't capture the error.
+      self.enabled_environments = %w[
+        integration-blue-aws
+        staging
+        production
+      ]
+
+      self.excluded_exceptions = [
+        # Default ActionDispatch rescue responses
+        "ActionController::RoutingError",
+        "AbstractController::ActionNotFound",
+        "ActionController::MethodNotAllowed",
+        "ActionController::UnknownHttpMethod",
+        "ActionController::NotImplemented",
+        "ActionController::UnknownFormat",
+        "Mime::Type::InvalidMimeType",
+        "ActionController::MissingExactTemplate",
+        "ActionController::InvalidAuthenticityToken",
+        "ActionController::InvalidCrossOriginRequest",
+        "ActionDispatch::Http::Parameters::ParseError",
+        "ActionController::BadRequest",
+        "ActionController::ParameterMissing",
+        "Rack::QueryParser::ParameterTypeError",
+        "Rack::QueryParser::InvalidParameterError",
+        # Default ActiveRecord rescue responses
+        "ActiveRecord::RecordNotFound",
+        "ActiveRecord::StaleObjectError",
+        "ActiveRecord::RecordInvalid",
+        "ActiveRecord::RecordNotSaved",
+        # Additional items
+        "ActiveJob::DeserializationError",
+        "CGI::Session::CookieStore::TamperedWithCookie",
+        "GdsApi::HTTPIntermittentServerError",
+        "GdsApi::TimedOutException",
+        "Mongoid::Errors::DocumentNotFound",
+        "Sinatra::NotFound",
+        "Slimmer::IntermittentRetrievalError",
+      ]
+
+      # This will exclude exceptions that are triggered by one of the ignored
+      # exceptions. For example, when any exception occurs in a template,
+      # Rails will raise a ActionView::Template::Error, instead of the original error.
+      self.inspect_exception_causes_for_exclusion = true
+
+      # List of exceptions to ignore if they take place during the data sync.
+      # Some errors are transient in nature, e.g. PostgreSQL databases being
+      # unavailable, and add little value. In fact, their presence can greatly
+      # increase the number of errors being sent and risk genuine errors being
+      # rate-limited by Sentry.
+      self.data_sync_excluded_exceptions = [
+        "PG::Error",
+        "GdsApi::ContentStore::ItemNotFound",
+      ]
+
       @before_send_callbacks = [
-        ignore_exceptions_if_not_in_active_sentry_env,
         ignore_excluded_exceptions_in_data_sync,
         increment_govuk_statsd_counters,
       ]
+      # Need to invoke an arbitrary `before_send=` in order to trigger the
+      # `before_send_callbacks` behaviour
+      self.before_send = lambda { |error_or_event, _hint|
+        error_or_event
+      }
     end
 
     def before_send=(closure)
@@ -25,10 +87,6 @@ module GovukError
     end
 
   protected
-
-    def ignore_exceptions_if_not_in_active_sentry_env
-      ->(event, _hint) { event if active_sentry_environments.include?(sentry_environment) }
-    end
 
     def ignore_excluded_exceptions_in_data_sync
       lambda { |event, hint|
