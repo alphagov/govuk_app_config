@@ -20,7 +20,11 @@ module GovukError
     args[:tags] ||= {}
     args[:tags][:govuk_app_config_version] = GovukAppConfig::VERSION
 
-    Sentry.capture_exception(exception_or_message, args)
+    if exception_or_message.is_a?(String)
+      Sentry.capture_message(exception_or_message, args)
+    else
+      Sentry.capture_exception(exception_or_message, args)
+    end
   end
 
   def self.is_configured?

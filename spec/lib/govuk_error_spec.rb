@@ -11,6 +11,14 @@ RSpec.describe GovukError do
       expect(Sentry).to have_received(:capture_exception)
     end
 
+    it "forwards the string" do
+      allow(Sentry).to receive(:capture_message)
+
+      GovukError.notify("Foo")
+
+      expect(Sentry).to have_received(:capture_message)
+    end
+
     it "allows Airbrake-style parameters" do
       allow(Sentry).to receive(:capture_exception)
 
