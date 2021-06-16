@@ -78,7 +78,13 @@ module GovukContentSecurityPolicy
                        # Allow JSON call to klick2contact - HMPO web chat provider
                        "gov.klick2contact.com",
                        # Allow connecting to Verify to check whether the user is logged in
-                       "www.signin.service.gov.uk"
+                       "www.signin.service.gov.uk",
+                       # Allow connection to Speedcurve's CDN for LUX - used for
+                       # real user metrics on GOV.UK. This loads using an image
+                       # (see image policy), but returns a JavaScript file -
+                       # which is why this has to be added to the `connect-src`
+                       # policy as well.
+                       "lux.speedcurve.com"
 
     # Disallow all <object>, <embed>, and <applet> elements
     #
