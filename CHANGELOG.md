@@ -1,3 +1,7 @@
+# 3.2.0
+
+-  Add Speedcurve's LUX to connect-src policy ([#206](https://github.com/alphagov/govuk_app_config/pull/206))
+
 # 3.1.1
 
 - Fix the new before_send behaviour & tests, and add documentation ([#197](https://github.com/alphagov/govuk_app_config/pull/197))
