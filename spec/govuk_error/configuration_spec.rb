@@ -3,10 +3,6 @@ require "sentry-raven"
 require "govuk_app_config/govuk_error/configuration"
 
 RSpec.describe GovukError::Configuration do
-  before :each do
-    stub_const("GovukStatsd", double(Module, increment: nil))
-  end
-
   describe ".initialize" do
     it "delegates to the passed object if it doesn't have the method defined" do
       delegated_object = double("Raven.configuration").as_null_object
@@ -15,26 +11,20 @@ RSpec.describe GovukError::Configuration do
     end
   end
 
-  describe ".before_send" do
-    let(:configuration) do
-      configuration = GovukError::Configuration.new(Raven.configuration)
-      configuration.before_send = lambda { |error_or_event, _hint|
-        error_or_event
-      }
-      configuration
-    end
+  describe ".should_capture" do
+    let(:configuration) { GovukError::Configuration.new(Raven.configuration) }
 
     it "ignores errors if they happen in an environment we don't care about" do
       ClimateControl.modify SENTRY_CURRENT_ENV: "some-temporary-environment" do
         configuration.active_sentry_environments << "production"
-        expect(configuration.before_send.call(StandardError.new)).to be_nil
+        expect(configuration.should_capture.call(StandardError.new)).to eq(false)
       end
     end
 
     it "captures errors if they happen in an environment we care about" do
       ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
         configuration.active_sentry_environments << "production"
-        expect(configuration.before_send.call(StandardError.new)).to be_truthy
+        expect(configuration.should_capture.call(StandardError.new)).to eq(true)
       end
     end
 
@@ -49,19 +39,19 @@ RSpec.describe GovukError::Configuration do
       end
 
       it "should capture errors by default" do
-        expect(configuration.before_send.call(StandardError.new)).to be_truthy
+        expect(configuration.should_capture.call(StandardError.new)).to eq(true)
       end
 
       it "should ignore errors that have been added as a string to data_sync_excluded_exceptions" do
         configuration.data_sync_excluded_exceptions << "StandardError"
 
-        expect(configuration.before_send.call(StandardError.new)).to be_nil
+        expect(configuration.should_capture.call(StandardError.new)).to eq(false)
       end
 
       it "should ignore errors that have been added as a class to data_sync_excluded_exceptions" do
         configuration.data_sync_excluded_exceptions << StandardError
 
-        expect(configuration.before_send.call(StandardError.new)).to be_nil
+        expect(configuration.should_capture.call(StandardError.new)).to eq(false)
       end
 
       it "should ignore errors whose underlying cause is an exception in data_sync_excluded_exceptions" do
@@ -81,7 +71,7 @@ RSpec.describe GovukError::Configuration do
         end
 
         expect(chained_exception).to be_an_instance_of(SomeOtherError)
-        expect(configuration.before_send.call(chained_exception)).to be_nil
+        expect(configuration.should_capture.call(chained_exception)).to eq(false)
       end
 
       it "should ignore errors that are subclasses of an exception in data_sync_excluded_exceptions" do
@@ -89,7 +79,7 @@ RSpec.describe GovukError::Configuration do
         stub_const("SomeInheritedClass", Class.new(SomeClass))
 
         configuration.data_sync_excluded_exceptions << "SomeClass"
-        expect(configuration.before_send.call(SomeInheritedClass.new)).to be_nil
+        expect(configuration.should_capture.call(SomeInheritedClass.new)).to eq(false)
       end
     end
 
@@ -106,89 +96,22 @@ RSpec.describe GovukError::Configuration do
       it "should capture errors even if they are in the list of data_sync_excluded_exceptions" do
         configuration.data_sync_excluded_exceptions << "StandardError"
 
-        expect(configuration.before_send.call(StandardError.new)).to be_truthy
-      end
-    end
-
-    context "when the before_send lambda has not been overridden" do
-      it "increments the appropriate counters" do
-        ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
-          configuration.active_sentry_environments << "production"
-          expect(GovukStatsd).to receive(:increment).exactly(1).times.with("errors_occurred")
-          expect(GovukStatsd).to receive(:increment).exactly(1).times.with("error_types.standard_error")
-          configuration.before_send.call(StandardError.new)
-        end
-      end
-    end
-
-    context "when the before_send lambda has been overridden" do
-      it "increments the appropriate counters" do
-        ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
-          configuration.active_sentry_environments << "production"
-          expect(GovukStatsd).to receive(:increment).exactly(1).times.with("errors_occurred")
-          expect(GovukStatsd).to receive(:increment).exactly(1).times.with("error_types.standard_error")
-          expect(GovukStatsd).to receive(:increment).exactly(1).times.with("hello_world")
-
-          configuration.before_send = lambda do |error_or_event, _hint|
-            GovukStatsd.increment("hello_world")
-            error_or_event
-          end
-
-          configuration.before_send.call(StandardError.new)
-        end
-      end
-    end
-
-    context "when the before_send lambda has been overridden several times, all take effect" do
-      it "increments the appropriate counters" do
-        ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
-          configuration.active_sentry_environments << "production"
-          expect(GovukStatsd).to receive(:increment).exactly(1).times.with("errors_occurred")
-          expect(GovukStatsd).to receive(:increment).exactly(1).times.with("error_types.standard_error")
-          expect(GovukStatsd).to receive(:increment).exactly(1).times.with("hello_world")
-          expect(GovukStatsd).to receive(:increment).exactly(1).times.with("hello_world_again")
-
-          configuration.before_send = lambda do |error_or_event, _hint|
-            GovukStatsd.increment("hello_world")
-            error_or_event
-          end
-          configuration.before_send = lambda do |error_or_event, _hint|
-            GovukStatsd.increment("hello_world_again")
-            error_or_event
-          end
-
-          configuration.before_send.call(StandardError.new)
-        end
+        expect(configuration.should_capture.call(StandardError.new)).to eq(true)
       end
     end
   end
 
-  describe ".before_send=" do
-    it "Allows apps to add their own `before_send` callback, that is evaluated alongside the default. If all return their parameter, then the chain continues, but if any returns `nil`, then it ends and the error is dropped" do
+  describe ".should_capture=" do
+    it "Allows apps to add their own `should_capture` callback, that is evaluated alongside the default. If both return `true`, then we should capture, but if either returns `false`, then we shouldn't." do
       ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
         raven_configurator = GovukError::Configuration.new(Raven.configuration)
         raven_configurator.active_sentry_environments << "production"
-        raven_configurator.before_send = lambda do |error_or_event, _hint|
-          error_or_event if error_or_event == "do capture"
+        raven_configurator.should_capture = lambda do |error_or_event|
+          error_or_event == "do capture"
         end
 
-        expect(raven_configurator.before_send.call("do capture")).to be_truthy
-        expect(raven_configurator.before_send.call("don't capture", {})).to be_nil
-      end
-    end
-
-    it "does not increment the counters if the callback returns nil" do
-      ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
-        raven_configurator = GovukError::Configuration.new(Raven.configuration)
-        raven_configurator.active_sentry_environments << "production"
-        raven_configurator.before_send = lambda do |_error_or_event, _hint|
-          nil
-        end
-
-        expect(GovukStatsd).not_to receive(:increment).with("errors_occurred")
-        expect(GovukStatsd).not_to receive(:increment).with("error_types.standard_error")
-
-        raven_configurator.before_send.call(StandardError.new)
+        expect(raven_configurator.should_capture.call("do capture")).to eq(true)
+        expect(raven_configurator.should_capture.call("don't capture")).to eq(false)
       end
     end
   end

@@ -1,4 +1,10 @@
 GovukError.configure do |config|
+  config.before_send = proc { |e|
+    GovukStatsd.increment("errors_occurred")
+    GovukStatsd.increment("error_types.#{e.class.name.demodulize.underscore}")
+    e
+  }
+
   config.silence_ready = !Rails.env.production? if defined?(Rails)
 
   # These are the environments (described by the `SENTRY_CURRENT_ENV`
@@ -57,10 +63,6 @@ GovukError.configure do |config|
     "PG::Error",
     "GdsApi::ContentStore::ItemNotFound",
   ]
-
-  config.before_send = lambda { |error_or_event, _hint|
-    error_or_event
-  }
 
   config.transport_failure_callback = proc {
     GovukStatsd.increment("error_reports_failed")
