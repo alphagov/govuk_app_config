@@ -19,6 +19,10 @@
 - This release also fixes the `data_sync_excluded_exceptions` behaviour that has been broken since v3.1.0.
 - Released as a pre-release to identify and fix any problems before a wider rollout.
 
+# 3.3.0
+
+- Revert the `should_capture`/`before_send` consolidation introduced in 3.1.0. This fixes the `data_sync_excluded_exceptions` behaviour that has been broken since v3.1.0. ([#211](https://github.com/alphagov/govuk_app_config/pull/211))
+
 # 3.2.0
 
 - Add Speedcurve's LUX to connect-src policy ([#206](https://github.com/alphagov/govuk_app_config/pull/206))
