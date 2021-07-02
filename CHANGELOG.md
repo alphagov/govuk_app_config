@@ -1,10 +1,31 @@
+# 4.0.0.pre.4
+
+- Fix Sentry client initialisation ([#205](https://github.com/alphagov/govuk_app_config/pull/205)).
+- BREAKING: non-Rails apps will need to manually call `GovukError.configure` in order to initialise Sentry.
+- BREAKING: `GovukError.configure` can only be called once by the downstream application.
+
+# 4.0.0.pre.3
+
+- Include [sentry-rails](https://github.com/getsentry/sentry-ruby/tree/master/sentry-rails) by default ([#203](https://github.com/alphagov/govuk_app_config/pull/203)).
+
+# 4.0.0.pre.2
+
+- Fix default Sentry configuration ([#202](https://github.com/alphagov/govuk_app_config/pull/202)).
+- BREAKING: this means no more `silence_ready` or `transport_failure_callback` options.
+
+# 4.0.0.pre.1
+
+- BREAKING: upgrades Sentry gem from `sentry-raven` to `sentry-ruby` ([#199](https://github.com/alphagov/govuk_app_config/pull/199)). There is a **[migration guide](https://docs.sentry.io/platforms/ruby/migration/)** you should follow before upgrading to this version of govuk_app_config.
+- This release also fixes the `data_sync_excluded_exceptions` behaviour that has been broken since v3.1.0.
+- Released as a pre-release to identify and fix any problems before a wider rollout.
+
 # 3.3.0
 
 - Revert the `should_capture`/`before_send` consolidation introduced in 3.1.0. This fixes the `data_sync_excluded_exceptions` behaviour that has been broken since v3.1.0. ([#211](https://github.com/alphagov/govuk_app_config/pull/211))
 
 # 3.2.0
 
--  Add Speedcurve's LUX to connect-src policy ([#206](https://github.com/alphagov/govuk_app_config/pull/206))
+- Add Speedcurve's LUX to connect-src policy ([#206](https://github.com/alphagov/govuk_app_config/pull/206))
 
 # 3.1.1
 
