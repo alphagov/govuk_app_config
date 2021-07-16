@@ -1,3 +1,12 @@
+# 4.0.0
+
+- BREAKING: replaces deprecated `sentry-raven` with `sentry-ruby` and `sentry-rails`. Follow the **[migration guide](https://docs.sentry.io/platforms/ruby/migration/)** before upgrading to this version of govuk_app_config to ensure full compatibility with the new gems.
+- BREAKING: `GovukError.configure` can only be called once, and non-Rails apps will have to manually call `GovukError.configure` in order to initialise Sentry.
+- BREAKING: apps will no longer increment the `error_reports_failed` statsd if events fail to get sent to Sentry.
+- BREAKING: the behaviour of `before_send` has changed, and the `should_capture` method is deprecated.
+- See pre-release notes below for details.
+- PR: [#212](https://github.com/alphagov/govuk_app_config/pull/212)
+
 # 4.0.0.pre.4
 
 - Fix Sentry client initialisation ([#205](https://github.com/alphagov/govuk_app_config/pull/205)).
@@ -16,7 +25,7 @@
 # 4.0.0.pre.1
 
 - BREAKING: upgrades Sentry gem from `sentry-raven` to `sentry-ruby` ([#199](https://github.com/alphagov/govuk_app_config/pull/199)). There is a **[migration guide](https://docs.sentry.io/platforms/ruby/migration/)** you should follow before upgrading to this version of govuk_app_config.
-- This release also fixes the `data_sync_excluded_exceptions` behaviour that has been broken since v3.1.0.
+- This release also fixes the `data_sync_excluded_exceptions` behaviour that was broken in v3.1.0 (later fixed in v3.3.0, which was released after 4.0.0.pre.1).
 - Released as a pre-release to identify and fix any problems before a wider rollout.
 
 # 3.3.0
