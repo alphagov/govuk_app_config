@@ -25,7 +25,7 @@
 # 4.0.0.pre.1
 
 - BREAKING: upgrades Sentry gem from `sentry-raven` to `sentry-ruby` ([#199](https://github.com/alphagov/govuk_app_config/pull/199)). There is a **[migration guide](https://docs.sentry.io/platforms/ruby/migration/)** you should follow before upgrading to this version of govuk_app_config.
-- This release also fixes the `data_sync_excluded_exceptions` behaviour that has been broken since v3.1.0.
+- This release also fixes the `data_sync_excluded_exceptions` behaviour that was broken in v3.1.0 (later fixed in v3.3.0, which was released after 4.0.0.pre.1).
 - Released as a pre-release to identify and fix any problems before a wider rollout.
 
 # 3.3.0
