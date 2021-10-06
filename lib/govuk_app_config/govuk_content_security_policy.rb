@@ -76,7 +76,7 @@ module GovukContentSecurityPolicy
                        # Allow JSON call to Nuance - HMRC web chat provider
                        "hmrc-uk.digital.nuance.com",
                        # Allow JSON call to klick2contact - HMPO web chat provider
-                       "gov.klick2contact.com",
+                       "hmpowebchat.klick2contact.com",
                        # Allow connecting to Verify to check whether the user is logged in
                        "www.signin.service.gov.uk",
                        # Allow connection to Speedcurve's CDN for LUX - used for
