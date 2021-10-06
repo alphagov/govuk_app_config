@@ -1,3 +1,7 @@
+# 4.0.1
+
+- Update Content Security Policy with new klick2contact.com subdomain ([#213](https://github.com/alphagov/govuk_app_config/pull/213)).
+
 # 4.0.0
 
 - BREAKING: replaces deprecated `sentry-raven` with `sentry-ruby` and `sentry-rails`. Follow the **[migration guide](https://docs.sentry.io/platforms/ruby/migration/)** before upgrading to this version of govuk_app_config to ensure full compatibility with the new gems.
