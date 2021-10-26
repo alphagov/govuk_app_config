@@ -1,3 +1,7 @@
+# Unreleased
+
+- Add Puma to dependencies ([#214](https://github.com/alphagov/govuk_app_config/pull/214)).
+
 # 4.0.1
 
 - Update Content Security Policy with new klick2contact.com subdomain ([#213](https://github.com/alphagov/govuk_app_config/pull/213)).
