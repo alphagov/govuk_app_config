@@ -1,3 +1,7 @@
+# 4.2.0
+
+- Added `GovukCache` for consistent cacheing.
+
 # 4.1.0
 
 - Add Puma to dependencies ([#214](https://github.com/alphagov/govuk_app_config/pull/214)).
