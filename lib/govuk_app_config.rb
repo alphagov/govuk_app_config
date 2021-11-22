@@ -1,5 +1,6 @@
 require "govuk_app_config/version"
 require "govuk_app_config/govuk_statsd"
+require "govuk_app_config/govuk_cache"
 require "govuk_app_config/govuk_error"
 require "govuk_app_config/govuk_healthcheck"
 require "govuk_app_config/govuk_i18n"
