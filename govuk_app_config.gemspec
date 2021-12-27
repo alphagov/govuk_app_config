@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "sentry-rails", "~> 4.5.0"
   spec.add_dependency "sentry-ruby", "~> 4.5.0"
   spec.add_dependency "statsd-ruby", "~> 1.5.0"
-  spec.add_dependency "unicorn", ">= 5.4", "< 5.9"
+  spec.add_dependency "unicorn", ">= 5.4", "< 6.2"
 
   spec.add_development_dependency "byebug"
   spec.add_development_dependency "climate_control"
