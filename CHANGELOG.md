@@ -1,3 +1,7 @@
+# 4.2.0
+
+- Add pluralisation rules for Azerbaijani, Persian, Georgian, and Turkish. ([#219](https://github.com/alphagov/govuk_app_config/pull/219))
+
 # 4.1.0
 
 - Add Puma to dependencies ([#214](https://github.com/alphagov/govuk_app_config/pull/214)).
