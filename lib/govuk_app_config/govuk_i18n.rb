@@ -1,10 +1,14 @@
 module GovukI18n
   def self.plurals
     {
+      # Azerbaijani
+      az: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
       # Dari - this isn't an iso code. Probably should be 'prs' as per ISO 639-3.
       dr: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
       # Latin America and Caribbean Spanish
       "es-419": { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
+      # Persian
+      fa: { i18n: { plural: { keys: %i[one other], rule: ->(n) { [0, 1].include?(n) ? :one : :other } } } },
       # Scottish Gaelic
       gd: { i18n: { plural: { keys: %i[one two few other],
                               rule:
@@ -21,12 +25,16 @@ module GovukI18n
                                 end } } },
       # Armenian
       hy: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
+      # Georgian
+      ka: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
       # Kazakh
       kk: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
       # Punjabi Shahmukhi
       "pa-pk": { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
       # Sinhalese
       si: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
+      # Turkish
+      tr: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
       # Uzbek
       uz: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
       # Chinese Hong Kong
