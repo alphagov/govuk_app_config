@@ -1,3 +1,7 @@
+# Unreleased
+
+- Remove Speedcurve's LUX from the connect-src policy ([#216](https://github.com/alphagov/govuk_app_config/pull/216)).
+
 # 4.2.0
 
 - Add pluralisation rules for Azerbaijani, Persian, Georgian, and Turkish. ([#219](https://github.com/alphagov/govuk_app_config/pull/219))
