@@ -1,4 +1,4 @@
-# Unreleased
+# 4.3.0
 
 - Remove Speedcurve's LUX from the connect-src policy ([#216](https://github.com/alphagov/govuk_app_config/pull/216)).
 
