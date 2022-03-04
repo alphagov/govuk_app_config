@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "logstasher", ">= 1.2.2", "< 2.2.0"
   spec.add_dependency "prometheus_exporter", "~> 2.0.2"
   spec.add_dependency "puma", "~> 5.0"
-  spec.add_dependency "sentry-rails", "~> 4.5.0"
+  spec.add_dependency "sentry-rails", ">= 4.5", "< 5.2"
   spec.add_dependency "sentry-ruby", "~> 4.5.0"
   spec.add_dependency "statsd-ruby", "~> 1.5.0"
   spec.add_dependency "unicorn", ">= 5.4", "< 5.9"
