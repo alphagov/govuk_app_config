@@ -1,10 +1,10 @@
-require "prometheus_exporter"
-require "prometheus_exporter/server"
-require "prometheus_exporter/middleware"
-
 module GovukPrometheusExporter
   def self.configure
     unless Rails.env == "test"
+      require "prometheus_exporter"
+      require "prometheus_exporter/server"
+      require "prometheus_exporter/middleware"
+
       server = PrometheusExporter::Server::WebServer.new bind: "localhost", port: 9394
       server.start
 
