@@ -1,3 +1,4 @@
+require "prometheus_exporter"
 require "prometheus_exporter/server"
 require "prometheus_exporter/middleware"
 
