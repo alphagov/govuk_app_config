@@ -1,3 +1,6 @@
+# 4.4.0
+
+- Add GovukPrometheusModule, to allow for export of prometheus metrics ([#223](https://github.com/alphagov/govuk_app_config/pull/223)).
 # 4.3.0
 
 - Remove Speedcurve's LUX from the connect-src policy ([#216](https://github.com/alphagov/govuk_app_config/pull/216)).
