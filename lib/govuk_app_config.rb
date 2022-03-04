@@ -6,6 +6,7 @@ require "govuk_app_config/govuk_i18n"
 # This require is deprecated and should be removed on next major version bump
 # and should be required by applications directly.
 require "govuk_app_config/govuk_unicorn"
+require "govuk_app_config/govuk_prometheus_exporter"
 
 if defined?(Rails)
   require "govuk_app_config/govuk_logging"
