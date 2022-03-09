@@ -1,3 +1,7 @@
+# 4.4.2
+
+- Update HMPO webchat address in security policy ([#225](https://github.com/alphagov/govuk_app_config/pull/225)).
+
 # 4.4.1
 
 - Fix issue where GovukPrometheusExporter module prevented the gem to load due to missing constant "PrometheusExporter" ([#224](https://github.com/alphagov/govuk_app_config/pull/224)).
