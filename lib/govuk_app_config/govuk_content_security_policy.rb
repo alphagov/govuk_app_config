@@ -77,6 +77,8 @@ module GovukContentSecurityPolicy
                        "hmrc-uk.digital.nuance.com",
                        # Allow JSON call to klick2contact - HMPO web chat provider
                        "hmpowebchat.klick2contact.com",
+                       # Allow JSON call to Eckoh - HMPO web chat provider
+                       "omni.eckoh.uk",
                        # Allow connecting to Verify to check whether the user is logged in
                        "www.signin.service.gov.uk"
 
