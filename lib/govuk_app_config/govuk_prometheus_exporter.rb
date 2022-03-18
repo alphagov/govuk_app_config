@@ -5,7 +5,7 @@ module GovukPrometheusExporter
       require "prometheus_exporter/server"
       require "prometheus_exporter/middleware"
 
-      server = PrometheusExporter::Server::WebServer.new bind: "localhost", port: 9394
+      server = PrometheusExporter::Server::WebServer.new bind: "0.0.0.0", port: 9394
       server.start
 
       Rails.application.middleware.unshift PrometheusExporter::Middleware
