@@ -1,3 +1,7 @@
+# 4.4.3
+
+- Update prometheus exporter server to 0.0.0.0 from localhost  ([#227](https://github.com/alphagov/govuk_app_config/pull/227)).
+
 # 4.4.2
 
 - Update HMPO webchat address in security policy ([#225](https://github.com/alphagov/govuk_app_config/pull/225)).
