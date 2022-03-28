@@ -1,6 +1,6 @@
 module GovukPrometheusExporter
   def self.configure
-    unless Rails.env == "test"
+    unless Rails.env == "test" || (ENV["GOVUK_PROMETHEUS_EXPORTER"]) != "true"
       require "prometheus_exporter"
       require "prometheus_exporter/server"
       require "prometheus_exporter/middleware"
