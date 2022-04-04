@@ -22,11 +22,11 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "logstasher", "~> 2.1"
   spec.add_dependency "prometheus_exporter", "~> 2.0"
-  spec.add_dependency "puma", "~> 5.0"
-  spec.add_dependency "sentry-rails", "~> 4.5"
-  spec.add_dependency "sentry-ruby", "~> 4.5"
+  spec.add_dependency "puma", "~> 5.6"
+  spec.add_dependency "sentry-rails", "~> 5.2"
+  spec.add_dependency "sentry-ruby", "~> 5.2"
   spec.add_dependency "statsd-ruby", "~> 1.5"
-  spec.add_dependency "unicorn", "~> 5.4"
+  spec.add_dependency "unicorn", "~> 6.1"
 
   spec.add_development_dependency "byebug"
   spec.add_development_dependency "climate_control"
