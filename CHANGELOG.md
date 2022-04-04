@@ -1,5 +1,6 @@
 # Unreleased
 
+- Fix govuk_error being incompatible with Ruby >= 3 ([#233](https://github.com/alphagov/govuk_app_config/pull/233))
 - Require Ruby 2.7 as the minimum supported Ruby version ([#233](https://github.com/alphagov/govuk_app_config/pull/233))
 - Require Sentry 5 and Unicorn 6 major versions ([#237](https://github.com/alphagov/govuk_app_config/pull/237))
 - Prevent sentry-rails logger warnings when govuk_error is used with non-Rails apps ([#234](https://github.com/alphagov/govuk_app_config/pull/234))
