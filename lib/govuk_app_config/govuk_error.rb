@@ -1,5 +1,5 @@
 require "sentry-ruby"
-require "sentry-rails"
+require "sentry-rails" if defined?(Rails)
 require "govuk_app_config/govuk_statsd"
 require "govuk_app_config/govuk_error/configuration"
 require "govuk_app_config/version"

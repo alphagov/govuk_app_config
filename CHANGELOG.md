@@ -1,3 +1,7 @@
+# Unreleased
+
+- Prevent sentry-rails logger warnings when govuk_error is used with non-Rails apps ([#234](https://github.com/alphagov/govuk_app_config/pull/234))
+
 # 4.4.3
 
 - Update prometheus exporter server to 0.0.0.0 from localhost  ([#227](https://github.com/alphagov/govuk_app_config/pull/227)).
