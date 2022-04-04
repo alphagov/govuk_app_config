@@ -31,11 +31,10 @@ module GovukContentSecurityPolicy
                    :data, # Base64 encoded images
                    *GOVUK_DOMAINS,
                    *GOOGLE_ANALYTICS_DOMAINS, # Tracking pixels
+                   # Speedcurve real user monitoring (RUM) - as per: https://support.speedcurve.com/docs/add-rum-to-your-csp
+                   "lux.speedcurve.com",
                    # Some content still links to an old domain we used to use
-                   "assets.digital.cabinet-office.gov.uk",
-                   # Allow images to be loaded for Speedcurve's LUX - used for
-                   # getting real user metrics on GOV.UK
-                   "lux.speedcurve.com"
+                   "assets.digital.cabinet-office.gov.uk"
 
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src
     policy.script_src :self,
@@ -71,6 +70,8 @@ module GovukContentSecurityPolicy
     policy.connect_src :self,
                        *GOVUK_DOMAINS,
                        *GOOGLE_ANALYTICS_DOMAINS,
+                       # Speedcurve real user monitoring (RUM) - as per: https://support.speedcurve.com/docs/add-rum-to-your-csp
+                       "lux.speedcurve.com",
                        # Allow connecting to web chat from HMRC contact pages
                        "www.tax.service.gov.uk",
                        # Allow JSON call to Nuance - HMRC web chat provider
