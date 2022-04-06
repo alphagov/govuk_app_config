@@ -5,7 +5,7 @@ RSpec::Core::RakeTask.new(:spec)
 
 desc "Lint Ruby"
 task :lint do
-  sh "bundle exec rubocop --format clang"
+  sh "bundle exec rubocop"
 end
 
 task default: %i[spec lint]
