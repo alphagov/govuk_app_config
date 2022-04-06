@@ -1,5 +1,6 @@
 # Unreleased
 
+- Require Sentry 5 and Unicorn 6 major versions ([#237](https://github.com/alphagov/govuk_app_config/pull/237))
 - Prevent sentry-rails logger warnings when govuk_error is used with non-Rails apps ([#234](https://github.com/alphagov/govuk_app_config/pull/234))
 
 # 4.4.3
