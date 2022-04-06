@@ -1,3 +1,4 @@
+require "active_support"
 require "active_support/testing/time_helpers"
 require "byebug"
 require "climate_control"
