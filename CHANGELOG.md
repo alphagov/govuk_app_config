@@ -1,5 +1,7 @@
 # Unreleased
 
+- Fix prometheus_exporter to only be enabled when the GOVUK_PROMETHEUS_EXPORTER env var is set to "true" ([#231](https://github.com/alphagov/govuk_app_config/pull/231)).
+- Add Prometheus monitoring for EKS section to README.md ([#231](https://github.com/alphagov/govuk_app_config/pull/231)).
 - Fix govuk_error being incompatible with Ruby >= 3 ([#233](https://github.com/alphagov/govuk_app_config/pull/233))
 - Require Ruby 2.7 as the minimum supported Ruby version ([#233](https://github.com/alphagov/govuk_app_config/pull/233))
 - Require Sentry 5 and Unicorn 6 major versions ([#237](https://github.com/alphagov/govuk_app_config/pull/237))

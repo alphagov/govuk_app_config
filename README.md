@@ -7,6 +7,7 @@ Adds the basics of a GOV.UK application:
 - Statsd client for reporting stats
 - Rails logging
 - Content Security Policy generation for frontend apps
+- Prometheus monitoring for EKS
 
 ## Installation
 
@@ -165,6 +166,15 @@ GovukContentSecurityPolicy.configure
 ## i18n rules 
 
 Some frontend apps support languages that are not defined in the i18n gem. This provides them with our own custom rules for these languages.
+
+## Prometheus monitoring for EKS
+
+Create a `/config/initializers/prometheus.rb` file in the app and add the following
+
+```ruby
+require "govuk_app_config/govuk_prometheus_exporter"	
+GovukPrometheusExporter.configure	
+```
 
 ## License
 
