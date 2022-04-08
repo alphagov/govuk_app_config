@@ -1,4 +1,4 @@
-# Unreleased
+# 4.5.0
 
 - Add lux.speedcurve.com to connect_src for GOV.UK Content Security Policy ([#232](https://github.com/alphagov/govuk_app_config/pull/232))
 - Fix prometheus_exporter to only be enabled when the GOVUK_PROMETHEUS_EXPORTER env var is set to "true" ([#231](https://github.com/alphagov/govuk_app_config/pull/231)).
