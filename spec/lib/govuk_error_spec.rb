@@ -32,9 +32,11 @@ RSpec.describe GovukError do
 
   describe ".configure" do
     it "configures Sentry via the Configuration, and raises exception for subsequent calls" do
+      allow(Sentry).to receive(:get_current_client).and_return(nil)
       expect { |b| GovukError.configure(&b) }
         .to yield_with_args(instance_of(GovukError::Configuration))
 
+      allow(Sentry).to receive(:get_current_client).and_return(double("Sentry::Client"))
       expect { GovukError.configure { |_config| } }
         .to raise_exception(GovukError::AlreadyInitialised)
     end
