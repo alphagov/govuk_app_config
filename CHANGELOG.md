@@ -1,3 +1,7 @@
+# Unreleased
+
+- Add internal Sidekiq exception "Sidekiq::JobRetry::Skip" to excluded exceptions ([#241](https://github.com/alphagov/govuk_app_config/pull/241)).
+
 # 4.5.0
 
 - Add lux.speedcurve.com to connect_src for GOV.UK Content Security Policy ([#232](https://github.com/alphagov/govuk_app_config/pull/232))
