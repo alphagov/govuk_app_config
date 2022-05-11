@@ -1,5 +1,6 @@
 # Unreleased
 
+- Add a warning for apps using GovukError with Sidekiq that don't have sentry-sidekiq installed ([#241](https://github.com/alphagov/govuk_app_config/pull/241)).
 - Add internal Sidekiq exception "Sidekiq::JobRetry::Skip" to excluded exceptions ([#241](https://github.com/alphagov/govuk_app_config/pull/241)).
 
 # 4.5.0

@@ -38,6 +38,14 @@ RSpec.describe GovukError do
       expect { GovukError.configure { |_config| } }
         .to raise_exception(GovukError::AlreadyInitialised)
     end
+
+    it "raises a warning if Sidekiq exists but Sidekiq::Sentry does not" do
+      stub_const("Sidekiq", "Sidekiq")
+      allow(Sentry).to receive(:get_current_client).and_return(nil)
+
+      expect { GovukError.configure }
+        .to output(/Warning: GovukError is not configured to track Sidekiq errors/).to_stderr
+    end
   end
 
   describe ".is_configured?" do
