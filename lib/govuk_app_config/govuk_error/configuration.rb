@@ -53,6 +53,7 @@ module GovukError
         "Mongoid::Errors::DocumentNotFound",
         "Sinatra::NotFound",
         "Slimmer::IntermittentRetrievalError",
+        "Sidekiq::JobRetry::Skip",
       ]
 
       # This will exclude exceptions that are triggered by one of the ignored

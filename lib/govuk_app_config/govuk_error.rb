@@ -34,6 +34,10 @@ module GovukError
   def self.configure
     raise GovukError::AlreadyInitialised if is_configured?
 
+    if defined?(Sidekiq) && !defined?(Sentry::Sidekiq)
+      warn "Warning: GovukError is not configured to track Sidekiq errors, install the sidekiq-sentry gem to track them."
+    end
+
     Sentry.init do |sentry_config|
       config = Configuration.new(sentry_config)
       yield config if block_given?
