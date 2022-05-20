@@ -1,3 +1,7 @@
+# 4.6.1
+
+- Fixes warning message to refer to correct Sidekiq gem dependency name ([#243](https://github.com/alphagov/govuk_app_config/pull/243)).
+
 # 4.6.0
 
 - Add a warning for apps using GovukError with Sidekiq that don't have sentry-sidekiq installed ([#241](https://github.com/alphagov/govuk_app_config/pull/241)).
