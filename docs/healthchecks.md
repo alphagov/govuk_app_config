@@ -1,5 +1,7 @@
 # Health Checks
 
+GOV.UK apps often have special `/healthcheck` routes, which give an indication of whether the app is running and able to respond to requests. [Read about how health checks are used](https://docs.publishing.service.gov.uk/manual/alerts/app-healthcheck-not-ok.html).
+
 ## Including checks in your app
 
 Set up a route in your rack-compatible Ruby application, and pick the built-in
