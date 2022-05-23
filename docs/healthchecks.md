@@ -1,6 +1,43 @@
 # Health Checks
 
-## Check interface
+GOV.UK apps often have special `/healthcheck` routes, which give an indication of whether the app is running and able to respond to requests. [Read about how health checks are used](https://docs.publishing.service.gov.uk/manual/alerts/app-healthcheck-not-ok.html).
+
+## Including checks in your app
+
+Set up a route in your rack-compatible Ruby application, and pick the built-in
+or custom checks you wish to perform.
+
+For Rails apps:
+
+```ruby
+get "/healthcheck/ready", to: GovukHealthcheck.rack_response(
+  GovukHealthcheck::SidekiqRedis,
+  GovukHealthcheck::ActiveRecord,
+  CustomCheck,
+)
+```
+
+It also accepts objects, so classes can be initialized:
+
+```ruby
+get "/healthcheck/ready", to: GovukHealthcheck.rack_response(
+  InitializedCheck.new(:param),
+)
+```
+
+Built-in checks you can use include:
+
+- `GovukHealthcheck::RailsCache` - checks that the Rails cache store, such as Memcached, is acessible by writing and reading back a cache entry called "healthcheck-cache".
+
+- `GovukHealthcheck::Redis` - checks that the app can connect to Redis by writing and reading back a cache entry called "healthcheck-cache".
+
+- `GovukHealthcheck::Mongoid` - checks that the app has a connection to its Mongo database via Mongoid.
+
+- `GovukHealthcheck::SidekiqRedis` - checks that the app has a connection to Redis via Sidekiq.
+
+- `GovukHealthcheck::ActiveRecord` - checks that the app has a connection to the database via ActiveRecord.
+
+## Writing a custom healthcheck
 
 A check is expected to be a class with the following methods:
 
@@ -43,113 +80,4 @@ It is expected that these methods may cache their results for performance
 reasons, if a user wants to ensure they have the latest value they should
 create a new instance of the check first.
 
-## Including checks in your app
-
-Set up a route in your rack-compatible Ruby application, and pick the built-in
-or custom checks you wish to perform.
-
-For Rails apps:
-
-```ruby
-get "/healthcheck", to: GovukHealthcheck.rack_response(
-  GovukHealthcheck::SidekiqRedis,
-  GovukHealthcheck::ActiveRecord,
-  CustomCheck,
-)
-```
-
-It also accepts objects, so classes can be initialized:
-
-```ruby
-get "/healthcheck", to: GovukHealthcheck.rack_response(
-  InitializedCheck.new(:param),
-)
-```
-
-## Built-in Checks
-
-A convention used when naming these classes is that it should end with `Check`
-if it must be subclassed to work, but a concrete class which works on its own
-doesn't need that suffix. You should aim to follow this convention in your own
-apps, ideally putting custom health checks into a `Healthcheck` module.
-
-### `RailsCache`
-
-This checks that the Rails cache store, such as Memcached, is acessible by
-writing and reading back a cache entry called "healthcheck-cache".
-
-### `Mongoid`
-
-This checks that the app has a connection to its Mongo database via Mongoid.
-
-### `SidekiqRedis`
-
-This checks that the app has a connection to Redis via Sidekiq.
-
-### `ActiveRecord`
-
-This checks that the app has a connection to the database via ActiveRecord.
-
-### `ThresholdCheck`
-
-This class is the basis for a check which compares a value with a warning or a
-critical threshold.
-
-```ruby
-class MyThresholdCheck < GovukHealthcheck::ThresholdCheck
-  def name
-    :my_threshold_check
-  end
-
-  def value
-    # get the value to be checked
-  end
-
-  def total
-    # (optional) get the total value to be included in the details as extra
-    # information
-  end
-
-  def warning_threshold
-    # if the value is above this threshold, its status is warning
-  end
-
-  def critical_threshold
-    # if the value is above this threshold, its status is critical
-  end
-end
-```
-
-### `SidekiqQueueLatencyCheck`
-
-This class is the basis for a check which compares the Sidekiq queue latencies
-with warning or critical thresholds.
-
-```ruby
-class MySidekiqQueueLatencyCheck < GovukHealthcheck::SidekiqQueueLatencyCheck
-  def warning_threshold(queue:)
-    # the warning threshold for a particular queue
-  end
-
-  def critical_threshold(queue:)
-    # the critical threshold for a particular queue
-  end
-end
-```
-
-### `SidekiqRetrySizeCheck`
-
-Similar to `SidekiqQueueSizeCheck`, this class is the basis for a check which
-compares the Sidekiq retry set size with a warning and critical threshold.
-
-```ruby
-class MySidekiqRetrySizeCheck < GovukHealthcheck::SidekiqRetrySizeCheck
-  def warning_threshold
-    # the warning threshold for the retry set
-  end
-
-  def critical_threshold
-    # the critical threshold for the retry set
-  end
-end
-```
+Put custom health checks for your app into a `Healtcheck` module. Each custom check class should end with `Check`.
