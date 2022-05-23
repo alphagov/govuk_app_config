@@ -25,6 +25,14 @@ module GovukPuma
     # This reduces RAM wastage by making better use of copy-on-write.
     config.preload_app!
 
+    config.on_worker_boot do
+      require 'prometheus_exporter/instrumentation'
+      PrometheusExporter::Instrumentation::ActiveRecord.start(
+        custom_labels: { type: "puma_worker" }, #optional params
+        config_labels: [:database, :host] #optional params
+      )
+    end
+
     config.before_fork do |_server|
       next unless ENV["GOVUK_APP_ROOT"]
 
