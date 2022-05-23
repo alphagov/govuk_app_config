@@ -1,5 +1,28 @@
 # Health Checks
 
+## Including checks in your app
+
+Set up a route in your rack-compatible Ruby application, and pick the built-in
+or custom checks you wish to perform.
+
+For Rails apps:
+
+```ruby
+get "/healthcheck", to: GovukHealthcheck.rack_response(
+  GovukHealthcheck::SidekiqRedis,
+  GovukHealthcheck::ActiveRecord,
+  CustomCheck,
+)
+```
+
+It also accepts objects, so classes can be initialized:
+
+```ruby
+get "/healthcheck", to: GovukHealthcheck.rack_response(
+  InitializedCheck.new(:param),
+)
+```
+
 ## Check interface
 
 A check is expected to be a class with the following methods:
@@ -42,29 +65,6 @@ end
 It is expected that these methods may cache their results for performance
 reasons, if a user wants to ensure they have the latest value they should
 create a new instance of the check first.
-
-## Including checks in your app
-
-Set up a route in your rack-compatible Ruby application, and pick the built-in
-or custom checks you wish to perform.
-
-For Rails apps:
-
-```ruby
-get "/healthcheck", to: GovukHealthcheck.rack_response(
-  GovukHealthcheck::SidekiqRedis,
-  GovukHealthcheck::ActiveRecord,
-  CustomCheck,
-)
-```
-
-It also accepts objects, so classes can be initialized:
-
-```ruby
-get "/healthcheck", to: GovukHealthcheck.rack_response(
-  InitializedCheck.new(:param),
-)
-```
 
 ## Built-in Checks
 
