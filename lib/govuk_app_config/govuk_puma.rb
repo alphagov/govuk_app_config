@@ -21,10 +21,6 @@ module GovukPuma
     # The overall concurrency limit is worker count * max threads per worker.
     config.workers ENV.fetch("WEB_CONCURRENCY", 2)
 
-    # `preload_app!` tells Puma to load application code before forking worker processes.
-    # This reduces RAM wastage by making better use of copy-on-write.
-    config.preload_app!
-
     config.on_worker_boot do
       require 'prometheus_exporter/instrumentation'
       PrometheusExporter::Instrumentation::ActiveRecord.start(
@@ -32,6 +28,10 @@ module GovukPuma
         config_labels: [:database, :host] #optional params
       )
     end
+
+    # `preload_app!` tells Puma to load application code before forking worker processes.
+    # This reduces RAM wastage by making better use of copy-on-write.
+    config.preload_app!
 
     config.before_fork do |_server|
       next unless ENV["GOVUK_APP_ROOT"]
