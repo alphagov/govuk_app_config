@@ -23,6 +23,16 @@ get "/healthcheck/ready", to: GovukHealthcheck.rack_response(
 )
 ```
 
+Built-in checks you can use include:
+
+- `GovukHealthcheck::RailsCache` - checks that the Rails cache store, such as Memcached, is acessible by writing and reading back a cache entry called "healthcheck-cache".
+
+- `GovukHealthcheck::Mongoid` - checks that the app has a connection to its Mongo database via Mongoid.
+
+- `GovukHealthcheck::SidekiqRedis` - checks that the app has a connection to Redis via Sidekiq.
+
+- `GovukHealthcheck::ActiveRecord` - checks that the app has a connection to the database via ActiveRecord.
+
 ## Check interface
 
 A check is expected to be a class with the following methods:
@@ -66,26 +76,4 @@ It is expected that these methods may cache their results for performance
 reasons, if a user wants to ensure they have the latest value they should
 create a new instance of the check first.
 
-## Built-in Checks
-
-A convention used when naming these classes is that it should end with `Check`
-if it must be subclassed to work, but a concrete class which works on its own
-doesn't need that suffix. You should aim to follow this convention in your own
-apps, ideally putting custom health checks into a `Healthcheck` module.
-
-### `RailsCache`
-
-This checks that the Rails cache store, such as Memcached, is acessible by
-writing and reading back a cache entry called "healthcheck-cache".
-
-### `Mongoid`
-
-This checks that the app has a connection to its Mongo database via Mongoid.
-
-### `SidekiqRedis`
-
-This checks that the app has a connection to Redis via Sidekiq.
-
-### `ActiveRecord`
-
-This checks that the app has a connection to the database via ActiveRecord.
+Put custom health checks for your app into a `Healtcheck` module. Each custom check class should end with `Check`.
