@@ -35,7 +35,7 @@ Built-in checks you can use include:
 
 - `GovukHealthcheck::ActiveRecord` - checks that the app has a connection to the database via ActiveRecord.
 
-## Check interface
+## Writing a custom healthcheck
 
 A check is expected to be a class with the following methods:
 
