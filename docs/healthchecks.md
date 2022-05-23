@@ -8,7 +8,7 @@ or custom checks you wish to perform.
 For Rails apps:
 
 ```ruby
-get "/healthcheck", to: GovukHealthcheck.rack_response(
+get "/healthcheck/ready", to: GovukHealthcheck.rack_response(
   GovukHealthcheck::SidekiqRedis,
   GovukHealthcheck::ActiveRecord,
   CustomCheck,
@@ -18,7 +18,7 @@ get "/healthcheck", to: GovukHealthcheck.rack_response(
 It also accepts objects, so classes can be initialized:
 
 ```ruby
-get "/healthcheck", to: GovukHealthcheck.rack_response(
+get "/healthcheck/ready", to: GovukHealthcheck.rack_response(
   InitializedCheck.new(:param),
 )
 ```
