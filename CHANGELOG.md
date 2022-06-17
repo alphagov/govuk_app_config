@@ -1,3 +1,6 @@
+# 4.6.2
+- Adds a new domain to the security policy for GA ([#248](https://https://github.com/alphagov/govuk_app_config/pull/248))
+
 # 4.6.1
 
 - Fixes warning message to refer to correct Sidekiq gem dependency name ([#243](https://github.com/alphagov/govuk_app_config/pull/243)).
