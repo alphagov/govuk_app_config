@@ -1,3 +1,7 @@
+# 4.6.3
+
+- Adds `region1.google-analytics.com` to the security policy for GA ([#250](https://github.com/alphagov/govuk_app_config/pull/250))
+
 # 4.6.2
 
 - Adds a new domain to the security policy for GA ([#248](https://https://github.com/alphagov/govuk_app_config/pull/248))

@@ -19,7 +19,8 @@ module GovukContentSecurityPolicy
                                 ssl.google-analytics.com
                                 stats.g.doubleclick.net
                                 www.googletagmanager.com
-                                www.region1.google-analytics.com].freeze
+                                www.region1.google-analytics.com
+                                region1.google-analytics.com].freeze
 
   GOOGLE_STATIC_DOMAINS = %w[www.gstatic.com].freeze
 
