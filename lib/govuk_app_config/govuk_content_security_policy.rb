@@ -97,6 +97,8 @@ module GovukContentSecurityPolicy
   end
 
   def self.configure
+    return if ENV.include?("GOVUK_CSP_DISABLE")
+
     Rails.application.config.content_security_policy_report_only = ENV.include?("GOVUK_CSP_REPORT_ONLY")
 
     Rails.application.config.content_security_policy(&method(:build_policy))

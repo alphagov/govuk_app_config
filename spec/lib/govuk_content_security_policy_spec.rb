@@ -50,5 +50,14 @@ RSpec.describe GovukContentSecurityPolicy do
           .to(false)
       end
     end
+
+    it "can be disabled by an ENV var" do
+      Rails.application.config.content_security_policy = nil
+
+      ClimateControl.modify(GOVUK_CSP_DISABLE: "yes") do
+        GovukContentSecurityPolicy.configure
+        expect(Rails.application.config.content_security_policy).to be_nil
+      end
+    end
   end
 end
