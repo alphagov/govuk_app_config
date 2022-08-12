@@ -1,3 +1,7 @@
+# 4.7.0
+
+- Adds Prometheus Sidekiq monitoring ([#255](https://github.com/alphagov/govuk_app_config/pull/255))
+
 # 4.6.3
 
 - Adds `region1.google-analytics.com` to the security policy for GA ([#250](https://github.com/alphagov/govuk_app_config/pull/250))
