@@ -1,6 +1,11 @@
 module GovukPrometheusExporter
   def self.should_configure
-    ENV["GOVUK_PROMETHEUS_EXPORTER"] == "true" && !(defined?(Rails) && Rails.env == "test")
+    if File.basename($PROGRAM_NAME) == "rake" ||
+        defined?(Rails) && (Rails.const_defined?("Console") || Rails.env == "test")
+      false
+    else
+      ENV["GOVUK_PROMETHEUS_EXPORTER"] == "true"
+    end
   end
 
   def self.configure
