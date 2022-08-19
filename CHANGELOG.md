@@ -1,4 +1,4 @@
-# Unreleased
+# 4.8.0
 
 - Enables Sentry environment names for EKS versions of integration, staging and production.([#260](https://github.com/alphagov/govuk_app_config/pull/260))
 
