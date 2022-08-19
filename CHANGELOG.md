@@ -1,3 +1,7 @@
+# 4.8.0
+
+- Enables Sentry environment names for EKS versions of integration, staging and production.([#260](https://github.com/alphagov/govuk_app_config/pull/260))
+
 # 4.7.1
 
 - Fix the ability to open the Rails console (`bundle exec rails c`) when running inside a container ([#257](https://github.com/alphagov/govuk_app_config/pull/257)).

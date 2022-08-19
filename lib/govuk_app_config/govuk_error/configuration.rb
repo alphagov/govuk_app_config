@@ -19,8 +19,11 @@ module GovukError
       # don't capture the error.
       self.enabled_environments = %w[
         integration-blue-aws
+        integration-eks
         staging
+        staging-eks
         production
+        production-eks
       ]
 
       self.excluded_exceptions = [
