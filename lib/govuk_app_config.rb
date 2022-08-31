@@ -1,6 +1,7 @@
 require "govuk_app_config/version"
 require "govuk_app_config/govuk_statsd"
 require "govuk_app_config/govuk_error"
+require "govuk_app_config/govuk_proxy/static_proxy"
 require "govuk_app_config/govuk_healthcheck"
 require "govuk_app_config/govuk_i18n"
 # This require is deprecated and should be removed on next major version bump
