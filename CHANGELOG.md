@@ -1,3 +1,7 @@
+# Unreleased
+
+- Add GovukProxy::StaticProxy to forward Static asset requests by setting `GOVUK_PROXY_STATIC_ENABLED=true`.([#261](https://github.com/alphagov/govuk_app_config/pull/261))
+
 # 4.8.0
 
 - Enables Sentry environment names for EKS versions of integration, staging and production.([#260](https://github.com/alphagov/govuk_app_config/pull/260))
