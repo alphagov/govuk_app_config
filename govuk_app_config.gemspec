@@ -21,8 +21,10 @@ Gem::Specification.new do |spec|
   spec.require_paths = %w[lib]
 
   spec.add_dependency "logstasher", "~> 2.1"
+  spec.add_dependency "plek", "~> 4"
   spec.add_dependency "prometheus_exporter", "~> 2.0"
   spec.add_dependency "puma", "~> 5.6"
+  spec.add_dependency "rack-proxy", "~> 0.7"
   spec.add_dependency "sentry-rails", "~> 5.3"
   spec.add_dependency "sentry-ruby", "~> 5.3"
   spec.add_dependency "statsd-ruby", "~> 1.5"
