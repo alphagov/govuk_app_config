@@ -1,4 +1,4 @@
-# Unreleased
+# 4.9.0
 
 - Add GovukProxy::StaticProxy to forward Static asset requests by setting `GOVUK_PROXY_STATIC_ENABLED=true`.([#261](https://github.com/alphagov/govuk_app_config/pull/261))
 
