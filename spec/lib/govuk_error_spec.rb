@@ -26,7 +26,7 @@ RSpec.describe GovukError do
 
     it "sends the version along with the request" do
       GovukError.notify(StandardError.new, parameters: "Something")
-      expect(Sentry).to have_received(:capture_exception).with(StandardError.new, hash_including(tags: { govuk_app_config_version: /^[0-9]\.[0-9]\.[0-9](?:\.pre\.[0-9]+)?$/ }))
+      expect(Sentry).to have_received(:capture_exception).with(StandardError.new, hash_including(tags: { govuk_app_config_version: /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(\.pre\.[0-9]+)?$/ }))
     end
   end
 
