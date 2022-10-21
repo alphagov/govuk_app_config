@@ -1,3 +1,7 @@
+# 4.10.0
+
+- Reduce log level for the Sentry gem from `INFO` to `WARN` to avoid polluting logs with uninformative messages. This only affects log messages from the Sentry gem itself, which go to `stdout`.
+
 # 4.9.0
 
 - Add GovukProxy::StaticProxy to forward Static asset requests by setting `GOVUK_PROXY_STATIC_ENABLED=true`.([#261](https://github.com/alphagov/govuk_app_config/pull/261))
