@@ -1,3 +1,7 @@
+# 4.10.1
+
+- Fix an object ownership/sharing bug where the Rails log level was erroneously being set to `WARN` when initialising Sentry.
+
 # 4.10.0
 
 - Reduce log level for the Sentry gem from `INFO` to `WARN` to avoid polluting logs with uninformative messages. This only affects log messages from the Sentry gem itself, which go to `stdout`.

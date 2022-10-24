@@ -40,8 +40,6 @@ module GovukError
 
     Sentry.init do |sentry_config|
       config = Configuration.new(sentry_config)
-      # Avoid "Sending envelope with items ... to Sentry" logspew on stdout.
-      config.logger.level = Sentry::Logger::WARN
       yield config if block_given?
     end
   end

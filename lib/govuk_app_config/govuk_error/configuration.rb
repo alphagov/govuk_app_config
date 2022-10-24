@@ -74,6 +74,10 @@ module GovukError
         "GdsApi::ContentStore::ItemNotFound",
       ]
 
+      # Avoid "Sending envelope with items ... to Sentry" logspew, since we
+      # don't use Sentry's automatic session tracking.
+      self.auto_session_tracking = false
+
       @before_send_callbacks = [
         ignore_excluded_exceptions_in_data_sync,
         increment_govuk_statsd_counters,
