@@ -1,5 +1,6 @@
-# Unreleased
+# 4.11.0
 
+- Update Plek support to allow version 5
 - Add I18n plural rules for Welsh (cy), Maltese (mt) and Chinese (zh) since Rails-I18n has [dropped support](https://github.com/svenfuchs/rails-i18n/pull/1017) for them in 7.0.6 ([#266](https://github.com/alphagov/govuk_app_config/pull/266))
 
 # 4.10.1
