@@ -1,3 +1,7 @@
+# Unreleased
+
+- Add I18n plural rules for Welsh (cy), Maltese (mt) and Chinese (zh) since Rails-I18n has [dropped support](https://github.com/svenfuchs/rails-i18n/pull/1017) for them in 7.0.6 ([#266](https://github.com/alphagov/govuk_app_config/pull/266))
+
 # 4.10.1
 
 - Fix an object ownership/sharing bug where the Rails log level was erroneously being set to `WARN` when initialising Sentry.
