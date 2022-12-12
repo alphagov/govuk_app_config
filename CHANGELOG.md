@@ -1,3 +1,7 @@
+# 4.11.1
+
+- Remove govuk_i18n plural rules file
+
 # 4.11.0
 
 - Update Plek support to allow version 5
