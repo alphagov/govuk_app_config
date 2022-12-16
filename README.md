@@ -178,4 +178,4 @@ GovukPrometheusExporter.configure
 
 ## License
 
-[MIT License](LICENSE.md)
+[MIT License](LICENCE)
