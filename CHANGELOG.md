@@ -1,5 +1,6 @@
 # Unreleased
 
+* Remove webchat scripts from the CSP, these are now handled in [government-frontend](https://github.com/alphagov/government-frontend/pull/2643)
 * Remove `www.signin.service.gov.uk` from the CSP as it is no-longer used in GOV.UK
 * Disallow data fonts in the global Content Security policy
 

@@ -47,8 +47,6 @@ module GovukContentSecurityPolicy
                       "*.ytimg.com",
                       "www.youtube.com",
                       "www.youtube-nocookie.com",
-                      # Allow JSONP call to Nuance - HMRC web chat provider
-                      "hmrc-uk.digital.nuance.com",
                       # Allow all inline scripts until we can conclusively
                       # document all the inline scripts we use,
                       # and there's a better way to filter out junk reports
@@ -70,15 +68,7 @@ module GovukContentSecurityPolicy
                        *GOVUK_DOMAINS,
                        *GOOGLE_ANALYTICS_DOMAINS,
                        # Speedcurve real user monitoring (RUM) - as per: https://support.speedcurve.com/docs/add-rum-to-your-csp
-                       "lux.speedcurve.com",
-                       # Allow connecting to web chat from HMRC contact pages
-                       "www.tax.service.gov.uk",
-                       # Allow JSON call to Nuance - HMRC web chat provider
-                       "hmrc-uk.digital.nuance.com",
-                       # Allow JSON call to klick2contact - HMPO web chat provider
-                       "hmpowebchat.klick2contact.com",
-                       # Allow JSON call to Eckoh - HMPO web chat provider
-                       "omni.eckoh.uk"
+                       "lux.speedcurve.com"
 
     # Disallow all <object>, <embed>, and <applet> elements
     #
