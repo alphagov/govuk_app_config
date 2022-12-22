@@ -26,7 +26,7 @@ module GovukContentSecurityPolicy
 
   def self.build_policy(policy)
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/default-src
-    policy.default_src :https, :self, *GOVUK_DOMAINS
+    policy.default_src :self
 
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/img-src
     policy.img_src :self,
