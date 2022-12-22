@@ -64,9 +64,8 @@ module GovukContentSecurityPolicy
                      :unsafe_inline
 
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/font-src
-    policy.font_src :self,
-                    *GOVUK_DOMAINS,
-                    :data # Used by some legacy fonts
+    # Note: we purposely don't include data here because it produces a security risk.
+    policy.font_src :self, *GOVUK_DOMAINS
 
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/connect-src
     policy.connect_src :self,

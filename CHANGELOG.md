@@ -1,3 +1,7 @@
+# Unreleased
+
+* Disallow data fonts in the global Content Security policy
+
 # 4.11.1
 
 - Remove govuk_i18n plural rules file
