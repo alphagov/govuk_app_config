@@ -1,12 +1,12 @@
 module GovukContentSecurityPolicy
   # Generate a Content Security Policy (CSP) directive.
   #
-  # See https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP for more CSP info.
+  # Before making any changes please read our documentation: https://docs.publishing.service.gov.uk/manual/content-security-policy.html
   #
-  # The resulting policy should be checked with:
+  # If you are making a change here you should consider 2 basic rules of thumb:
   #
-  # - https://csp-evaluator.withgoogle.com
-  # - https://cspvalidator.org
+  # 1. Are you creating a XSS risk? Adding unsafe-* declarations, allowing data: URLs or being overly permissive (e.g. https) risks these
+  # 2. Is this change needed globally, if it's just one or two apps the change should be applied in them directly.
 
   GOVUK_DOMAINS = [
     "*.publishing.service.gov.uk",
@@ -30,7 +30,11 @@ module GovukContentSecurityPolicy
 
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/img-src
     policy.img_src :self,
-                   :data, # Base64 encoded images
+                   # This allows Base64 encoded images, but is a security
+                   # risk as it can embed third party resources.
+                   # As of December 2022, we intend to remove this prior
+                   # to making the CSP live.
+                   :data,
                    *GOVUK_DOMAINS,
                    *GOOGLE_ANALYTICS_DOMAINS, # Tracking pixels
                    # Speedcurve real user monitoring (RUM) - as per: https://support.speedcurve.com/docs/add-rum-to-your-csp
@@ -46,15 +50,18 @@ module GovukContentSecurityPolicy
                       "*.ytimg.com",
                       "www.youtube.com",
                       "www.youtube-nocookie.com",
-                      # Allow all inline scripts until we can conclusively
-                      # document all the inline scripts we use,
-                      # and there's a better way to filter out junk reports
+                      # This allows inline scripts and thus is a XSS risk.
+                      # As of December 2022, we intend to work towards removing
+                      # this from apps that don't use jQuery 1.12 (which needs
+                      # this) once we've set up nonces.
                       :unsafe_inline
 
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src
     policy.style_src :self,
                      *GOOGLE_STATIC_DOMAINS,
-                     # We use the `style=""` attribute on some HTML elements
+                     # This allows style="" attributes and style elements.
+                     # As of December 2022, we intend to remove this prior
+                     # to making the CSP live due to the security risks it has.
                      :unsafe_inline
 
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/font-src
