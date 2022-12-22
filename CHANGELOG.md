@@ -1,5 +1,6 @@
 # Unreleased
 
+* Remove `www.signin.service.gov.uk` from the CSP as it is no-longer used in GOV.UK
 * Disallow data fonts in the global Content Security policy
 
 # 4.11.1

@@ -43,8 +43,6 @@ module GovukContentSecurityPolicy
                       *GOVUK_DOMAINS,
                       *GOOGLE_ANALYTICS_DOMAINS,
                       *GOOGLE_STATIC_DOMAINS,
-                      # Allow JSONP call to Verify to check whether the user is logged in
-                      "www.signin.service.gov.uk",
                       # Allow YouTube Embeds (Govspeak turns YouTube links into embeds)
                       "*.ytimg.com",
                       "www.youtube.com",
@@ -80,9 +78,7 @@ module GovukContentSecurityPolicy
                        # Allow JSON call to klick2contact - HMPO web chat provider
                        "hmpowebchat.klick2contact.com",
                        # Allow JSON call to Eckoh - HMPO web chat provider
-                       "omni.eckoh.uk",
-                       # Allow connecting to Verify to check whether the user is logged in
-                       "www.signin.service.gov.uk"
+                       "omni.eckoh.uk"
 
     # Disallow all <object>, <embed>, and <applet> elements
     #
