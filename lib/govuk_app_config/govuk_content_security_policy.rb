@@ -40,7 +40,6 @@ module GovukContentSecurityPolicy
 
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src
     policy.script_src :self,
-                      *GOVUK_DOMAINS,
                       *GOOGLE_ANALYTICS_DOMAINS,
                       *GOOGLE_STATIC_DOMAINS,
                       # Allow YouTube Embeds (Govspeak turns YouTube links into embeds)
@@ -54,14 +53,13 @@ module GovukContentSecurityPolicy
 
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src
     policy.style_src :self,
-                     *GOVUK_DOMAINS,
                      *GOOGLE_STATIC_DOMAINS,
                      # We use the `style=""` attribute on some HTML elements
                      :unsafe_inline
 
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/font-src
     # Note: we purposely don't include data here because it produces a security risk.
-    policy.font_src :self, *GOVUK_DOMAINS
+    policy.font_src :self
 
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/connect-src
     policy.connect_src :self,
