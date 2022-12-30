@@ -89,6 +89,14 @@ module GovukContentSecurityPolicy
   def self.configure
     Rails.application.config.content_security_policy_report_only = ENV.include?("GOVUK_CSP_REPORT_ONLY")
 
-    Rails.application.config.content_security_policy(&method(:build_policy))
+    policy = Rails.application.config.content_security_policy(&method(:build_policy))
+
+    # # allow apps to customise the CSP by passing a block e.g:
+    # GovukContentSecuirtyPolicy.configure do |policy|
+    #   policy.image_src(*policy.image_src, "https://i.ytimg.com")
+    # end
+    yield(policy) if block_given?
+
+    policy
   end
 end

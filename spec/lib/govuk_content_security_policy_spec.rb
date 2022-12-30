@@ -50,5 +50,10 @@ RSpec.describe GovukContentSecurityPolicy do
           .to(false)
       end
     end
+
+    it "yields an instance of the policy if a block is provided" do
+      expect { |b| GovukContentSecurityPolicy.configure(&b) }
+        .to yield_with_args(an_instance_of(ActionDispatch::ContentSecurityPolicy))
+    end
   end
 end
