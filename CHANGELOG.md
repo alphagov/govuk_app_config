@@ -1,5 +1,6 @@
 # Unreleased
 
+* Allow `https://img.youtube.com` as a CSP image source
 * CSP only allows scripts, styles and fonts from self which reflects GOV.UK production behaviour
 * Set the default CSP behaviour to be allow communication only to self
 * Remove webchat scripts from the CSP, these are now handled in [government-frontend](https://github.com/alphagov/government-frontend/pull/2643)

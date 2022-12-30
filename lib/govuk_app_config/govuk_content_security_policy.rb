@@ -40,7 +40,9 @@ module GovukContentSecurityPolicy
                    # Speedcurve real user monitoring (RUM) - as per: https://support.speedcurve.com/docs/add-rum-to-your-csp
                    "lux.speedcurve.com",
                    # Some content still links to an old domain we used to use
-                   "assets.digital.cabinet-office.gov.uk"
+                   "assets.digital.cabinet-office.gov.uk",
+                   # Allow YouTube thumbnails
+                   "https://img.youtube.com"
 
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src
     policy.script_src :self,
