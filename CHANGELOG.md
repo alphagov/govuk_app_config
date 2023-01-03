@@ -1,4 +1,4 @@
-# Unreleased
+# 4.12.0
 
 * Allow `https://img.youtube.com` as a CSP image source
 * CSP only allows scripts, styles and fonts from self which reflects GOV.UK production behaviour
