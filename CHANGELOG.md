@@ -1,3 +1,12 @@
+# Unreleased
+
+* Allow `https://img.youtube.com` as a CSP image source
+* CSP only allows scripts, styles and fonts from self which reflects GOV.UK production behaviour
+* Set the default CSP behaviour to be allow communication only to self
+* Remove webchat scripts from the CSP, these are now handled in [government-frontend](https://github.com/alphagov/government-frontend/pull/2643)
+* Remove `www.signin.service.gov.uk` from the CSP as it is no-longer used in GOV.UK
+* Disallow data fonts in the global Content Security policy
+
 # 4.11.1
 
 - Remove govuk_i18n plural rules file
