@@ -1,3 +1,7 @@
+# 4.13.0
+
+- Flush log writes to stdout immediately so that structured (JSON) logs are not lost on crash or delayed indefinitely.
+
 # 4.12.0
 
 * Allow `https://img.youtube.com` as a CSP image source
