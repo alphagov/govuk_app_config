@@ -1,5 +1,6 @@
 # Unreleased
 
+* Forbid base elements in the Content Security Policy
 * BREAKING: Content Security Policy forbids unsafe-inline script-src and data: image-src. It provides a nonce generator. Apps that can't support this will need to amend their CSP configuration in an initializer, see [example](https://github.com/alphagov/signon/commit/ddcf31f5c30b8fd334e4aea74986b24bf2b0e9be) in signon. Any apps that still use jQuery 1.x will need unsafe-inline for Firefox compatibility.
 
 # 4.13.0

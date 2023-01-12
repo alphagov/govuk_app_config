@@ -28,6 +28,9 @@ module GovukContentSecurityPolicy
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/default-src
     policy.default_src :self
 
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/base-uri
+    policy.base_uri :none
+
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/img-src
     # Note: we purposely don't include `data:` here because it produces a security risk.
     policy.img_src :self,
