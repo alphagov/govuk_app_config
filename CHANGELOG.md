@@ -1,6 +1,6 @@
 # 4.13.0
 
-- Flush log writes to stdout immediately so that structured (JSON) logs are not lost on crash or delayed indefinitely.
+* Flush log writes to stdout immediately so that structured (JSON) logs are not lost on crash or delayed indefinitely.
 
 # 4.12.0
 
@@ -13,148 +13,149 @@
 
 # 4.11.1
 
-- Remove govuk_i18n plural rules file
+* Remove govuk_i18n plural rules file
 
 # 4.11.0
 
-- Update Plek support to allow version 5
-- Add I18n plural rules for Welsh (cy), Maltese (mt) and Chinese (zh) since Rails-I18n has [dropped support](https://github.com/svenfuchs/rails-i18n/pull/1017) for them in 7.0.6 ([#266](https://github.com/alphagov/govuk_app_config/pull/266))
+* Update Plek support to allow version 5
+* Add I18n plural rules for Welsh (cy), Maltese (mt) and Chinese (zh) since Rails-I18n has [dropped support](https://github.com/svenfuchs/rails-i18n/pull/1017) for them in 7.0.6 ([#266](https://github.com/alphagov/govuk_app_config/pull/266))
 
 # 4.10.1
 
-- Fix an object ownership/sharing bug where the Rails log level was erroneously being set to `WARN` when initialising Sentry.
+* Fix an object ownership/sharing bug where the Rails log level was erroneously being set to `WARN` when initialising Sentry.
 
 # 4.10.0
 
-- Reduce log level for the Sentry gem from `INFO` to `WARN` to avoid polluting logs with uninformative messages. This only affects log messages from the Sentry gem itself, which go to `stdout`.
+* Reduce log level for the Sentry gem from `INFO` to `WARN` to avoid polluting logs with uninformative messages. This only affects log messages from the Sentry gem itself, which go to `stdout`.
 
 # 4.9.0
 
-- Add GovukProxy::StaticProxy to forward Static asset requests by setting `GOVUK_PROXY_STATIC_ENABLED=true`.([#261](https://github.com/alphagov/govuk_app_config/pull/261))
+* Add GovukProxy::StaticProxy to forward Static asset requests by setting `GOVUK_PROXY_STATIC_ENABLED=true`.([#261](https://github.com/alphagov/govuk_app_config/pull/261))
 
 # 4.8.0
 
-- Enables Sentry environment names for EKS versions of integration, staging and production.([#260](https://github.com/alphagov/govuk_app_config/pull/260))
+* Enables Sentry environment names for EKS versions of integration, staging and production.([#260](https://github.com/alphagov/govuk_app_config/pull/260))
 
 # 4.7.1
 
-- Fix the ability to open the Rails console (`bundle exec rails c`) when running inside a container ([#257](https://github.com/alphagov/govuk_app_config/pull/257)).
+* Fix the ability to open the Rails console (`bundle exec rails c`) when running inside a container ([#257](https://github.com/alphagov/govuk_app_config/pull/257)).
 
 # 4.7.0
 
-- Adds Prometheus Sidekiq monitoring ([#255](https://github.com/alphagov/govuk_app_config/pull/255))
+* Adds Prometheus Sidekiq monitoring ([#255](https://github.com/alphagov/govuk_app_config/pull/255))
 
 # 4.6.3
 
-- Adds `region1.google-analytics.com` to the security policy for GA ([#250](https://github.com/alphagov/govuk_app_config/pull/250))
+* Adds `region1.google-analytics.com` to the security policy for GA ([#250](https://github.com/alphagov/govuk_app_config/pull/250))
 
 # 4.6.2
 
-- Adds a new domain to the security policy for GA ([#248](https://https://github.com/alphagov/govuk_app_config/pull/248))
+* Adds a new domain to the security policy for GA ([#248](https://https://github.com/alphagov/govuk_app_config/pull/248))
 
 # 4.6.1
 
-- Fixes warning message to refer to correct Sidekiq gem dependency name ([#243](https://github.com/alphagov/govuk_app_config/pull/243)).
+* Fixes warning message to refer to correct Sidekiq gem dependency name ([#243](https://github.com/alphagov/govuk_app_config/pull/243)).
 
 # 4.6.0
 
-- Add a warning for apps using GovukError with Sidekiq that don't have sentry-sidekiq installed ([#241](https://github.com/alphagov/govuk_app_config/pull/241)).
-- Add internal Sidekiq exception "Sidekiq::JobRetry::Skip" to excluded exceptions ([#241](https://github.com/alphagov/govuk_app_config/pull/241)).
+* Add a warning for apps using GovukError with Sidekiq that don't have sentry-sidekiq installed ([#241](https://github.com/alphagov/govuk_app_config/pull/241)).
+* Add internal Sidekiq exception "Sidekiq::JobRetry::Skip" to excluded exceptions ([#241](https://github.com/alphagov/govuk_app_config/pull/241)).
 
 # 4.5.0
 
-- Add lux.speedcurve.com to connect_src for GOV.UK Content Security Policy ([#232](https://github.com/alphagov/govuk_app_config/pull/232))
-- Fix prometheus_exporter to only be enabled when the GOVUK_PROMETHEUS_EXPORTER env var is set to "true" ([#231](https://github.com/alphagov/govuk_app_config/pull/231)).
-- Add Prometheus monitoring for EKS section to README.md ([#231](https://github.com/alphagov/govuk_app_config/pull/231)).
-- Fix govuk_error being incompatible with Ruby >= 3 ([#233](https://github.com/alphagov/govuk_app_config/pull/233))
-- Require Ruby 2.7 as the minimum supported Ruby version ([#233](https://github.com/alphagov/govuk_app_config/pull/233))
-- Require Sentry 5 and Unicorn 6 major versions ([#237](https://github.com/alphagov/govuk_app_config/pull/237))
-- Prevent sentry-rails logger warnings when govuk_error is used with non-Rails apps ([#234](https://github.com/alphagov/govuk_app_config/pull/234))
+* Add lux.speedcurve.com to connect_src for GOV.UK Content Security Policy ([#232](https://github.com/alphagov/govuk_app_config/pull/232))
+* Fix prometheus_exporter to only be enabled when the GOVUK_PROMETHEUS_EXPORTER env var is set to "true" ([#231](https://github.com/alphagov/govuk_app_config/pull/231)).
+* Add Prometheus monitoring for EKS section to README.md ([#231](https://github.com/alphagov/govuk_app_config/pull/231)).
+* Fix govuk_error being incompatible with Ruby >= 3 ([#233](https://github.com/alphagov/govuk_app_config/pull/233))
+* Require Ruby 2.7 as the minimum supported Ruby version ([#233](https://github.com/alphagov/govuk_app_config/pull/233))
+* Require Sentry 5 and Unicorn 6 major versions ([#237](https://github.com/alphagov/govuk_app_config/pull/237))
+* Prevent sentry-rails logger warnings when govuk_error is used with non-Rails apps ([#234](https://github.com/alphagov/govuk_app_config/pull/234))
 
 # 4.4.3
 
-- Update prometheus exporter server to 0.0.0.0 from localhost  ([#227](https://github.com/alphagov/govuk_app_config/pull/227)).
+* Update prometheus exporter server to 0.0.0.0 from localhost  ([#227](https://github.com/alphagov/govuk_app_config/pull/227)).
 
 # 4.4.2
 
-- Update HMPO webchat address in security policy ([#225](https://github.com/alphagov/govuk_app_config/pull/225)).
+* Update HMPO webchat address in security policy ([#225](https://github.com/alphagov/govuk_app_config/pull/225)).
 
 # 4.4.1
 
-- Fix issue where GovukPrometheusExporter module prevented the gem to load due to missing constant "PrometheusExporter" ([#224](https://github.com/alphagov/govuk_app_config/pull/224)).
-- Lazy load the prometheus_exporter dependency for only apps that use GovukPrometheusExporter ([#224](https://github.com/alphagov/govuk_app_config/pull/224)).
+* Fix issue where GovukPrometheusExporter module prevented the gem to load due to missing constant "PrometheusExporter" ([#224](https://github.com/alphagov/govuk_app_config/pull/224)).
+* Lazy load the prometheus_exporter dependency for only apps that use GovukPrometheusExporter ([#224](https://github.com/alphagov/govuk_app_config/pull/224)).
 
 # 4.4.0
 
-- Add GovukPrometheusModule, to allow for export of prometheus metrics ([#223](https://github.com/alphagov/govuk_app_config/pull/223)).
+* Add GovukPrometheusModule, to allow for export of prometheus metrics ([#223](https://github.com/alphagov/govuk_app_config/pull/223)).
 
 # 4.3.0
 
-- Remove Speedcurve's LUX from the connect-src policy ([#216](https://github.com/alphagov/govuk_app_config/pull/216)).
+* Remove Speedcurve's LUX from the connect-src policy ([#216](https://github.com/alphagov/govuk_app_config/pull/216)).
 
 # 4.2.0
 
-- Add pluralisation rules for Azerbaijani, Persian, Georgian, and Turkish. ([#219](https://github.com/alphagov/govuk_app_config/pull/219))
+* Add pluralisation rules for Azerbaijani, Persian, Georgian, and Turkish. ([#219](https://github.com/alphagov/govuk_app_config/pull/219))
 
 # 4.1.0
 
-- Add Puma to dependencies ([#214](https://github.com/alphagov/govuk_app_config/pull/214)).
+* Add Puma to dependencies ([#214](https://github.com/alphagov/govuk_app_config/pull/214)).
 
 # 4.0.1
 
-- Update Content Security Policy with new klick2contact.com subdomain ([#213](https://github.com/alphagov/govuk_app_config/pull/213)).
+* Update Content Security Policy with new klick2contact.com subdomain ([#213](https://github.com/alphagov/govuk_app_config/pull/213)).
 
 # 4.0.0
 
-- BREAKING: replaces deprecated `sentry-raven` with `sentry-ruby` and `sentry-rails`. Follow the **[migration guide](https://docs.sentry.io/platforms/ruby/migration/)** before upgrading to this version of govuk_app_config to ensure full compatibility with the new gems.
-- BREAKING: `GovukError.configure` can only be called once, and non-Rails apps will have to manually call `GovukError.configure` in order to initialise Sentry.
-- BREAKING: apps will no longer increment the `error_reports_failed` statsd if events fail to get sent to Sentry.
-- BREAKING: the behaviour of `before_send` has changed, and the `should_capture` method is deprecated.
-- See pre-release notes below for details.
-- PR: [#212](https://github.com/alphagov/govuk_app_config/pull/212)
+* BREAKING: replaces deprecated `sentry-raven` with `sentry-ruby` and `sentry-rails`. Follow the **[migration guide](https://docs.sentry.io/platforms/ruby/migration/)** before upgrading to this version of govuk_app_config to ensure full compatibility with the new gems.
+* BREAKING: `GovukError.configure` can only be called once, and non-Rails apps will have to manually call `GovukError.configure` in order to initialise Sentry.
+* BREAKING: apps will no longer increment the `error_reports_failed` statsd if events fail to get sent to Sentry.
+* BREAKING: the behaviour of `before_send` has changed, and the `should_capture` method is deprecated.
+* See pre-release notes below for details.
+* PR: [#212](https://github.com/alphagov/govuk_app_config/pull/212)
 
 # 4.0.0.pre.4
 
-- Fix Sentry client initialisation ([#205](https://github.com/alphagov/govuk_app_config/pull/205)).
-- BREAKING: non-Rails apps will need to manually call `GovukError.configure` in order to initialise Sentry.
-- BREAKING: `GovukError.configure` can only be called once by the downstream application.
+* Fix Sentry client initialisation ([#205](https://github.com/alphagov/govuk_app_config/pull/205)).
+* BREAKING: non-Rails apps will need to manually call `GovukError.configure` in order to initialise Sentry.
+* BREAKING: `GovukError.configure` can only be called once by the downstream application.
 
 # 4.0.0.pre.3
 
-- Include [sentry-rails](https://github.com/getsentry/sentry-ruby/tree/master/sentry-rails) by default ([#203](https://github.com/alphagov/govuk_app_config/pull/203)).
+* Include [sentry-rails](https://github.com/getsentry/sentry-ruby/tree/master/sentry-rails) by default ([#203](https://github.com/alphagov/govuk_app_config/pull/203)).
 
 # 4.0.0.pre.2
 
-- Fix default Sentry configuration ([#202](https://github.com/alphagov/govuk_app_config/pull/202)).
-- BREAKING: this means no more `silence_ready` or `transport_failure_callback` options.
+* Fix default Sentry configuration ([#202](https://github.com/alphagov/govuk_app_config/pull/202)).
+* BREAKING: this means no more `silence_ready` or `transport_failure_callback` options.
 
 # 4.0.0.pre.1
 
-- BREAKING: upgrades Sentry gem from `sentry-raven` to `sentry-ruby` ([#199](https://github.com/alphagov/govuk_app_config/pull/199)). There is a **[migration guide](https://docs.sentry.io/platforms/ruby/migration/)** you should follow before upgrading to this version of govuk_app_config.
-- This release also fixes the `data_sync_excluded_exceptions` behaviour that was broken in v3.1.0 (later fixed in v3.3.0, which was released after 4.0.0.pre.1).
-- Released as a pre-release to identify and fix any problems before a wider rollout.
+* BREAKING: upgrades Sentry gem from `sentry-raven` to `sentry-ruby` ([#199](https://github.com/alphagov/govuk_app_config/pull/199)). There is a **[migration guide](https://docs.sentry.io/platforms/ruby/migration/)** you should follow before upgrading to this version of govuk_app_config.
+* This release also fixes the `data_sync_excluded_exceptions` behaviour that was broken in v3.1.0 (later fixed in v3.3.0, which was released after 4.0.0.pre.1).
+* Released as a pre-release to identify and fix any problems before a wider rollout.
 
 # 3.3.0
 
-- Revert the `should_capture`/`before_send` consolidation introduced in 3.1.0. This fixes the `data_sync_excluded_exceptions` behaviour that has been broken since v3.1.0. ([#211](https://github.com/alphagov/govuk_app_config/pull/211))
+* Revert the `should_capture`/`before_send` consolidation introduced in 3.1.0. This fixes the `data_sync_excluded_exceptions` behaviour that has been broken since v3.1.0. ([#211](https://github.com/alphagov/govuk_app_config/pull/211))
 
 # 3.2.0
 
-- Add Speedcurve's LUX to connect-src policy ([#206](https://github.com/alphagov/govuk_app_config/pull/206))
+* Add Speedcurve's LUX to connect-src policy ([#206](https://github.com/alphagov/govuk_app_config/pull/206))
 
 # 3.1.1
 
-- Fix the new before_send behaviour & tests, and add documentation ([#197](https://github.com/alphagov/govuk_app_config/pull/197))
+* Fix the new before_send behaviour & tests, and add documentation ([#197](https://github.com/alphagov/govuk_app_config/pull/197))
 
 # 3.1.0
 
-- Remove support for `should_capture` callbacks in favour of `before_send` ([#196](https://github.com/alphagov/govuk_app_config/pull/196))
+* Remove support for `should_capture` callbacks in favour of `before_send` ([#196](https://github.com/alphagov/govuk_app_config/pull/196))
 
 # 3.0.0
 
 * BREAKING: Implement RFC 141 - remove unsuitable healthchecks and return a 500 on healthcheck failure ([#193](https://github.com/alphagov/govuk_app_config/pull/193))
 
 # 2.10.0
+
 * Allow LUX domain on img-src policy ([#191](https://github.com/alphagov/govuk_app_config/pull/191))
 
 # 2.9.1
