@@ -1,3 +1,7 @@
+# Unreleased
+
+* Scrub sensitive RabbitMQ data from sentry messages before sending them
+
 # 4.13.0
 
 * Flush log writes to stdout immediately so that structured (JSON) logs are not lost on crash or delayed indefinitely.

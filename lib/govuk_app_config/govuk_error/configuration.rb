@@ -79,6 +79,7 @@ module GovukError
       self.auto_session_tracking = false
 
       @before_send_callbacks = [
+        strip_sensitive_data,
         ignore_excluded_exceptions_in_data_sync,
         increment_govuk_statsd_counters,
       ]
@@ -110,6 +111,26 @@ module GovukError
 
         event unless data_sync.in_progress? && data_sync_ignored_error
       }
+    end
+
+    def strip_sensitive_data
+      lambda do |event, hint|
+        next event unless hint[:exception].is_a?(URI::InvalidURIError)
+
+        match = hint[:exception].message.match(/amqps?:|postgresql:|mysql2:|redis:/)
+
+        if match
+          message = "Filtered URI::InvalidURIError due to potentially sensitive #{match[0]} connection URI"
+          substitute_event = Sentry::ErrorEvent.new(
+            configuration: event.configuration,
+            message: message,
+          )
+          substitute_event.add_threads_interface(backtrace: hint[:exception].backtrace)
+          substitute_event
+        else
+          event
+        end
+      end
     end
 
     def increment_govuk_statsd_counters

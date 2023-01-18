@@ -56,6 +56,28 @@ RSpec.describe GovukError::Configuration do
       end
     end
 
+    it "strips sensitive data from an error message" do
+      error_message = "some info amqps://a_username:a_password@some.domain:1234 about this error"
+
+      ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
+        configuration.enabled_environments << "production"
+        sentry_client = send_exception_to_sentry(URI::InvalidURIError.new(error_message), configuration)
+        sent_error_messages = sentry_client.transport.events.map(&:message)
+        expect(sent_error_messages).not_to include(a_string_matching(/#{error_message}/))
+        expect(sent_error_messages).to include(a_string_matching(/Filtered URI::InvalidURIError due to potentially sensitive amqps: connection URI/))
+      end
+    end
+
+    it "leaves the error message unchanged if it does not contain sensitive information" do
+      a_safe_error_message = "normal error message with no credentials"
+      ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
+        configuration.enabled_environments << "production"
+        sentry_client = send_exception_to_sentry(StandardError.new(a_safe_error_message), configuration)
+        sent_error_messages = sentry_client.transport.events.first.exception.values.map(&:value)
+        expect(sent_error_messages).to include(a_string_matching(/#{a_safe_error_message}/))
+      end
+    end
+
     context "during the data sync" do
       around do |example|
         ClimateControl.modify SENTRY_CURRENT_ENV: "production", GOVUK_DATA_SYNC_PERIOD: "22:00-08:00" do
@@ -234,9 +256,12 @@ RSpec.describe GovukError::Configuration do
       end
     end
   end
-
   def send_exception_to_sentry(event, configuration)
-    sentry_client = Sentry::Client.new(optimise_configuration_for_testing(configuration))
+    test_configuration = optimise_configuration_for_testing(configuration)
+    sentry_client = Sentry::Client.new(test_configuration)
+    # Sentry will reference the configuration as global state so we need to
+    # stub it
+    allow(Sentry).to receive(:configuration).and_return(test_configuration)
     sentry_hub = Sentry::Hub.new(sentry_client, Sentry::Scope.new)
     sentry_hub.send(:capture_exception, event)
     sentry_client
