@@ -126,7 +126,7 @@ module GovukError
       lambda do |event, hint|
         result = event
         @before_send_callbacks.each do |callback|
-          result = callback.call(event, hint)
+          result = callback.call(result, hint)
           break if result.nil?
         end
         result
