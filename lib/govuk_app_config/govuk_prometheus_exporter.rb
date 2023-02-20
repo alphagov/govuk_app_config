@@ -1,6 +1,9 @@
 module GovukPrometheusExporter
   def self.should_configure
-    if File.basename($PROGRAM_NAME) == "rake" ||
+    # Allow us to force the Prometheus Exporter for persistent Rake tasks...
+    if ENV["GOVUK_PROMETHEUS_EXPORTER"] == "force"
+      true
+    elsif File.basename($PROGRAM_NAME) == "rake" ||
         defined?(Rails) && (Rails.const_defined?("Console") || Rails.env == "test")
       false
     else
