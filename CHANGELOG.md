@@ -1,3 +1,8 @@
+# 7.0.0
+
+* BREAKING: Remove [unicorn](https://rubygems.org/gems/unicorn/) and `GovukUnicorn`. All production GOV.UK apps are now using [Puma](https://rubygems.org/gems/puma/) instead.
+* `GovukStatsd` is deprecated and will be removed in a future major release.
+
 ## 6.0.1
 
 * Add support for configuring timeouts for puma-based applications
