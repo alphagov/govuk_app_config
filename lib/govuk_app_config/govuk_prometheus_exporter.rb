@@ -40,5 +40,9 @@ module GovukPrometheusExporter
     if defined?(Rails)
       Rails.application.middleware.unshift PrometheusExporter::Middleware
     end
+
+    if defined?(Sinatra)
+      Sinatra.use PrometheusExporter::Middleware
+    end
   end
 end
