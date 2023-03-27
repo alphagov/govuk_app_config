@@ -1,3 +1,7 @@
+## Unreleased
+
+* Drop support for Ruby 2.7.
+
 # 5.1.0
 
 * Add support to force-load the GovukPrometheusExporter by setting `GOVUK_PROMETHEUS_EXPORTER` to `force`. ([#282](https://github.com/alphagov/govuk_app_config/pull/282))
