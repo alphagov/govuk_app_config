@@ -1,6 +1,7 @@
-## Unreleased
+## 6.0.0
 
-* Drop support for Ruby 2.7.
+* BREAKING: Drop support for Ruby 2.7
+* Register the Prometheus exporter in Sinatra middleware
 
 # 5.1.0
 
