@@ -9,7 +9,11 @@ module GovukPuma
     end
 
     # `worker_timeout` specifies how many seconds Puma will wait before terminating a worker.
-    timeout = ENV.fetch("RAILS_ENV", "development") == "development" ? 3600 : 15
+    timeout = if ENV.fetch("RAILS_ENV", "development") == "development"
+                3600
+              else
+                Integer(ENV.fetch("PUMA_TIMEOUT", 15))
+              end
     config.worker_timeout timeout
 
     # When changing the min/max threads for Puma, also consider changing ActiveRecord to match.
