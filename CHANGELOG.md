@@ -1,3 +1,7 @@
+## 6.0.1
+
+* Add support for configuring timeouts for puma-based applications
+
 ## 6.0.0
 
 * BREAKING: Drop support for Ruby 2.7
