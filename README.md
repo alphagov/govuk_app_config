@@ -2,12 +2,12 @@
 
 Adds the basics of a GOV.UK application:
 
-- Unicorn as a web server
+- Puma as a web server
 - Error reporting with Sentry
-- Statsd client for reporting stats
+- Prometheus monitoring for EKS
+- Statsd client for reporting stats (deprecated; use Prometheus instead)
 - Rails logging
 - Content Security Policy generation for frontend apps
-- Prometheus monitoring for EKS
 
 ## Installation
 
@@ -17,31 +17,24 @@ Add this line to your application's Gemfile:
 gem "govuk_app_config"
 ```
 
-And then execute:
-
-    $ bundle
+Then run `bundle`.
 
 
-## Unicorn
+## Puma
 
 ### Configuration
 
-Find or create a `config/unicorn.rb` in the app
-
-At the start of the file insert:
+Create a file `config/puma.rb` in the app, containing:
 
 ```rb
-require "govuk_app_config/govuk_unicorn"
-GovukUnicorn.configure(self)
+require "govuk_app_config/govuk_puma"
+GovukPuma.configure_rails(self)
 ```
 
 ### Usage
 
-To serve an app with unicorn run:
+To run an app locally with Puma, run: `bundle exec puma` or `bundle exec rails s`.
 
-```sh
-$ bundle exec unicorn -c config/unicorn.rb
-```
 
 ## Error reporting
 
@@ -53,7 +46,7 @@ Your app will have to have the following environment variables set:
 
 - `SENTRY_DSN` - the [Data Source Name (DSN)][dsn] for Sentry
 - `SENTRY_CURRENT_ENV` - e.g. "production". Make sure it is [configured to be active](#active-sentry-environments).
-- `GOVUK_STATSD_PREFIX` - a Statsd prefix like `govuk.apps.application-name.hostname`
+- `GOVUK_STATSD_PREFIX` - a Statsd prefix like `govuk.apps.application-name.hostname` (deprecated; use Prometheus instead).
 
 [dsn]: https://docs.sentry.io/quickstart/#about-the-dsn
 
@@ -125,7 +118,19 @@ end
 
 `GovukError.configure` has the same options as the Sentry client, Raven. See [the Raven docs for all configuration options](https://docs.sentry.io/clients/ruby/config).
 
-## Statsd
+
+## Prometheus monitoring
+
+Create a `/config/initializers/prometheus.rb` file in the app and add the following
+
+```ruby
+require "govuk_app_config/govuk_prometheus_exporter"
+GovukPrometheusExporter.configure
+```
+
+## Statsd (deprecated)
+
+⚠️ Statsd support is deprecated and will be removed in a future major release of govuk_app_config.
 
 Use `GovukStatsd` to send stats to graphite. It has the same interface as [the Ruby Statsd client](https://github.com/reinh/statsd).
 
@@ -145,10 +150,12 @@ GovukStatsd.time("account.activate") { @account.activate! }
 This Gem provides a common "health check" framework for apps. See [the health
 check docs](docs/healthchecks.md) for more information on how to use it.
 
+
 ## Rails logging
 
 In Rails applications, the application will be configured to send JSON-formatted
-logs to `STDOUT` and unstructed logs to `STDERR`.
+logs to `STDOUT` and unstructured logs to `STDERR`.
+
 
 ## Content Security Policy generation
 
@@ -163,18 +170,10 @@ app with the following content:
 GovukContentSecurityPolicy.configure
 ```
 
-## i18n rules 
+## Internationalisation rules
 
 Some frontend apps support languages that are not defined in the i18n gem. This provides them with our own custom rules for these languages.
 
-## Prometheus monitoring for EKS
-
-Create a `/config/initializers/prometheus.rb` file in the app and add the following
-
-```ruby
-require "govuk_app_config/govuk_prometheus_exporter"	
-GovukPrometheusExporter.configure	
-```
 
 ## License
 

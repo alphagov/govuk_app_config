@@ -3,9 +3,6 @@ require "govuk_app_config/govuk_statsd"
 require "govuk_app_config/govuk_error"
 require "govuk_app_config/govuk_proxy/static_proxy"
 require "govuk_app_config/govuk_healthcheck"
-# This require is deprecated and should be removed on next major version bump
-# and should be required by applications directly.
-require "govuk_app_config/govuk_unicorn"
 require "govuk_app_config/govuk_prometheus_exporter"
 
 if defined?(Rails)
