@@ -1,13 +1,17 @@
+# 7.1.0
+
+* `GovukError` now allows specifying any name for the Sentry environment tag via the `SENTRY_CURRENT_ENV` environment variable. The environment name no longer has to match one of a fixed set of strings in order for `GovukError` to log events to Sentry.
+
 # 7.0.0
 
 * BREAKING: Remove [unicorn](https://rubygems.org/gems/unicorn/) and `GovukUnicorn`. All production GOV.UK apps are now using [Puma](https://rubygems.org/gems/puma/) instead.
 * `GovukStatsd` is deprecated and will be removed in a future major release.
 
-## 6.0.1
+# 6.0.1
 
 * Add support for configuring timeouts for puma-based applications
 
-## 6.0.0
+# 6.0.0
 
 * BREAKING: Drop support for Ruby 2.7
 * Register the Prometheus exporter in Sinatra middleware

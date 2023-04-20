@@ -13,19 +13,6 @@ module GovukError
     end
 
     def set_up_defaults
-      # These are the environments (described by the `SENTRY_CURRENT_ENV`
-      # ENV variable) where we want to capture Sentry errors. If
-      # `SENTRY_CURRENT_ENV` isn't in this list, or isn't defined, then
-      # don't capture the error.
-      self.enabled_environments = %w[
-        integration-blue-aws
-        integration-eks
-        staging
-        staging-eks
-        production
-        production-eks
-      ]
-
       self.excluded_exceptions = [
         # Default ActionDispatch rescue responses
         "ActionController::RoutingError",
