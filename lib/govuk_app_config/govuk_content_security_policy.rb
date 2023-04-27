@@ -56,17 +56,10 @@ module GovukContentSecurityPolicy
                       "www.youtube-nocookie.com"
 
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src
-    # Note: we purposely don't include `data:` or `unsafe-eval` because
+    # Note: we purposely don't include `data:`, `unsafe-inline` or `unsafe-eval` because
     # they are security risks, if you need them for a legacy app please only apply them at
     # an app level.
-    policy.style_src :self,
-                     *GOOGLE_STATIC_DOMAINS,
-                     # This allows `style=""` attributes and `<style>` elements.
-                     # As of January 2023 our intentions to remove this were scuppered
-                     # by Govspeak [1] using inline styles on tables. Until that
-                     # is resolved we'll keep unsafe_inline
-                     # [1]: https://github.com/alphagov/govspeak/blob/5642fcc4231f215d1c58ad7feb30ca42fb8cfb91/lib/govspeak/html_sanitizer.rb#L72-L73
-                     :unsafe_inline
+    policy.style_src :self, *GOOGLE_STATIC_DOMAINS
 
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/font-src
     # Note: we purposely don't include data here because it produces a security risk.
