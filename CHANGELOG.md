@@ -1,3 +1,7 @@
+# Unreleased
+
+* Suppress noisy Puma::HttpParserError errors
+
 # 7.1.0
 
 * `GovukError` now allows specifying any name for the Sentry environment tag via the `SENTRY_CURRENT_ENV` environment variable. The environment name no longer has to match one of a fixed set of strings in order for `GovukError` to log events to Sentry.
