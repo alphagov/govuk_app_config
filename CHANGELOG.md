@@ -1,6 +1,6 @@
-# Unreleased
+# 7.2.0
 
-* Suppress noisy Puma::HttpParserError errors
+* Suppress noisy Puma::HttpParserError errors ([#292](https://github.com/alphagov/govuk_app_config/pull/292))
 
 # 7.1.0
 
