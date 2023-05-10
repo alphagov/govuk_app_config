@@ -41,6 +41,7 @@ module GovukError
         "GdsApi::HTTPIntermittentServerError",
         "GdsApi::TimedOutException",
         "Mongoid::Errors::DocumentNotFound",
+        "Puma::HttpParserError",
         "Sinatra::NotFound",
         "Slimmer::IntermittentRetrievalError",
         "Sidekiq::JobRetry::Skip",
