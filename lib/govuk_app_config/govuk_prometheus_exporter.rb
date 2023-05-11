@@ -34,15 +34,19 @@ module GovukPrometheusExporter
       end
     end
 
-    server = PrometheusExporter::Server::WebServer.new bind: "0.0.0.0", port: 9394
-    server.start
+    begin
+      server = PrometheusExporter::Server::WebServer.new bind: "0.0.0.0", port: 9394
+      server.start
 
-    if defined?(Rails)
-      Rails.application.middleware.unshift PrometheusExporter::Middleware
-    end
+      if defined?(Rails)
+        Rails.application.middleware.unshift PrometheusExporter::Middleware
+      end
 
-    if defined?(Sinatra)
-      Sinatra.use PrometheusExporter::Middleware
+      if defined?(Sinatra)
+        Sinatra.use PrometheusExporter::Middleware
+      end
+    rescue Errno::EADDRINUSE
+      warn "Warning: Could not connect to Prometheus Server"
     end
   end
 end
