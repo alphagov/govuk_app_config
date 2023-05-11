@@ -1,3 +1,7 @@
+# 7.2.1
+
+* Allow prometheus binding to fail with a warning rather than a crash ([#294](https://github.com/alphagov/govuk_app_config/pull/294))
+
 # 7.2.0
 
 * Suppress noisy Puma::HttpParserError errors ([#292](https://github.com/alphagov/govuk_app_config/pull/292))
