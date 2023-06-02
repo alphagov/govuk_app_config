@@ -1,3 +1,7 @@
+# 8.0.0
+
+* BREAKING: Content Security Policy forbids the use of inline style attributes.
+
 # 7.2.1
 
 * Allow prometheus binding to fail with a warning rather than a crash ([#294](https://github.com/alphagov/govuk_app_config/pull/294))
