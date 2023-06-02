@@ -1,4 +1,4 @@
-# Unreleased
+# 8.0.0
 
 * BREAKING: Content Security Policy forbids the use of inline style attributes.
 
