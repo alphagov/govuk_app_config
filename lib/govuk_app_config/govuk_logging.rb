@@ -48,6 +48,10 @@ module GovukLogging
     Rails.application.config.logstasher.view_enabled = false
     Rails.application.config.logstasher.job_enabled = false
 
+    # Elasticsearch index expect source to be an object and logstash defaults
+    # source to be the host IP address causing logs to be dropped.
+    Rails.application.config.logstasher.source = {}
+
     Rails.application.config.logstasher.logger = Logger.new(
       $real_stdout, # rubocop:disable Style/GlobalVars
       level: Rails.logger.level,
