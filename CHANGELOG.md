@@ -1,3 +1,7 @@
+# 8.0.1
+
+* Change the "source" field in Rails logs from logstasher from string representing IP host address to an empty object. 
+
 # 8.0.0
 
 * BREAKING: Content Security Policy forbids the use of inline style attributes.
