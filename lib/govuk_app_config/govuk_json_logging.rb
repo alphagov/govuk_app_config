@@ -25,8 +25,13 @@ module GovukJsonLogging
     $stdout.sync = true
     # rubocop:enable Style/GlobalVars
 
-    # Send Rails' logs to STDERR because they're not JSON formatted.
-    Rails.logger = ActiveSupport::TaggedLogging.new(Logger.new($stderr, level: Rails.logger.level))
+    Rails.logger = Logger.new(
+      $real_stdout, # rubocop:disable Style/GlobalVars
+      level: Rails.logger.level,
+      formatter: proc { |_severity, datetime, _progname, msg|
+        "#{msg.is_a?(JSON) ? { **msg, govuk_request_id: 'blah' }.to_json : JSON.dump(timestamp: datetime.to_s, message: msg)}\n"
+      },
+    )
 
     LogStasher.add_custom_fields do |fields|
       # Mirrors Nginx request logging, e.g. GET /path/here HTTP/1.1

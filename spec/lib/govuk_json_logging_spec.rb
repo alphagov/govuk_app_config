@@ -15,21 +15,23 @@ RSpec.describe GovukJsonLogging do
 
   after { Rails.application = nil }
 
-  old_stderr = nil
+  original_stderr = nil
 
   let(:fake_stdout) { StringIO.new }
+  let(:fake_stderr) { StringIO.new }
   let(:info_log_level) { 1 }
 
   before do
-    old_stderr = $stderr
-    $stderr = StringIO.new
+    original_stderr = $stderr
+    $stderr = fake_stderr
     allow($stdout).to receive(:clone).and_return(fake_stdout)
     allow($stdout).to receive(:reopen)
     Rails.logger = Logger.new(fake_stdout, level: info_log_level)
+
   end
 
   after do
-    $stderr = old_stderr
+    $stderr = original_stderr
   end
 
   describe ".configure" do
@@ -59,9 +61,9 @@ RSpec.describe GovukJsonLogging do
       GovukJsonLogging.configure
       logger = Rails.logger
       logger.info("test default log entry")
-      $stderr.rewind
+      fake_stdout.rewind
 
-      expect($stderr.read).to match(/test default log entry/)
+      expect(fake_stdout.read).to match(/test default log entry/)
     end
 
     describe "when making requests to the application" do
@@ -74,18 +76,19 @@ RSpec.describe GovukJsonLogging do
       it "logs errors thrown by the application" do
         GovukJsonLogging.configure
         get "/error"
-        $stderr.rewind
-        lines = $stderr.read.split("\n")
+        fake_stdout.rewind
+        lines = fake_stdout.read.split("\n")
         expect(lines).to include(/default exception/)
         error_log_line = lines.find { |log| log.match?(/default exception/) }
         expect(error_log_line).not_to be_empty
         error_log_json = JSON.parse(error_log_line)
-        expect(error_log_json).to match(hash_including(
+        error_log_json_msg = JSON.parse(error_log_json["message"])
+        expect(error_log_json_msg).to match(hash_including(
                                           "exception_class" => "StandardError",
                                           "exception_message" => "default exception",
                                         ))
-        expect(error_log_json).to have_key("stacktrace")
-        expect(error_log_json["stacktrace"]).to be_a(Array)
+        expect(error_log_json_msg).to have_key("stacktrace")
+        expect(error_log_json_msg["stacktrace"]).to be_a(Array)
       end
     end
   end
