@@ -20,6 +20,7 @@ module GovukPrometheusExporter
 
     if defined?(Sidekiq)
       Sidekiq.configure_server do |config|
+        require "sidekiq/api"
         require "prometheus_exporter/instrumentation"
         config.server_middleware do |chain|
           chain.add PrometheusExporter::Instrumentation::Sidekiq
