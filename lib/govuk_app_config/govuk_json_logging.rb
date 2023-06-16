@@ -1,3 +1,4 @@
+require "json"
 require "logstasher"
 require "action_controller"
 require_relative "rails_ext/action_dispatch/debug_exceptions"
@@ -28,8 +29,26 @@ module GovukJsonLogging
     Rails.logger = Logger.new(
       $real_stdout, # rubocop:disable Style/GlobalVars
       level: Rails.logger.level,
-      formatter: proc { |_severity, datetime, _progname, msg|
-        "#{msg.is_a?(JSON) ? { **msg, govuk_request_id: 'blah' }.to_json : JSON.dump(timestamp: datetime.to_s, message: msg)}\n"
+      formatter: proc { |severity, datetime, _progname, msg|
+
+        begin
+          message = JSON.parse(msg)
+        rescue JSON::ParserError, TypeError => _e
+          message = msg
+        end
+
+        hash = {
+          "@timestamp": datetime.utc.iso8601(3),
+          message: message,
+          level: severity,
+          tags: %w[rails],
+        }
+
+        if defined?(GdsApi::GovukHeaders) && !GdsApi::GovukHeaders.headers[:govuk_request_id].nil?
+          hash[:govuk_request_id] = GdsApi::GovukHeaders.headers[:govuk_request_id]
+        end
+
+        "#{hash.to_json}\n"
       },
     )
 

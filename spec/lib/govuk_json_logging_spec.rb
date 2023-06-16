@@ -4,6 +4,13 @@ require "govuk_app_config/govuk_json_logging"
 require "rack/test"
 
 RSpec.describe GovukJsonLogging do
+  let(:govuk_headers_class) do
+    Class.new do
+      def self.headers
+        { govuk_request_id: "some-value" }
+      end
+    end
+  end
   before do
     stub_const("DummyLoggingRailsApp", Class.new(Rails::Application) do
       config.hosts.clear
@@ -74,6 +81,30 @@ RSpec.describe GovukJsonLogging do
       end
 
       it "logs errors thrown by the application" do
+        stub_const("GdsApi::GovukHeaders", govuk_headers_class)
+        GovukJsonLogging.configure
+        get "/error"
+        fake_stdout.rewind
+        lines = fake_stdout.read.split("\n")
+        expect(lines).to include(/default exception/)
+        error_log_line = lines.find { |log| log.match?(/default exception/) }
+        expect(error_log_line).not_to be_empty
+
+        error_log_json = JSON.parse(error_log_line)
+        expect(error_log_json).to match(hash_including(
+                                          "govuk_request_id" => "some-value",
+                                        ))
+
+        error_log_json_msg = error_log_json["message"]
+        expect(error_log_json_msg).to match(hash_including(
+                                              "exception_class" => "StandardError",
+                                              "exception_message" => "default exception",
+                                            ))
+        expect(error_log_json_msg).to have_key("stacktrace")
+        expect(error_log_json_msg["stacktrace"]).to be_a(Array)
+      end
+
+      it "logs errors thrown by the application with no govuk_request_id" do
         GovukJsonLogging.configure
         get "/error"
         fake_stdout.rewind
@@ -82,13 +113,27 @@ RSpec.describe GovukJsonLogging do
         error_log_line = lines.find { |log| log.match?(/default exception/) }
         expect(error_log_line).not_to be_empty
         error_log_json = JSON.parse(error_log_line)
-        error_log_json_msg = JSON.parse(error_log_json["message"])
+        error_log_json_msg = error_log_json["message"]
         expect(error_log_json_msg).to match(hash_including(
-                                          "exception_class" => "StandardError",
-                                          "exception_message" => "default exception",
-                                        ))
+                                              "exception_class" => "StandardError",
+                                              "exception_message" => "default exception",
+                                            ))
         expect(error_log_json_msg).to have_key("stacktrace")
         expect(error_log_json_msg["stacktrace"]).to be_a(Array)
+      end
+
+      it "logs to stdout in JSON format with govuk_request_id" do
+        stub_const("GdsApi::GovukHeaders", govuk_headers_class)
+        GovukJsonLogging.configure
+        logger = Rails.logger
+        logger.info("test default log entry")
+        fake_stdout.rewind
+        log_line = fake_stdout.read
+        log_json = JSON.parse(log_line)
+
+        expect(log_json).to include("message" => "test default log entry")
+        expect(log_json).to include("govuk_request_id" => "some-value")
+
       end
     end
   end
