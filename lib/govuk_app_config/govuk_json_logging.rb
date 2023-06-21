@@ -5,32 +5,14 @@ require_relative "rails_ext/action_dispatch/debug_exceptions"
 
 module GovukJsonLogging
   def self.configure
-    # GOV.UK Rails applications are expected to output JSON to stdout which is
-    # then indexed in a Kibana instance. These log outputs are created by the
-    # logstasher gem.
-    #
-    # Rails applications will typically write other things to stdout such as
-    # `Rails.logger` calls or 'puts' statements. However these are not in a
-    # JSON format which causes problems for the log file parsers.
-    #
-    # To resolve this we redirect stdout to stderr, to cover any Rails
-    # writing. This frees up the normal stdout for the logstasher logs.
-    #
     # We also disable buffering, so that logs aren't lost on crash or delayed
     # indefinitely while troubleshooting.
-
-    # rubocop:disable Style/GlobalVars
-    $real_stdout = $stdout.clone
-    $real_stdout.sync = true
-    $stdout.reopen($stderr)
     $stdout.sync = true
-    # rubocop:enable Style/GlobalVars
 
     Rails.logger = Logger.new(
-      $real_stdout, # rubocop:disable Style/GlobalVars
+      $stdout,
       level: Rails.logger.level,
       formatter: proc { |severity, datetime, _progname, msg|
-
         begin
           message = JSON.parse(msg)
         rescue JSON::ParserError, TypeError => _e
@@ -77,7 +59,7 @@ module GovukJsonLogging
     Rails.application.config.logstasher.source = {}
 
     Rails.application.config.logstasher.logger = Logger.new(
-      $real_stdout, # rubocop:disable Style/GlobalVars
+      $stdout,
       level: Rails.logger.level,
       formatter: proc { |_severity, _datetime, _progname, msg|
         "#{msg.is_a?(String) ? msg : msg.inspect}\n"

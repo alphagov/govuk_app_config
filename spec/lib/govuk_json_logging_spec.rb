@@ -23,6 +23,7 @@ RSpec.describe GovukJsonLogging do
   after { Rails.application = nil }
 
   original_stderr = nil
+  original_stdout = nil
 
   let(:fake_stdout) { StringIO.new }
   let(:fake_stderr) { StringIO.new }
@@ -30,15 +31,15 @@ RSpec.describe GovukJsonLogging do
 
   before do
     original_stderr = $stderr
+    original_stdout = $stdout
     $stderr = fake_stderr
-    allow($stdout).to receive(:clone).and_return(fake_stdout)
-    allow($stdout).to receive(:reopen)
+    $stdout = fake_stdout
     Rails.logger = Logger.new(fake_stdout, level: info_log_level)
-
   end
 
   after do
     $stderr = original_stderr
+    $stdout = original_stdout
   end
 
   describe ".configure" do
@@ -80,7 +81,7 @@ RSpec.describe GovukJsonLogging do
         Rails.application
       end
 
-      it "logs errors thrown by the application" do
+      it "logs errors thrown by the application with govuk_request_id" do
         stub_const("GdsApi::GovukHeaders", govuk_headers_class)
         GovukJsonLogging.configure
         get "/error"
@@ -133,7 +134,6 @@ RSpec.describe GovukJsonLogging do
 
         expect(log_json).to include("message" => "test default log entry")
         expect(log_json).to include("govuk_request_id" => "some-value")
-
       end
     end
   end
