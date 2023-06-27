@@ -38,12 +38,9 @@ module GovukJsonLogging
 
             trace = wrapper.application_trace
             trace = wrapper.framework_trace if trace.empty?
+            exception.set_backtrace(trace)
 
-            logger.fatal({
-              exception_class: exception.class.to_s,
-              exception_message: exception.message,
-              stacktrace: trace,
-            }.to_json)
+            logger.fatal(exception.full_message)
           end
         end
       end

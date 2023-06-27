@@ -13,15 +13,9 @@ module GovukJsonLogging
       $stdout,
       level: Rails.logger.level,
       formatter: proc { |severity, datetime, _progname, msg|
-        begin
-          message = JSON.parse(msg)
-        rescue JSON::ParserError, TypeError => _e
-          message = msg
-        end
-
         hash = {
           "@timestamp": datetime.utc.iso8601(3),
-          message: message,
+          message: msg,
           level: severity,
           tags: %w[rails],
         }

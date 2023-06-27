@@ -22,6 +22,10 @@ RSpec.describe GovukJsonLogging do
 
   after { Rails.application = nil }
 
+  # By storing origin stdout in a constant and redirect `$stdout` to a fake one,
+  # We are able to inspect and test what is printed
+  # BUT it also suppress all the normal log outputs
+  # I.E. puts doesn't work anymore :D
   original_stderr = nil
   original_stdout = nil
 
@@ -97,12 +101,9 @@ RSpec.describe GovukJsonLogging do
                                         ))
 
         error_log_json_msg = error_log_json["message"]
-        expect(error_log_json_msg).to match(hash_including(
-                                              "exception_class" => "StandardError",
-                                              "exception_message" => "default exception",
-                                            ))
-        expect(error_log_json_msg).to have_key("stacktrace")
-        expect(error_log_json_msg["stacktrace"]).to be_a(Array)
+        expect(error_log_json_msg).to include("StandardError")
+        expect(error_log_json_msg).to include("default exception")
+        expect(error_log_json_msg).to match(/from.*:[0-9]+:in.*/)
       end
 
       it "logs errors thrown by the application with no govuk_request_id" do
@@ -115,12 +116,9 @@ RSpec.describe GovukJsonLogging do
         expect(error_log_line).not_to be_empty
         error_log_json = JSON.parse(error_log_line)
         error_log_json_msg = error_log_json["message"]
-        expect(error_log_json_msg).to match(hash_including(
-                                              "exception_class" => "StandardError",
-                                              "exception_message" => "default exception",
-                                            ))
-        expect(error_log_json_msg).to have_key("stacktrace")
-        expect(error_log_json_msg["stacktrace"]).to be_a(Array)
+        expect(error_log_json_msg).to include("StandardError")
+        expect(error_log_json_msg).to include("default exception")
+        expect(error_log_json_msg).to match(/from.*:[0-9]+:in.*/)
       end
 
       it "logs to stdout in JSON format with govuk_request_id" do
