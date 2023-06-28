@@ -9,7 +9,7 @@ module GovukAppConfig
     end
 
     config.before_initialize do
-      GovukLogging.configure if Rails.env.production?
+      GovukLogging.configure if Rails.env.production? || ENV["ENABLE_PRODUCTION_LOGS"]
     end
 
     config.after_initialize do
