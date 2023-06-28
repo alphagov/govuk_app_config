@@ -1,6 +1,6 @@
 require "action_dispatch/middleware/debug_exceptions"
 
-module GovukLogging
+module GovukJsonLogging
   module RailsExt
     module ActionDispatch
       def self.should_monkey_patch_log_error?(clazz = ::ActionDispatch::DebugExceptions)

@@ -2,7 +2,7 @@ require "logstasher"
 require "action_controller"
 require_relative "rails_ext/action_dispatch/debug_exceptions"
 
-module GovukLogging
+module GovukJsonLogging
   def self.configure
     # GOV.UK Rails applications are expected to output JSON to stdout which is
     # then indexed in a Kibana instance. These log outputs are created by the

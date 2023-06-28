@@ -1,9 +1,9 @@
 require "spec_helper"
 require "rails"
-require "govuk_app_config/govuk_logging"
+require "govuk_app_config/govuk_json_logging"
 require "rack/test"
 
-RSpec.describe GovukLogging do
+RSpec.describe GovukJsonLogging do
   before do
     stub_const("DummyLoggingRailsApp", Class.new(Rails::Application) do
       config.hosts.clear
@@ -35,19 +35,19 @@ RSpec.describe GovukLogging do
   describe ".configure" do
     it "enables logstasher" do
       Rails.application.config.logstasher.enabled = false
-      expect { GovukLogging.configure }
+      expect { GovukJsonLogging.configure }
         .to change { Rails.application.config.logstasher.enabled }
         .to(true)
     end
 
     it "initialises a logstasher logger using the rails logger level" do
-      GovukLogging.configure
+      GovukJsonLogging.configure
       expect(Rails.application.config.logstasher.logger.level)
         .to eq(info_log_level)
     end
 
     it "can write to logstasher log" do
-      GovukLogging.configure
+      GovukJsonLogging.configure
       logger = Rails.application.config.logstasher.logger
       logger.info("test log entry")
       fake_stdout.rewind
@@ -56,7 +56,7 @@ RSpec.describe GovukLogging do
     end
 
     it "can write to default rails logger" do
-      GovukLogging.configure
+      GovukJsonLogging.configure
       logger = Rails.logger
       logger.info("test default log entry")
       $stderr.rewind
@@ -72,7 +72,7 @@ RSpec.describe GovukLogging do
       end
 
       it "logs errors thrown by the application" do
-        GovukLogging.configure
+        GovukJsonLogging.configure
         get "/error"
         $stderr.rewind
         lines = $stderr.read.split("\n")
