@@ -103,7 +103,7 @@ RSpec.describe GovukJsonLogging do
         error_log_json_msg = error_log_json["message"]
         expect(error_log_json_msg).to include("StandardError")
         expect(error_log_json_msg).to include("default exception")
-        expect(error_log_json_msg).to match(/from.*:[0-9]+:in.*/)
+        expect(error_log_json_msg).to match(/[a-zA-Z]+.*:[0-9]+:in.*/)
       end
 
       it "logs errors thrown by the application with no govuk_request_id" do
@@ -118,7 +118,7 @@ RSpec.describe GovukJsonLogging do
         error_log_json_msg = error_log_json["message"]
         expect(error_log_json_msg).to include("StandardError")
         expect(error_log_json_msg).to include("default exception")
-        expect(error_log_json_msg).to match(/from.*:[0-9]+:in.*/)
+        expect(error_log_json_msg).to match(/[a-zA-Z].*:[0-9]+:in.*/)
       end
 
       it "logs to stdout in JSON format with govuk_request_id" do

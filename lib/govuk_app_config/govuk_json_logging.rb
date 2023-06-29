@@ -1,11 +1,10 @@
 require "json"
 require "logstasher"
 require "action_controller"
-require_relative "rails_ext/action_dispatch/debug_exceptions"
 
 module GovukJsonLogging
   def self.configure
-    # We also disable buffering, so that logs aren't lost on crash or delayed
+    # We disable buffering, so that logs aren't lost on crash or delayed
     # indefinitely while troubleshooting.
     $stdout.sync = true
 
@@ -68,7 +67,5 @@ module GovukJsonLogging
       # the responses it gets, so direct this to the logstasher logger.
       GdsApi::Base.default_options[:logger] = Rails.application.config.logstasher.logger
     end
-
-    RailsExt::ActionDispatch.monkey_patch_log_error if RailsExt::ActionDispatch.should_monkey_patch_log_error?
   end
 end
