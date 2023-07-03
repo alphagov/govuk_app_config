@@ -8,6 +8,10 @@ module GovukAppConfig
       end
     end
 
+    initializer "govuk_app_config.configure_open_telemetry" do |app|
+      GovukOpenTelemetry.configure(app.class.module_parent_name.underscore)
+    end
+
     config.before_initialize do
       GovukLogging.configure if Rails.env.production?
     end
