@@ -1,3 +1,7 @@
+# 8.1.0
+
+* Add ability to enable Open Telemetry instrumentation for Rails applications.
+
 # 8.0.2
 
 * Fix the ability to collect Sidekiq metrics in GovukPrometheusExporter. ([#299](https://github.com/alphagov/govuk_app_config/pull/299))
