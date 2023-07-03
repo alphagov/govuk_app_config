@@ -104,6 +104,9 @@ end
 
 `GovukError.configure` has the same options as the Sentry client, Raven. See [the Raven docs for all configuration options](https://docs.sentry.io/clients/ruby/config).
 
+## Open Telemetry
+
+To enable Open Telemetry instrumentation for Rails set the ENABLE_OPEN_TELEMETRY="true" environment variable.
 
 ## Prometheus monitoring
 
