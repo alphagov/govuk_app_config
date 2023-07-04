@@ -145,6 +145,13 @@ check docs](docs/healthchecks.md) for more information on how to use it.
 In Rails applications, the application will be configured to send JSON-formatted
 logs to `STDOUT` and unstructured logs to `STDERR`.
 
+To enable production-like logging, an env variable `GOVUK_RAILS_JSON_LOGGING`
+is set in the `govuk-helm-charts` and then checked in `railtie.rb`. This will
+allow JSON format logs and `Govuk-Request-Id` to be visible.
+
+For development logs, in order to see the production style logs, developers should
+set `GOVUK_RAILS_JSON_LOGGING`in `govuk-docker` -> `docker-compose` files.
+
 
 ## Content Security Policy generation
 
