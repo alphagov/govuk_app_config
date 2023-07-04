@@ -1,3 +1,7 @@
+# 8.1.1
+
+* Fix prometheus_exporter to method patching compatible with open telemetry.
+
 # 8.1.0
 
 * Add ability to enable Open Telemetry instrumentation for Rails applications.

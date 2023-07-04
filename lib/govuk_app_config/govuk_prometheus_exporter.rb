@@ -40,7 +40,7 @@ module GovukPrometheusExporter
       server.start
 
       if defined?(Rails)
-        Rails.application.middleware.unshift PrometheusExporter::Middleware
+        Rails.application.middleware.unshift PrometheusExporter::Middleware, instrument: :prepend
       end
 
       if defined?(Sinatra)
