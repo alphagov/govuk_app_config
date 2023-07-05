@@ -1,3 +1,7 @@
+# 9.0.3
+
+* When error is reported by Rails logger, the field is now logged as "error_message" in order to avoid overwriting the "message" field.
+
 # 9.0.2
 
 * GovukAppConfig no longer automatically initialises OpenTelemetry when running in `rails console`.
