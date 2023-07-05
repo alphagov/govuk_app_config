@@ -50,6 +50,11 @@ module GovukJsonLogging
     # Elasticsearch index expect source to be an object and logstash defaults
     # source to be the host IP address causing logs to be dropped.
     Rails.application.config.logstasher.source = {}
+    # Elasticsearch index expect error to be an object and logstash defaults
+    # error to be a string causing logs to be dropped.
+    Rails.application.config.logstasher.field_renaming = {
+      error: :message,
+    }
 
     Rails.application.config.logstasher.logger = Logger.new(
       $stdout,

@@ -1,3 +1,7 @@
+# 9.0.1
+
+* Rename the "error" field in Rails logs from logstasher to "message" as error is supposed to be an object.
+
 # 9.0.0
 
 * BREAKING: JSON logs are no longer configured automatically for production Rails apps and are turned on with the GOVUK_RAILS_JSON_LOGGING environment variable ([#302](https://github.com/alphagov/govuk_app_config/pull/302))
