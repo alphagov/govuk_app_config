@@ -10,9 +10,15 @@ module GovukOpenTelemetry
     require "opentelemetry/exporter/otlp"
     require "opentelemetry/instrumentation/all"
 
+    require "sentry-opentelemetry"
+
     OpenTelemetry::SDK.configure do |config|
       config.service_name = service_name
       config.use_all # enables all instrumentation!
+
+      config.add_span_processor(Sentry::OpenTelemetry::SpanProcessor.instance)
     end
+
+    OpenTelemetry.propagation = Sentry::OpenTelemetry::Propagator.new
   end
 end

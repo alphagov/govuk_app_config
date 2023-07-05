@@ -13,6 +13,9 @@ module GovukError
     end
 
     def set_up_defaults
+      self.traces_sample_rate = 0.1
+      self.instrumenter = :otel
+
       self.excluded_exceptions = [
         # Default ActionDispatch rescue responses
         "ActionController::RoutingError",
