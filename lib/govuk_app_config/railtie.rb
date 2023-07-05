@@ -13,7 +13,7 @@ module GovukAppConfig
     end
 
     config.before_initialize do
-      GovukLogging.configure if Rails.env.production?
+      GovukJsonLogging.configure if ENV["GOVUK_RAILS_JSON_LOGGING"]
     end
 
     config.after_initialize do

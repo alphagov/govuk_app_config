@@ -7,7 +7,7 @@ require "govuk_app_config/govuk_open_telemetry"
 require "govuk_app_config/govuk_prometheus_exporter"
 
 if defined?(Rails)
-  require "govuk_app_config/govuk_logging"
+  require "govuk_app_config/govuk_json_logging"
   require "govuk_app_config/govuk_content_security_policy"
   require "govuk_app_config/railtie"
 end

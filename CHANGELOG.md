@@ -1,3 +1,7 @@
+# Unreleased
+
+* BREAKING: JSON logs are no longer configured automatically for production Rails apps and are turned on with the GOVUK_RAILS_JSON_LOGGING environment variable ([#302](https://github.com/alphagov/govuk_app_config/pull/302))
+
 # 8.1.1
 
 * Fix prometheus_exporter to method patching compatible with open telemetry.
