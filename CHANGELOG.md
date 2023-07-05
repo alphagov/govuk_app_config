@@ -1,4 +1,4 @@
-# Unreleased
+# 9.0.0
 
 * BREAKING: JSON logs are no longer configured automatically for production Rails apps and are turned on with the GOVUK_RAILS_JSON_LOGGING environment variable ([#302](https://github.com/alphagov/govuk_app_config/pull/302))
 * Add govuk_request_id to JSON logging for apps with gds-api-adapters ([#300](https://github.com/alphagov/govuk_app_config/pull/300))
