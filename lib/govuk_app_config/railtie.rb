@@ -9,7 +9,9 @@ module GovukAppConfig
     end
 
     initializer "govuk_app_config.configure_open_telemetry" do |app|
-      GovukOpenTelemetry.configure(app.class.module_parent_name.underscore)
+      unless Rails.const_defined?(:Console)
+        GovukOpenTelemetry.configure(app.class.module_parent_name.underscore)
+      end
     end
 
     config.before_initialize do

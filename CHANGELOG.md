@@ -1,3 +1,7 @@
+# 9.0.2
+
+* GovukAppConfig no longer automatically initialises OpenTelemetry when running in `rails console`.
+
 # 9.0.1
 
 * Rename the "error" field in Rails logs from logstasher to "message" as error is supposed to be an object.
@@ -12,11 +16,11 @@
 
 # 8.1.1
 
-* Fix prometheus_exporter to method patching compatible with open telemetry.
+* Fix prometheus_exporter to method patching compatible with OpenTelemetry.
 
 # 8.1.0
 
-* Add ability to enable Open Telemetry instrumentation for Rails applications.
+* Add ability to enable OpenTelemetry instrumentation for Rails applications.
 
 # 8.0.2
 
