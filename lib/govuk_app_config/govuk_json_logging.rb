@@ -53,7 +53,7 @@ module GovukJsonLogging
     # Elasticsearch index expect error to be an object and logstash defaults
     # error to be a string causing logs to be dropped.
     Rails.application.config.logstasher.field_renaming = {
-      error: :message,
+      error: :error_message,
     }
 
     Rails.application.config.logstasher.logger = Logger.new(
