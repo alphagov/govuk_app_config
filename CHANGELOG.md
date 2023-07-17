@@ -1,3 +1,7 @@
+# 9.0.4
+
+* Fix an issue with Rails.logger being not an instance of ActiveSupport::Logger. Rails expects Rails.logger to have methods that Ruby STD Logger does not provide. e.g. `silence()` ([#309](https://github.com/alphagov/govuk_app_config/pull/309))
+
 # 9.0.3
 
 * When error is reported by Rails logger, the field is now logged as "error_message" in order to avoid overwriting the "message" field.

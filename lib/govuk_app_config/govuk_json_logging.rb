@@ -8,24 +8,21 @@ module GovukJsonLogging
     # indefinitely while troubleshooting.
     $stdout.sync = true
 
-    Rails.logger = Logger.new(
-      $stdout,
-      level: Rails.logger.level,
-      formatter: proc { |severity, datetime, _progname, msg|
-        hash = {
-          "@timestamp": datetime.utc.iso8601(3),
-          message: msg,
-          level: severity,
-          tags: %w[rails],
-        }
+    Rails.logger = ActiveSupport::Logger.new($stdout, level: Rails.logger.level)
+    Rails.logger.formatter = proc { |severity, datetime, _progname, msg|
+      hash = {
+        "@timestamp": datetime.utc.iso8601(3),
+        message: msg,
+        level: severity,
+        tags: %w[rails],
+      }
 
-        if defined?(GdsApi::GovukHeaders) && !GdsApi::GovukHeaders.headers[:govuk_request_id].nil?
-          hash[:govuk_request_id] = GdsApi::GovukHeaders.headers[:govuk_request_id]
-        end
+      if defined?(GdsApi::GovukHeaders) && !GdsApi::GovukHeaders.headers[:govuk_request_id].nil?
+        hash[:govuk_request_id] = GdsApi::GovukHeaders.headers[:govuk_request_id]
+      end
 
-        "#{hash.to_json}\n"
-      },
-    )
+      "#{hash.to_json}\n"
+    }
 
     LogStasher.add_custom_fields do |fields|
       # Mirrors Nginx request logging, e.g. GET /path/here HTTP/1.1
