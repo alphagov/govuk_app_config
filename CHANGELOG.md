@@ -1,3 +1,7 @@
+# Unreleased
+
+* GovukAppConfig silences OpenTelemetry log output when running a rake task ([#311](https://github.com/alphagov/govuk_app_config/pull/311))
+
 # 9.0.4
 
 * Fix an issue with Rails.logger being not an instance of ActiveSupport::Logger. Rails expects Rails.logger to have methods that Ruby STD Logger does not provide. e.g. `silence()` ([#309](https://github.com/alphagov/govuk_app_config/pull/309))
@@ -36,7 +40,7 @@
 
 # 8.0.1
 
-* Change the "source" field in Rails logs from logstasher from string representing IP host address to an empty object. 
+* Change the "source" field in Rails logs from logstasher from string representing IP host address to an empty object.
 
 # 8.0.0
 
