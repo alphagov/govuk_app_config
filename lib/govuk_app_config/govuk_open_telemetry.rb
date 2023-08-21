@@ -13,6 +13,11 @@ module GovukOpenTelemetry
     OpenTelemetry::SDK.configure do |config|
       config.service_name = service_name
       config.use_all # enables all instrumentation!
+      config.logger = Logger.new(File::NULL) if in_rake_task?
     end
+  end
+
+  def self.in_rake_task?
+    Rails.const_defined?(:Rake) && Rake.application.top_level_tasks.any?
   end
 end
