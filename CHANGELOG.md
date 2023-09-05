@@ -1,6 +1,7 @@
 # Unreleased
 
 * GovukAppConfig silences OpenTelemetry log output when running a rake task ([#311](https://github.com/alphagov/govuk_app_config/pull/311))
+* Update warning message for Prometheus metric server address already in use.
 
 # 9.0.4
 

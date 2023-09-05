@@ -47,7 +47,7 @@ module GovukPrometheusExporter
         Sinatra.use PrometheusExporter::Middleware
       end
     rescue Errno::EADDRINUSE
-      warn "Warning: Could not connect to Prometheus Server"
+      warn "Could not start Prometheus metrics server as address already in use."
     end
   end
 end
