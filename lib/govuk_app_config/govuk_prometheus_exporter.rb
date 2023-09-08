@@ -11,7 +11,7 @@ module GovukPrometheusExporter
     end
   end
 
-  def self.configure
+  def self.configure(collectors: [])
     return unless should_configure
 
     require "prometheus_exporter"
@@ -37,6 +37,9 @@ module GovukPrometheusExporter
 
     begin
       server = PrometheusExporter::Server::WebServer.new bind: "0.0.0.0", port: 9394
+
+      collectors.each { |collector| server.collector.register_collector(collector.new) }
+
       server.start
 
       if defined?(Rails)
