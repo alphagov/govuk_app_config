@@ -1,3 +1,7 @@
+# Next
+
+* Default to Prometheus histograms, not summaries ([#318](https://github.com/alphagov/govuk_app_config/pull/318))
+
 # 9.1.0
 
 * GovukAppConfig silences OpenTelemetry log output when running a rake task ([#311](https://github.com/alphagov/govuk_app_config/pull/311))

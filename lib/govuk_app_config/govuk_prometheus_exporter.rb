@@ -1,3 +1,8 @@
+require "prometheus_exporter"
+require "prometheus_exporter/metric"
+require "prometheus_exporter/server"
+require "prometheus_exporter/middleware"
+
 module GovukPrometheusExporter
   def self.should_configure
     # Allow us to force the Prometheus Exporter for persistent Rake tasks...
@@ -11,12 +16,14 @@ module GovukPrometheusExporter
     end
   end
 
-  def self.configure(collectors: [])
+  def self.configure(collectors: [], default_aggregation: PrometheusExporter::Metric::Histogram)
     return unless should_configure
 
-    require "prometheus_exporter"
-    require "prometheus_exporter/server"
-    require "prometheus_exporter/middleware"
+    # PrometheusExporter::Metric::Histogram.DEFAULT_BUCKETS tops out at 10 but
+    # we have a few controller actions which are slower than this, so we add a
+    # few extra buckets for slower requests
+    PrometheusExporter::Metric::Histogram.default_buckets = [0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10, 15, 25, 50].freeze
+    PrometheusExporter::Metric::Base.default_aggregation = default_aggregation
 
     if defined?(Sidekiq)
       Sidekiq.configure_server do |config|
