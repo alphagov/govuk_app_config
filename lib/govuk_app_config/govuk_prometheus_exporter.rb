@@ -1,3 +1,8 @@
+require "prometheus_exporter"
+require "prometheus_exporter/metric"
+require "prometheus_exporter/server"
+require "prometheus_exporter/middleware"
+
 module GovukPrometheusExporter
   def self.should_configure
     # Allow us to force the Prometheus Exporter for persistent Rake tasks...
@@ -11,12 +16,8 @@ module GovukPrometheusExporter
     end
   end
 
-  def self.configure(collectors: [], default_aggregation: Prometheus::Metric::Histogram)
+  def self.configure(collectors: [], default_aggregation: PrometheusExporter::Metric::Histogram)
     return unless should_configure
-
-    require "prometheus_exporter"
-    require "prometheus_exporter/server"
-    require "prometheus_exporter/middleware"
 
     # PrometheusExporter::Metric::Histogram.DEFAULT_BUCKETS tops out at 10 but
     # we have a few controller actions which are slower than this, so we add a
