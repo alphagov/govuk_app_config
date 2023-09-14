@@ -1,4 +1,4 @@
-# Next
+# 9.2.0
 
 * Default to Prometheus histograms, not summaries ([#318](https://github.com/alphagov/govuk_app_config/pull/318))
 
