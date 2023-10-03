@@ -1,3 +1,7 @@
+# 9.3.0
+
+* Get prometheus labels from controller, not params ([#320](https://github.com/alphagov/govuk_app_config/pull/320))
+
 # 9.2.0
 
 * Default to Prometheus histograms, not summaries ([#318](https://github.com/alphagov/govuk_app_config/pull/318))
