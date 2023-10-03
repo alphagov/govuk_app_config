@@ -4,7 +4,6 @@ require "prometheus_exporter/server"
 require "prometheus_exporter/middleware"
 
 module GovukPrometheusExporter
-
   #
   # See https://github.com/discourse/prometheus_exporter/pull/293
   #
@@ -12,7 +11,7 @@ module GovukPrometheusExporter
   # that PR is merged / released
   #
   class RailsMiddleware < PrometheusExporter::Middleware
-    def default_labels(env, result)
+    def default_labels(env, _result)
       controller_instance = env["action_controller.instance"]
       action = controller = nil
       if controller_instance
@@ -26,13 +25,13 @@ module GovukPrometheusExporter
       end
       {
         action: action || "other",
-        controller: controller || "other"
+        controller: controller || "other",
       }
     end
   end
 
   class SinatraMiddleware < PrometheusExporter::Middleware
-    def default_labels(env, result)
+    def default_labels(_env, _result)
       # The default prometheus exporter middleware uses the controller and
       # action as labels.  These aren't meaningful in Sinatra applications, and
       # other options (such as request.path_info) have potentially very high
