@@ -4,6 +4,43 @@ require "prometheus_exporter/server"
 require "prometheus_exporter/middleware"
 
 module GovukPrometheusExporter
+  #
+  # See https://github.com/discourse/prometheus_exporter/pull/293
+  #
+  # RailsMiddleware can be removed and replaced with the default middleware if
+  # that PR is merged / released
+  #
+  class RailsMiddleware < PrometheusExporter::Middleware
+    def default_labels(env, _result)
+      controller_instance = env["action_controller.instance"]
+      action = controller = nil
+      if controller_instance
+        action = controller_instance.action_name
+        controller = controller_instance.controller_name
+      elsif (cors = env["rack.cors"]) && cors.respond_to?(:preflight?) && cors.preflight?
+        # if the Rack CORS Middleware identifies the request as a preflight request,
+        # the stack doesn't get to the point where controllers/actions are defined
+        action = "preflight"
+        controller = "preflight"
+      end
+      {
+        action: action || "other",
+        controller: controller || "other",
+      }
+    end
+  end
+
+  class SinatraMiddleware < PrometheusExporter::Middleware
+    def default_labels(_env, _result)
+      # The default prometheus exporter middleware uses the controller and
+      # action as labels.  These aren't meaningful in Sinatra applications, and
+      # other options (such as request.path_info) have potentially very high
+      # cardinality.  For now, just accept that we can't be more specific than
+      # the application / pod and don't provide any other labels
+      {}
+    end
+  end
+
   def self.should_configure
     # Allow us to force the Prometheus Exporter for persistent Rake tasks...
     if ENV["GOVUK_PROMETHEUS_EXPORTER"] == "force"
@@ -50,11 +87,11 @@ module GovukPrometheusExporter
       server.start
 
       if defined?(Rails)
-        Rails.application.middleware.unshift PrometheusExporter::Middleware, instrument: :prepend
+        Rails.application.middleware.unshift RailsMiddleware, instrument: :prepend
       end
 
       if defined?(Sinatra)
-        Sinatra.use PrometheusExporter::Middleware
+        Sinatra.use SinatraMiddleware
       end
     rescue Errno::EADDRINUSE
       warn "Could not start Prometheus metrics server as address already in use."
