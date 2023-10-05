@@ -1,3 +1,8 @@
+# 9.4.0
+
+* Disallow any domain from embeding a page to prevent clickjacking ([#322](https://github.com/alphagov/govuk_app_config/pull/322))
+* Fix GovukContentSecurityPolicy test ([#324](https://github.com/alphagov/govuk_app_config/pull/324))
+
 # 9.3.0
 
 * Get prometheus labels from controller, not params ([#320](https://github.com/alphagov/govuk_app_config/pull/320))
