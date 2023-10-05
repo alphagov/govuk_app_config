@@ -11,10 +11,9 @@ RSpec.describe GovukContentSecurityPolicy do
 
   describe ".configure" do
     it "creates a policy" do
-      Rails.application.config.content_security_policy = nil
-
       expect { GovukContentSecurityPolicy.configure }
         .to change { Rails.application.config.content_security_policy }
+        .from(nil)
         .to(an_instance_of(ActionDispatch::ContentSecurityPolicy))
     end
 
