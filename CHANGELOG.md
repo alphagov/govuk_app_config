@@ -1,3 +1,7 @@
+# 9.5.0
+
+* Allow gov.uk domains to embed pages in the global Content Security Policy ([#325](https://github.com/alphagov/govuk_app_config/pull/325))
+
 # 9.4.0
 
 * Disallow any domain from embeding a page to prevent clickjacking ([#322](https://github.com/alphagov/govuk_app_config/pull/322))
