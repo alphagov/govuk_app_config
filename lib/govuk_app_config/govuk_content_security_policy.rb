@@ -80,10 +80,10 @@ module GovukContentSecurityPolicy
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src
     policy.frame_src :self, *GOVUK_DOMAINS, "www.youtube.com", "www.youtube-nocookie.com" # Allow youtube embeds
 
-    # Disallow any domain from embeding a page using <frame>, <iframe>, <object>, or <embed> to prevent clickjacking
+    # Disallow non-gov.uk domains from embeding a page using <frame>, <iframe>, <object>, or <embed> to prevent clickjacking
     #
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors
-    policy.frame_ancestors :none
+    policy.frame_ancestors :self, *GOVUK_DOMAINS
 
     policy.report_uri ENV["GOVUK_CSP_REPORT_URI"] if ENV.include?("GOVUK_CSP_REPORT_URI")
   end
