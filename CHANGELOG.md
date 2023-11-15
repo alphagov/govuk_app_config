@@ -1,3 +1,7 @@
+# Unreleased
+
+* Enable adding custom LogStasher fields from apps ([#327](https://github.com/alphagov/govuk_app_config/pull/327))
+
 # 9.6.0
 
 * Allow YouTube thumbnails from https://i.ytimg.com in the global Content Security Policy ([#328](https://github.com/alphagov/govuk_app_config/pull/328))
