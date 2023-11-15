@@ -1,3 +1,7 @@
+# Unreleased
+
+* Enable adding custom LogStasher fields from apps ([#327](https://github.com/alphagov/govuk_app_config/pull/327))
+
 # 9.5.0
 
 * Allow gov.uk domains to embed pages in the global Content Security Policy ([#325](https://github.com/alphagov/govuk_app_config/pull/325))
