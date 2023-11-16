@@ -1,3 +1,7 @@
+# 9.6.0
+
+* Allow YouTube thumbnails from https://i.ytimg.com in the global Content Security Policy ([#328](https://github.com/alphagov/govuk_app_config/pull/328))
+
 # 9.5.0
 
 * Allow gov.uk domains to embed pages in the global Content Security Policy ([#325](https://github.com/alphagov/govuk_app_config/pull/325))
