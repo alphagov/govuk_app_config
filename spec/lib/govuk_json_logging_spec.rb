@@ -3,6 +3,11 @@ require "rails"
 require "govuk_app_config/govuk_json_logging"
 require "rack/test"
 
+class TestController < ActionController::Base
+  include LogStasher::ActionController::Instrumentation
+  def index; end
+end
+
 RSpec.describe GovukJsonLogging do
   let(:govuk_headers_class) do
     Class.new do
@@ -76,6 +81,66 @@ RSpec.describe GovukJsonLogging do
       fake_stdout.rewind
 
       expect(fake_stdout.read).to match(/test default log entry/)
+    end
+
+    context "given a block" do
+      it "evals the block" do
+        done = false
+        expect {
+          GovukJsonLogging.configure do
+            done = true
+          end
+        }.to change { done }.to(true)
+      end
+
+      context "and the block configures custom fields" do
+        describe "any subsequently-created ActionController" do
+          let(:headers) { { "REMOTE_ADDR" => "10.10.10.10" } }
+          let(:mock_request) { ActionDispatch::TestRequest.new(Rack::MockRequest.env_for("http://example.com:8080/", headers)) }
+          let(:mock_response) { ActionDispatch::TestResponse.new }
+
+          before do
+            GovukJsonLogging.configure do
+              add_custom_fields do |fields|
+                fields[:govuk_custom_field] = request.headers["GOVUK-Custom-Header"]
+              end
+            end
+
+            @controller = TestController.new
+            allow(@controller).to receive(:request).and_return(mock_request)
+            allow(@controller).to receive(:response).and_return(mock_response)
+          end
+
+          it "has a logstasher_add_custom_fields_to_payload method" do
+            expect(@controller.methods).to include(:logstasher_add_custom_fields_to_payload)
+          end
+
+          describe "calling the logstasher_add_custom_fields_to_payload" do
+            let(:payload) { {} }
+
+            it "executes the block" do
+              expect(@controller).to receive(:logstasher_add_custom_fields_to_payload)
+              @controller.send(:append_info_to_payload, payload)
+            end
+
+            it "adds the custom fields to the payload" do
+              @controller.send(:append_info_to_payload, payload)
+              expect(payload.keys).to include(:govuk_custom_field)
+            end
+
+            context "when the custom field has a value" do
+              before do
+                mock_request.headers["GOVUK-Custom-header"] = "My header value"
+              end
+
+              it "sets the custom field value in the payload" do
+                @controller.send(:append_info_to_payload, payload)
+                expect(payload[:govuk_custom_field]).to eq("My header value")
+              end
+            end
+          end
+        end
+      end
     end
 
     describe "when making requests to the application" do

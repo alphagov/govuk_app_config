@@ -3,7 +3,23 @@ require "logstasher"
 require "action_controller"
 
 module GovukJsonLogging
-  def self.configure
+  class Configuration
+    def initialize
+      @custom_fields_block = proc {}
+    end
+
+    attr_reader :custom_fields_block
+
+    def add_custom_fields(&block)
+      @custom_fields_block = block if block_given?
+    end
+  end
+
+  def self.configure(&block)
+    configuration = Configuration.new
+
+    configuration.instance_eval(&block) if block_given?
+
     # We disable buffering, so that logs aren't lost on crash or delayed
     # indefinitely while troubleshooting.
     $stdout.sync = true
@@ -31,6 +47,8 @@ module GovukJsonLogging
       fields[:govuk_request_id] = request.headers["GOVUK-Request-Id"]
       fields[:varnish_id] = request.headers["X-Varnish"]
       fields[:govuk_app_config] = GovukAppConfig::VERSION
+
+      instance_exec(fields, &configuration.custom_fields_block) if block_given?
     end
 
     Rails.application.config.logstasher.enabled = true
