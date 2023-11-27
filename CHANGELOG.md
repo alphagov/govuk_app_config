@@ -1,4 +1,4 @@
-# Unreleased
+# 9.7.0
 
 * Enable adding custom LogStasher fields from apps ([#327](https://github.com/alphagov/govuk_app_config/pull/327))
 
