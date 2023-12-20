@@ -1,3 +1,7 @@
+# 9.8.0
+
+* Add GOVUK domains to script src CSP ([#334](https://github.com/alphagov/govuk_app_config/pull/334))
+
 # 9.7.0
 
 * Enable adding custom LogStasher fields from apps ([#327](https://github.com/alphagov/govuk_app_config/pull/327))
