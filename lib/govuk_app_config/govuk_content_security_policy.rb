@@ -51,6 +51,7 @@ module GovukContentSecurityPolicy
     policy.script_src :self,
                       *GOOGLE_ANALYTICS_DOMAINS,
                       *GOOGLE_STATIC_DOMAINS,
+                      *GOVUK_DOMAINS,
                       # Allow YouTube Embeds (Govspeak turns YouTube links into embeds)
                       "*.ytimg.com",
                       "www.youtube.com",
