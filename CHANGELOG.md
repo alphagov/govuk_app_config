@@ -1,3 +1,7 @@
+# 9.8.1
+
+* Revert "Add GOVUK domains to script src CSP" ([#336](https://github.com/alphagov/govuk_app_config/pull/336))
+
 # 9.8.0
 
 * Add GOVUK domains to script src CSP ([#334](https://github.com/alphagov/govuk_app_config/pull/334))
