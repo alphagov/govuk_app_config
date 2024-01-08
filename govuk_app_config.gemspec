@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "logstasher", "~> 2.1"
   spec.add_dependency "opentelemetry-exporter-otlp", ">= 0.25", "< 0.27"
-  spec.add_dependency "opentelemetry-instrumentation-all", ">= 0.39.1", "< 0.55.0"
+  spec.add_dependency "opentelemetry-instrumentation-all", ">= 0.39.1", "< 0.56.0"
   spec.add_dependency "opentelemetry-sdk", "~> 1.2"
   spec.add_dependency "plek", ">= 4", "< 6"
   spec.add_dependency "prometheus_exporter", "~> 2.0"
