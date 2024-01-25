@@ -22,7 +22,7 @@ RSpec.describe GovukError::Configuration do
   describe ".before_send" do
     let(:configuration) do
       configuration = GovukError::Configuration.new(Sentry::Configuration.new)
-      configuration.before_send = lambda { |error_or_event, _hint|
+      configuration.before_send = ->(error_or_event, _hint) {
         error_or_event
       }
       configuration
@@ -132,10 +132,10 @@ RSpec.describe GovukError::Configuration do
           expect(GovukStatsd).to receive(:increment).exactly(1).times.with("error_types.standard_error")
           expect(GovukStatsd).to receive(:increment).exactly(1).times.with("hello_world")
 
-          configuration.before_send = lambda do |error_or_event, _hint|
+          configuration.before_send = ->(error_or_event, _hint) {
             GovukStatsd.increment("hello_world")
             error_or_event
-          end
+          }
 
           send_exception_to_sentry(StandardError.new, configuration)
         end
@@ -150,14 +150,14 @@ RSpec.describe GovukError::Configuration do
           expect(GovukStatsd).to receive(:increment).exactly(1).times.with("hello_world")
           expect(GovukStatsd).to receive(:increment).exactly(1).times.with("hello_world_again")
 
-          configuration.before_send = lambda do |error_or_event, _hint|
+          configuration.before_send = ->(error_or_event, _hint) {
             GovukStatsd.increment("hello_world")
             error_or_event
-          end
-          configuration.before_send = lambda do |error_or_event, _hint|
+          }
+          configuration.before_send = ->(error_or_event, _hint) {
             GovukStatsd.increment("hello_world_again")
             error_or_event
-          end
+          }
 
           send_exception_to_sentry(StandardError.new, configuration)
         end
@@ -184,9 +184,9 @@ RSpec.describe GovukError::Configuration do
       ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
         sentry_configurator = GovukError::Configuration.new(Sentry::Configuration.new)
         stub_const("CustomError", Class.new(StandardError))
-        sentry_configurator.before_send = lambda do |event, hint|
+        sentry_configurator.before_send = ->(event, hint) {
           event if hint[:exception].is_a?(CustomError)
-        end
+        }
 
         sentry_client = send_exception_to_sentry(CustomError.new, sentry_configurator)
         expect(sentry_client.transport.events.count).to eq(1)
@@ -198,9 +198,9 @@ RSpec.describe GovukError::Configuration do
     it "does not increment the counters if the callback returns nil" do
       ClimateControl.modify SENTRY_CURRENT_ENV: "production" do
         sentry_configurator = GovukError::Configuration.new(Sentry::Configuration.new)
-        sentry_configurator.before_send = lambda do |_error_or_event, _hint|
+        sentry_configurator.before_send = ->(_error_or_event, _hint) {
           nil
-        end
+        }
 
         expect(GovukStatsd).not_to receive(:increment).with("errors_occurred")
         expect(GovukStatsd).not_to receive(:increment).with("error_types.standard_error")

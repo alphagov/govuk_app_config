@@ -96,9 +96,9 @@ and occurs at the time of a data sync, then it will be excluded even if the cust
 
 ```ruby
 GovukError.configure do |config|
-  config.before_send = lambda do |event, hint|
+  config.before_send = ->(event, hint) {
     hint[:exception].is_a?(ErrorWeWantToIgnore) ? nil : event
-  end
+  }
 end
 ```
 
