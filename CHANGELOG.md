@@ -1,3 +1,7 @@
+# 9.8.2
+
+* Fix Ruby 3.3 compatibility ([#343](https://github.com/alphagov/govuk_app_config/pull/343))
+
 # 9.8.1
 
 * Revert "Add GOVUK domains to script src CSP" ([#336](https://github.com/alphagov/govuk_app_config/pull/336))
