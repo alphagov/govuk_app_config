@@ -72,9 +72,7 @@ module GovukError
       ]
       # Need to invoke an arbitrary `before_send=` in order to trigger the
       # `before_send_callbacks` behaviour
-      self.before_send = lambda { |error_or_event, _hint|
-        error_or_event
-      }
+      self.before_send = ->(error_or_event, _hint) { error_or_event }
     end
 
     def before_send=(closure)
@@ -85,7 +83,7 @@ module GovukError
   protected
 
     def ignore_excluded_exceptions_in_data_sync
-      lambda { |event, hint|
+      ->(event, hint) {
         data_sync_ignored_error = data_sync_excluded_exceptions.any? do |exception_to_ignore|
           exception_to_ignore = Object.const_get(exception_to_ignore) unless exception_to_ignore.is_a?(Module)
           exception_chain = Sentry::Utils::ExceptionCauseChain.exception_to_array(hint[:exception])
@@ -101,7 +99,7 @@ module GovukError
     end
 
     def increment_govuk_statsd_counters
-      lambda { |event, hint|
+      ->(event, hint) {
         if hint[:exception]
           GovukStatsd.increment("errors_occurred")
           GovukStatsd.increment("error_types.#{hint[:exception].class.name.split('::').last.underscore}")
@@ -111,14 +109,14 @@ module GovukError
     end
 
     def run_before_send_callbacks
-      lambda do |event, hint|
+      ->(event, hint) {
         result = event
         @before_send_callbacks.each do |callback|
           result = callback.call(event, hint)
           break if result.nil?
         end
         result
-      end
+      }
     end
   end
 end
