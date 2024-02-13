@@ -45,6 +45,7 @@ module GovukError
         "Sinatra::NotFound",
         "Slimmer::IntermittentRetrievalError",
         "Sidekiq::JobRetry::Skip",
+        "SignalException",
       ]
 
       # This will exclude exceptions that are triggered by one of the ignored
