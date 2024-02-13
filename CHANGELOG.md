@@ -1,3 +1,7 @@
+# 9.9.1
+
+* Stop sending SignalExceptions to Sentry by default.
+
 # 9.9.0
 
 * Drop support for Ruby 3.0. The minimum required Ruby version is now 3.1.4.
