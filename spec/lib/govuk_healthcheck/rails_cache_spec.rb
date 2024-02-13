@@ -4,7 +4,7 @@ require_relative "shared_interface"
 
 RSpec.describe GovukHealthcheck::RailsCache do
   let(:cache) { double(:cache, write: true, read: true) }
-  let(:rails) { double(:mongoid, cache: cache) }
+  let(:rails) { double(:mongoid, cache:) }
   before { stub_const("Rails", rails) }
 
   describe ".status" do

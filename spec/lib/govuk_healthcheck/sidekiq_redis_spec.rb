@@ -4,7 +4,7 @@ require_relative "shared_interface"
 
 RSpec.describe GovukHealthcheck::SidekiqRedis do
   let(:redis_info) { double(:redis_info) }
-  let(:sidekiq) { double(:sidekiq, redis_info: redis_info) }
+  let(:sidekiq) { double(:sidekiq, redis_info:) }
   before { stub_const("Sidekiq", sidekiq) }
 
   context "when the database is connected" do
