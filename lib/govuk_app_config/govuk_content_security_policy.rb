@@ -71,7 +71,9 @@ module GovukContentSecurityPolicy
                        *GOVUK_DOMAINS,
                        *GOOGLE_ANALYTICS_DOMAINS,
                        # Speedcurve real user monitoring (RUM) - as per: https://support.speedcurve.com/docs/add-rum-to-your-csp
-                       "lux.speedcurve.com"
+                       "lux.speedcurve.com",
+                       "gds-single-consent-staging.app",
+                       "gds-single-consent.app"
 
     # Disallow all <object>, <embed>, and <applet> elements
     #
