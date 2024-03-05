@@ -1,3 +1,7 @@
+# 9.9.2
+
+* Add single cookie consent api URLs ([#355](https://github.com/alphagov/govuk_app_config/pull/355))
+
 # 9.9.1
 
 * Stop sending SignalExceptions to Sentry by default.
