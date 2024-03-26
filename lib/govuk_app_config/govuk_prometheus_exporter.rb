@@ -42,15 +42,7 @@ module GovukPrometheusExporter
   end
 
   def self.should_configure
-    # Allow us to force the Prometheus Exporter for persistent Rake tasks...
-    if ENV["GOVUK_PROMETHEUS_EXPORTER"] == "force"
-      true
-    elsif File.basename($PROGRAM_NAME) == "rake" ||
-        defined?(Rails) && (Rails.const_defined?("Console") || Rails.env == "test")
-      false
-    else
-      ENV["GOVUK_PROMETHEUS_EXPORTER"] == "true"
-    end
+    !(defined?(Rails) && Rails.const_defined?("Console"))
   end
 
   def self.configure(collectors: [], default_aggregation: PrometheusExporter::Metric::Histogram)
@@ -81,9 +73,7 @@ module GovukPrometheusExporter
 
     begin
       server = PrometheusExporter::Server::WebServer.new bind: "0.0.0.0", port: 9394
-
-      collectors.each { |collector| server.collector.register_collector(collector.new) }
-
+      collectors.each { |c| server.collector.register_collector(c.new) }
       server.start
 
       if defined?(Rails)
@@ -94,7 +84,7 @@ module GovukPrometheusExporter
         Sinatra.use SinatraMiddleware
       end
     rescue Errno::EADDRINUSE
-      warn "Could not start Prometheus metrics server as address already in use."
+      warn "not starting Prometheus metrics server: address already in use"
     end
   end
 end
