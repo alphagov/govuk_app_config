@@ -3,7 +3,9 @@ require "active_support/testing/time_helpers"
 require "byebug"
 require "climate_control"
 require "rspec/its"
+require "simplecov"
 require "webmock/rspec"
+SimpleCov.start
 
 RSpec.configure do |config|
   config.include(ActiveSupport::Testing::TimeHelpers)
