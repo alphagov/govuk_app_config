@@ -1,3 +1,7 @@
+# 9.11.0
+
+* Add GDS::SSO::PermissionDeniedError to excluded exceptions list ([#366](https://github.com/alphagov/govuk_app_config/pull/366))
+
 # 9.10.0
 
 * Simplify the logic for deciding whether to initialize `GovukPrometheusExporter`. `GovukPrometheusExporter` provides the `/metrics` webserver and "exporter" process for aggregating counters in multi-process apps. govuk_app_config will now always attempt to initialize GovukPrometheusExporter except when running under `rails console`. The `GOVUK_PROMETHEUS_EXPORTER` environment variable no longer has any effect.
