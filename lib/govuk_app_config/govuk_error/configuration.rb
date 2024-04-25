@@ -40,6 +40,7 @@ module GovukError
         "CGI::Session::CookieStore::TamperedWithCookie",
         "GdsApi::HTTPIntermittentServerError",
         "GdsApi::TimedOutException",
+        "GDS::SSO::PermissionDeniedError",
         "Mongoid::Errors::DocumentNotFound",
         "Puma::HttpParserError",
         "Sinatra::NotFound",
