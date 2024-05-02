@@ -1,3 +1,7 @@
+# 9.12.0
+
+* Add new `NonGovukDomains` module with `EXTERNAL_HOST_REDIRECT_ALLOW_LIST` constant, so that we can avoid duplicating allowlists across publishing apps. ([#367](https://github.com/alphagov/govuk_app_config/pull/367))
+
 # 9.11.0
 
 * Add GDS::SSO::PermissionDeniedError to excluded exceptions list ([#366](https://github.com/alphagov/govuk_app_config/pull/366))
