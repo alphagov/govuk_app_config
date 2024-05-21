@@ -16,6 +16,7 @@ RSpec.describe GovukJsonLogging do
       end
     end
   end
+
   before do
     stub_const("DummyLoggingRailsApp", Class.new(Rails::Application) do
       config.hosts.clear

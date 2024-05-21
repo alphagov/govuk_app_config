@@ -1,3 +1,7 @@
+# Unreleased
+
+* Fix OpenTelemetry errors when using with Logstasher gem ([#372](https://github.com/alphagov/govuk_app_config/pull/372))
+
 # 9.11.0
 
 * Add GDS::SSO::PermissionDeniedError to excluded exceptions list ([#366](https://github.com/alphagov/govuk_app_config/pull/366))
