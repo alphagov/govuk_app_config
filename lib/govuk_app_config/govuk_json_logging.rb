@@ -20,6 +20,8 @@ module GovukJsonLogging
     config = Rails.application.config.logstasher
     if (!config.controller_monkey_patch && config.controller_monkey_patch != false) || config.controller_monkey_patch == true
       require_relative "./govuk_json_logging/rails_ext/action_controller/metal/instrumentation"
+      # Prevent the old monkey patch being applied
+      config.controller_monkey_patch = false
     end
 
     configuration = Configuration.new
