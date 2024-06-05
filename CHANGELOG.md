@@ -1,4 +1,4 @@
-# Unreleased
+# 9.11.2
 
 * Fix Logstasher monkey patch overriding patch from this library for OpenTelemetry errors ([#377](https://github.com/alphagov/govuk_app_config/pull/377))
 
