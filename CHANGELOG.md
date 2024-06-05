@@ -1,3 +1,7 @@
+# 9.11.2
+
+* Update dependencies
+
 # 9.11.1
 
 * Fix OpenTelemetry errors when using with Logstasher gem ([#372](https://github.com/alphagov/govuk_app_config/pull/372))
