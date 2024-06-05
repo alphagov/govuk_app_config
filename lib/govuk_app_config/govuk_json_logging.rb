@@ -16,6 +16,12 @@ module GovukJsonLogging
   end
 
   def self.configure(&block)
+    # Fixes the monkey patch from the logstasher gem to support Rails 7
+    config = Rails.application.config.logstasher
+    if (!config.controller_monkey_patch && config.controller_monkey_patch != false) || config.controller_monkey_patch == true
+      require_relative "./govuk_json_logging/rails_ext/action_controller/metal/instrumentation"
+    end
+
     configuration = Configuration.new
 
     configuration.instance_eval(&block) if block_given?
