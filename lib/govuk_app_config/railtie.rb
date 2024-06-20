@@ -14,6 +14,10 @@ module GovukAppConfig
       end
     end
 
+    initializer "govuk_app_config.configure_timezone", before: "active_support.initialize_time_zone" do |app|
+      GovukTimezone.configure(app.config)
+    end
+
     config.before_initialize do
       GovukJsonLogging.configure if ENV["GOVUK_RAILS_JSON_LOGGING"]
     end
