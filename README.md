@@ -8,6 +8,7 @@ Adds the basics of a GOV.UK application:
 - Statsd client for reporting stats (deprecated; use Prometheus instead)
 - Rails logging
 - Content Security Policy generation for frontend apps
+- Sets the time zone to London
 
 ## Installation
 
@@ -181,6 +182,9 @@ GovukContentSecurityPolicy.configure
 
 Some frontend apps support languages that are not defined in the i18n gem. This provides them with our own custom rules for these languages.
 
+## Time zone
+
+This gem sets `config.time_zone` to `"London"` - this cannot currently be overridden in application config.
 
 ## License
 
