@@ -1,3 +1,7 @@
+# 9.12.0
+
+* Set time_zone to London in all GOV.UK apps ([#381](https://github.com/alphagov/govuk_app_config/pull/381))
+
 # 9.11.2
 
 * Fix Logstasher monkey patch overriding patch from this library for OpenTelemetry errors ([#377](https://github.com/alphagov/govuk_app_config/pull/377))
