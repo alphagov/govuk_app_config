@@ -45,6 +45,7 @@ module GovukError
         "Puma::HttpParserError",
         "Sinatra::NotFound",
         "Slimmer::IntermittentRetrievalError",
+        "Slimmer::SourceWrapperNotFoundError",
         "Sidekiq::JobRetry::Skip",
         "SignalException",
       ]
