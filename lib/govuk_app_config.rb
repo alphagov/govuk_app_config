@@ -9,5 +9,6 @@ require "govuk_app_config/govuk_prometheus_exporter"
 if defined?(Rails)
   require "govuk_app_config/govuk_json_logging"
   require "govuk_app_config/govuk_content_security_policy"
+  require "govuk_app_config/govuk_timezone"
   require "govuk_app_config/railtie"
 end
