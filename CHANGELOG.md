@@ -1,3 +1,7 @@
+# 9.13.0
+
+* Add Slimmer::SourceWrapperNotFoundError to excluded exceptions.
+
 # 9.12.0
 
 * Set time_zone to London in all GOV.UK apps ([#381](https://github.com/alphagov/govuk_app_config/pull/381))
