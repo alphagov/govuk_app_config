@@ -1,4 +1,4 @@
-# Unreleased
+# 9.13.0
 
 * Add Slimmer::SourceWrapperNotFoundError to excluded exceptions.
 
