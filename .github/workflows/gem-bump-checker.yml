@@ -1,0 +1,9 @@
+on:
+  workflow_dispatch: {}
+  pull_request: {}
+
+jobs:
+  gem-bump-checker:
+    uses: alphagov/govuk-infrastructure/.github/workflows/gem-bump-checker.yml@main
+    secrets:
+      GH_TOKEN: ${{ secrets.GOVUK_CI_GITHUB_API_TOKEN }}
