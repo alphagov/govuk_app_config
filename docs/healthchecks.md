@@ -80,4 +80,4 @@ It is expected that these methods may cache their results for performance
 reasons, if a user wants to ensure they have the latest value they should
 create a new instance of the check first.
 
-Put custom health checks for your app into a `Healtcheck` module. Each custom check class should end with `Check`.
+Put custom health checks for your app into a `Healthcheck` module. Each custom check class should end with `Check`.
