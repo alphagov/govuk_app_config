@@ -1,14 +1,12 @@
 module GovukTimezone
   def self.configure(config)
-    case config.time_zone
-    when "UTC"
-      Rails.logger.info "govuk_app_config changing time_zone from UTC (the default) to London"
-    when "London"
-      Rails.logger.info "govuk_app_config always sets time_zone to London - there is no need to set config.time_zone in your app"
-    else
-      raise "govuk_app_config prevents configuring time_zones other than London - config.time_zone was set to #{config.time_zone}"
-    end
+    raise "govuk_app_config prevents configuring time_zone with config.time_zone - use config.govuk_time_zone instead" unless config.time_zone == "UTC"
 
-    config.time_zone = "London"
+    if config.respond_to? :govuk_time_zone
+      config.time_zone = config.govuk_time_zone
+    else
+      Rails.logger.info 'govuk_app_config changing time_zone from UTC (the rails default) to London (the GOV.UK default). Set config.govuk_time_zone = "UTC" if you need UTC.'
+      config.time_zone = "London"
+    end
   end
 end
