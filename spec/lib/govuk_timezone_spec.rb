@@ -1,8 +1,10 @@
+require "ostruct"
 require "spec_helper"
 require "govuk_app_config/govuk_timezone"
 
 RSpec.describe GovukError do
   describe ".configure" do
+    let(:config) { OpenStruct.new }
     let(:logger) { instance_double("ActiveSupport::Logger") }
 
     before do
@@ -10,29 +12,31 @@ RSpec.describe GovukError do
     end
 
     it "should override the default UTC time_zone to London" do
-      config = Struct.new(:time_zone).new("UTC")
+      config.time_zone = "UTC"
       expect(logger).to receive(:info)
       GovukTimezone.configure(config)
       expect(config.time_zone).to eq("London")
     end
 
     it "should allow apps to set time_zone explicitly with config.govuk_time_zone" do
-      config = Struct.new(:time_zone, :govuk_time_zone).new("UTC", "Shanghai")
+      config.time_zone = "UTC"
+      config.govuk_time_zone = "Shanghai"
       GovukTimezone.configure(config)
       expect(config.time_zone).to eq("Shanghai")
     end
 
     it "should default to London if config.govuk_time_zone is nil" do
-      config = Struct.new(:time_zone, :govuk_time_zone).new("UTC", nil)
+      config.time_zone = "UTC"
+      config.govuk_time_zone = nil
       expect(logger).to receive(:info)
       GovukTimezone.configure(config)
       expect(config.time_zone).to eq("London")
     end
 
     it "should raise an error if config.time_zone is set to anything other than the default UTC" do
-      config = Struct.new(:time_zone).new("London")
+      config.time_zone = "London"
       expect { GovukTimezone.configure(config) }.to raise_error(/govuk_app_config prevents configuring time_zone with config[.]time_zone/)
-      config = Struct.new(:time_zone).new("Shanghai")
+      config.time_zone = "Shanghai"
       expect { GovukTimezone.configure(config) }.to raise_error(/govuk_app_config prevents configuring time_zone with config[.]time_zone/)
     end
   end
