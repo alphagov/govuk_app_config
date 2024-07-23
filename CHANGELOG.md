@@ -1,3 +1,7 @@
+# 9.14.0
+
+* Configure `time_zone` with `govuk_time_zone` [#392](https://github.com/alphagov/govuk_app_config/pull/392)
+
 # 9.13.1
 
 * Update dependencies
