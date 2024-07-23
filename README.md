@@ -184,7 +184,17 @@ Some frontend apps support languages that are not defined in the i18n gem. This 
 
 ## Time zone
 
-This gem sets `config.time_zone` to `"London"` - this cannot currently be overridden in application config.
+This gem sets `config.time_zone` to `"London"` by default.
+
+If you require a different time zone, you can set it with `config.govuk_time_zone`:
+
+```ruby
+config.govuk_time_zone = "UTC"
+```
+
+Note that we've introduced a new config field (`govuk_time_zone`) here, because
+it's otherwise not possible to distinguish between an app using UTC as the
+default and an app explicitly asking for UTC.
 
 ## License
 
