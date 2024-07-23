@@ -22,6 +22,13 @@ RSpec.describe GovukError do
       expect(config.time_zone).to eq("Shanghai")
     end
 
+    it "should default to London if config.govuk_time_zone is nil" do
+      config = Struct.new(:time_zone, :govuk_time_zone).new("UTC", nil)
+      expect(logger).to receive(:info)
+      GovukTimezone.configure(config)
+      expect(config.time_zone).to eq("London")
+    end
+
     it "should raise an error if config.time_zone is set to anything other than the default UTC" do
       config = Struct.new(:time_zone).new("London")
       expect { GovukTimezone.configure(config) }.to raise_error(/govuk_app_config prevents configuring time_zone with config[.]time_zone/)
