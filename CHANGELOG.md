@@ -1,3 +1,7 @@
+# 9.14.3
+
+* Update SidekiqRedis healthcheck to work with Sidekiq 7 [#399](https://github.com/alphagov/govuk_app_config/pull/399)
+
 # 9.14.2
 
 * Update dependencies
