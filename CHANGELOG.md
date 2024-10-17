@@ -1,4 +1,4 @@
-# Unreleased
+# 9.15.0
 
 * Add Sanitiser::Strategy::SanitisingError to excluded exceptions list ([#402](https://github.com/alphagov/govuk_app_config/pull/402))
 
