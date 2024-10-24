@@ -47,6 +47,7 @@ module GovukError
         "Slimmer::IntermittentRetrievalError",
         "Slimmer::SourceWrapperNotFoundError",
         "Sidekiq::JobRetry::Skip",
+        "Sanitiser::Strategy::SanitisingError",
         "SignalException",
       ]
 
