@@ -5,7 +5,7 @@ module GovukPuma
     config.environment ENV.fetch("RAILS_ENV", "development")
 
     if ENV["GOVUK_APP_LOGROOT"]
-      config.stdout_redirect "#{ENV['GOVUK_APP_LOGROOT']}/app.out.log" "#{ENV['GOVUK_APP_LOGROOT']}/app.err.log"
+      config.stdout_redirect "#{ENV['GOVUK_APP_LOGROOT']}/app.out.log" + "#{ENV['GOVUK_APP_LOGROOT']}/app.err.log"
     end
 
     # `worker_timeout` specifies how many seconds Puma will wait before terminating a worker.
