@@ -4,13 +4,13 @@ require "prometheus_exporter/server"
 require "prometheus_exporter/middleware"
 
 module GovukPrometheusExporter
-  #
-  # See https://github.com/discourse/prometheus_exporter/pull/293
-  #
-  # RailsMiddleware can be removed and replaced with the default middleware if
-  # that PR is merged / released
-  #
   class RailsMiddleware < PrometheusExporter::Middleware
+    #
+    # See https://github.com/discourse/prometheus_exporter/pull/293
+    #
+    # default_labels can be removed and fall through to the base method if
+    # that PR is merged / released
+    #
     def default_labels(env, _result)
       controller_instance = env["action_controller.instance"]
       action = controller = nil
@@ -28,6 +28,10 @@ module GovukPrometheusExporter
         controller: controller || "other",
       }
     end
+
+    def custom_labels(env)
+      env.fetch("govuk.prometheus_labels", {})
+    end
   end
 
   class SinatraMiddleware < PrometheusExporter::Middleware
@@ -38,6 +42,10 @@ module GovukPrometheusExporter
       # cardinality.  For now, just accept that we can't be more specific than
       # the application / pod and don't provide any other labels
       {}
+    end
+
+    def custom_labels(env)
+      env.fetch("govuk.prometheus_labels", {})
     end
   end
 
