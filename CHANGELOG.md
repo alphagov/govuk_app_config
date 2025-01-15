@@ -1,3 +1,7 @@
+# 9.16.0
+
+* GovukPrometheus - custom labels from rack env ([#424](https://github.com/alphagov/govuk_app_config/pull/424))
+
 # 9.15.8
 
 * Update dependencies
