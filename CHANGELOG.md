@@ -1,3 +1,7 @@
+# 9.16.6
+
+* Update dependencies
+
 # 9.16.5
 
 * Update dependencies
