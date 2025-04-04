@@ -178,9 +178,15 @@ app with the following content:
 GovukContentSecurityPolicy.configure
 ```
 
-## Internationalisation rules
+## Internationalisation of languages not yet supported by Rails
 
-Some frontend apps support languages that are not defined in the i18n gem. This provides them with our own custom rules for these languages.
+Some frontend apps support languages that are not defined in the i18n gem that is bundled with Rails.
+Missing translations can be added to the folder lib/govuk_app_config/govuk_i8n/ and enabled in the
+frontend application by creating a file at `config/initializers/govuk_i18n.rb` with the following content:
+
+```ruby
+GovukI18n.configure
+```
 
 ## Time zone
 
