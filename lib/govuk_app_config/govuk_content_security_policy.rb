@@ -42,7 +42,9 @@ module GovukContentSecurityPolicy
                    "assets.digital.cabinet-office.gov.uk",
                    # Allow YouTube thumbnails
                    "https://img.youtube.com",
-                   "https://i.ytimg.com"
+                   "https://i.ytimg.com",
+                   # Maps
+                   "https://api.os.uk"
 
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src
     # Note: we purposely don't include `data:`, `unsafe-inline` or `unsafe-eval` because
