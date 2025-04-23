@@ -1,3 +1,7 @@
+# 9.17.1
+
+* Update dependencies
+
 # 9.17.0
 
 * Add support for internationalisation of Rails framework strings ([#444](https://github.com/alphagov/govuk_app_config/pull/444))
