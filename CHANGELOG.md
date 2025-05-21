@@ -1,3 +1,7 @@
+# 9.17.5
+
+* Update dependencies
+
 # 9.17.4
 
 * Update CI workflow to handle concurrent releases ([#461](https://github.com/alphagov/govuk_app_config/pull/461))
