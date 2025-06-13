@@ -1,3 +1,7 @@
+# 9.17.11
+
+* Add Kyrgyz translations
+
 # 9.17.10
 
 * Update dependencies
