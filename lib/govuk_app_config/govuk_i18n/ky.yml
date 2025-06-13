@@ -1,0 +1,214 @@
+ky:
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "Ырасталбай койду: %{errors}"
+        restrict_dependent_destroy:
+          has_many: "Жазууну жок кылуу мүмкүн эмес, анткени көз каранды %{record} бар"
+          has_one: "Жазууну жок кылуу мүмкүн эмес, анткени көз каранды %{record} бар"
+  date:
+    abbr_day_names:
+    - Жш
+    - Дш
+    - Шш
+    - Шр
+    - Бш
+    - Жм
+    - Иш
+    abbr_month_names:
+    - 
+    - Янв
+    - Фев
+    - Мар
+    - Апр
+    - Май
+    - Июн
+    - Июл
+    - Авг
+    - Сен
+    - Окт
+    - Ноя
+    - Дек
+    day_names:
+    - Жекшемби
+    - Дүйшөмбү
+    - Шейшемби
+    - Шаршемби
+    - Бейшемби
+    - Жума
+    - Ишеммби
+    formats:
+      default: "%d-%m-%Y"
+      long: "%d-%B %Y"
+      short: "%d-%b"
+    month_names:
+    - 
+    - Январь
+    - Февраль
+    - Март
+    - Апрель
+    - Май
+    - Июнь
+    - Июль
+    - Август
+    - Сентябрь
+    - Октябрь
+    - Ноябрь
+    - Декабрь
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: болжолу менен %{count} саат
+        other: болжолу менен %{count} саат
+      about_x_months:
+        one: болжолу менен %{count} ай
+        other: болжолу менен %{count} ай
+      about_x_years:
+        one: болжолу менен %{count} жыл
+        other: болжолу менен %{count} жыл
+      almost_x_years:
+        one: "%{count} жылдай"
+        other: "%{count} жылдай"
+      half_a_minute: жарым мүнөт
+      less_than_x_minutes:
+        one: бир мүнөттөн аз
+        other: "%{count} мүнөттөн аз"
+      less_than_x_seconds:
+        one: "%{count} секунддан аз"
+        other: "%{count} секунддан аз"
+      over_x_years:
+        one: "%{count} жылдан кийин"
+        other: "%{count} жылдан кийин"
+      x_days:
+        one: "%{count} күн"
+        other: "%{count} күн"
+      x_minutes:
+        one: "%{count} мүнөт"
+        other: "%{count} мүнөт"
+      x_months:
+        one: "%{count} ай"
+        other: "%{count} ай"
+      x_seconds:
+        one: "%{count} секунд"
+        other: "%{count} секунд"
+      x_years:
+        one: "%{count} жыл"
+        other: "%{count} жыл"
+    prompts:
+      day: Күн
+      hour: Саат
+      minute: Мүнөт
+      month: Ай
+      second: Секунд
+      year: Жыл
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: кабыл алынышы керек
+      blank: бош болбошу керек
+      confirmation: "%{attribute} окшошпойт"
+      empty: бош болбошу керек
+      equal_to: "%{count} барабар болушу керек"
+      even: жуп болушу керек
+      exclusion: сакталган
+      greater_than: "%{count} чоңураак болушу керек"
+      greater_than_or_equal_to: "%{count} чоңураак же барабар болушу керек"
+      in: "%{count} болушу керек"
+      inclusion: тизмеге кошулбайт
+      invalid: жараксыз
+      less_than: "%{count} аз болушу керек"
+      less_than_or_equal_to: "%{count} азыраак же барабар болушу керек"
+      model_invalid: "Ырасталбай койду: %{errors}"
+      not_a_number: бул номер эмес
+      not_an_integer: бүтүн сан болушу керек
+      odd: так болушу керек
+      other_than: "%{count} башка болушу керек"
+      password_too_long: өтө узун
+      present: бош болушу керек
+      required: бар болушу керек
+      taken: эчак алынган
+      too_long:
+        one: өтө узун (максимум %{count} белги)
+        other: өтө узун (максимум %{count} белги)
+      too_short:
+        one: өтө кыска (минимум %{count} белги)
+        other: өтө кыска (минимум %{count} белги)
+      wrong_length:
+        one: узундугу туура эмес (%{count} белги болушу керек)
+        other: узундугу туура эмес (%{count} белги болушу керек)
+    template:
+      body: Төмөнкү талаалар менен көйгөйлөр бар:
+      header:
+        one: "%{count} ката бул %{model} моделинин сакталуусуна тыюу салды"
+        other: "%{count} ката бул %{model} моделинин сакталуусуна тыюу салды"
+  helpers:
+    select:
+      prompt: Тандаңыз
+    submit:
+      create: "%{model} түзүңүз"
+      submit: "%{model} сактаңыз"
+      update: "%{model} жаңыртыңыз"
+  number:
+    currency:
+      format:
+        delimiter: " "
+        format: "%n %u"
+        precision: 2
+        separator: ","
+        significant: false
+        strip_insignificant_zeros: false
+        unit: "сом"
+    human:
+      decimal_units:
+        format: "%n %u"
+        units:
+          billion: Милиард
+          million: Миллион
+          quadrillion: Квадрилион
+          thousand: Миң
+          trillion: Триллион
+          unit: ''
+      format:
+        delimiter: " "
+        precision: 3
+        separator: ","
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: Байт
+            other: Байттар
+          eb: ЕБ
+          gb: ГБ
+          kb: КБ
+          mb: МБ
+          pb: ПБ
+          tb: ТБ
+          zb: ЗБ
+    percentage:
+      format:
+        delimiter: " "
+        format: "%n%"
+        separator: ","
+    precision:
+      format:
+        delimiter: " "
+        separator: ","
+  support:
+    array:
+      last_word_connector: ", жана "
+      two_words_connector: жана 
+      words_connector: ", "
+  time:
+    am: т.ч.
+    formats:
+      default: "%a, %d-%b %Y, %H:%M:%S %z"
+      long: "%d-%B %Y, %H:%M"
+      short: "%d-%b, %H:%M"
+    pm: т.к.
