@@ -1,18 +1,17 @@
----
 ky:
   activerecord:
     errors:
       messages:
         record_invalid: "Ырасталбай койду: %{errors}"
         restrict_dependent_destroy:
-          has_one: "Жазууну жок кылуу мүмкүн эмес, анткени көз каранды %{record} бар"
           has_many: "Жазууну жок кылуу мүмкүн эмес, анткени көз каранды %{record} бар"
+          has_one: "Жазууну жок кылуу мүмкүн эмес, анткени көз каранды %{record} бар"
   date:
-    abbr_day_names: 
+    abbr_day_names:
     - Жш
     - Дш
     - Шш
-    - Шр 
+    - Шр
     - Бш
     - Жм
     - Иш
@@ -62,7 +61,7 @@ ky:
     - :year
   datetime:
     distance_in_words:
-      about_x_hours: 
+      about_x_hours:
         one: болжолу менен %{count} саат
         other: болжолу менен %{count} саат
       about_x_months:
@@ -75,36 +74,36 @@ ky:
         one: "%{count} жылдай"
         other: "%{count} жылдай"
       half_a_minute: жарым мүнөт
-      less_than_x_seconds:
-        one: "%{count} секунддан аз"
-        other: "%{count} секунддан аз"
       less_than_x_minutes:
         one: бир мүнөттөн аз
         other: "%{count} мүнөттөн аз"
+      less_than_x_seconds:
+        one: "%{count} секунддан аз"
+        other: "%{count} секунддан аз"
       over_x_years:
         one: "%{count} жылдан кийин"
         other: "%{count} жылдан кийин"
-      x_seconds:
-        one: "%{count} секунд"
-        other: "%{count} секунд"
-      x_minutes:
-        one: "%{count} мүнөт"
-        other: "%{count} мүнөт"
       x_days:
         one: "%{count} күн"
         other: "%{count} күн"
+      x_minutes:
+        one: "%{count} мүнөт"
+        other: "%{count} мүнөт"
       x_months:
         one: "%{count} ай"
         other: "%{count} ай"
+      x_seconds:
+        one: "%{count} секунд"
+        other: "%{count} секунд"
       x_years:
         one: "%{count} жыл"
         other: "%{count} жыл"
     prompts:
-      second: Секунд
-      minute: Мүнөт
-      hour: Саат
       day: Күн
+      hour: Саат
+      minute: Мүнөт
       month: Ай
+      second: Секунд
       year: Жыл
   errors:
     format: "%{attribute} %{message}"
@@ -166,7 +165,7 @@ ky:
     human:
       decimal_units:
         format: "%n %u"
-        units: 
+        units:
           billion: Милиард
           million: Миллион
           quadrillion: Квадрилион
@@ -195,8 +194,8 @@ ky:
     percentage:
       format:
         delimiter: " "
-        separator: ","
         format: "%n%"
+        separator: ","
     precision:
       format:
         delimiter: " "
