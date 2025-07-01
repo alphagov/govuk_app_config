@@ -1,3 +1,7 @@
+# 9.17.13
+
+* Fix a syntax error in ky translations
+
 # 9.17.12
 
 * Update dependencies
