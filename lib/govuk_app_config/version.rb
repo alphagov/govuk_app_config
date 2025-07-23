@@ -1,3 +1,3 @@
 module GovukAppConfig
-  VERSION = "9.17.16".freeze
+  VERSION = "9.17.17".freeze
 end
