@@ -1,9 +1,14 @@
+# 9.18.0
+
+* Add `GovukEnvironment.current` feature
+
 # 9.17.17
 
 * Update dependencies
 
 # 9.17.16
 
+* Update dependencies
 
 # 9.17.15
 
