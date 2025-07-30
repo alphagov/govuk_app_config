@@ -192,6 +192,15 @@ The translations can be enabled in the frontend application by creating a file a
 GovukI18n.configure
 ```
 
+## Environment
+
+This gem provides a canonical way of querying the current environment as a string:
+
+```ruby
+GovukEnvironment.current
+# returns "production", "staging", "integration" or "development"
+```
+
 ## Time zone
 
 This gem sets `config.time_zone` to `"London"` by default.
