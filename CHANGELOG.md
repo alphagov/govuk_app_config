@@ -1,3 +1,7 @@
+# 9.18.1
+
+* Properly export `GovukEnvironment.current` feature
+
 # 9.18.0
 
 * Add `GovukEnvironment.current` feature
