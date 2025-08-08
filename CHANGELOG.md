@@ -1,3 +1,7 @@
+# 9.19.0
+
+* Add `GovukHealthcheck.EmergencyBannerRedis` healthcheck
+
 # 9.18.1
 
 * Properly export `GovukEnvironment.current` feature

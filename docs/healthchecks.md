@@ -29,7 +29,9 @@ Built-in checks you can use include:
 
 - `GovukHealthcheck::RailsCache` - checks that the Rails cache store, such as Memcached, is acessible by writing and reading back a cache entry called "healthcheck-cache".
 
-- `GovukHealthcheck::Redis` - checks that the app can connect to Redis by writing and reading back a cache entry called "healthcheck-cache".
+- `GovukHealthcheck::Redis` - checks that the app can connect to Redis by writing and reading back a cache entry called "healthcheck-&lt;random_hex>".
+
+- `GovukHealthcheck::EmergencyBannerRedis` - checks that the app can connect to the Redis instance which has the emergency banner config by writing and reading back a cache entry called "healthcheck-emergency-banner-&lt;random_hex>".
 
 - `GovukHealthcheck::Mongoid` - checks that the app has a connection to its Mongo database via Mongoid.
 
