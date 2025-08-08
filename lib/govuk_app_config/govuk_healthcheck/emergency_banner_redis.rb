@@ -9,7 +9,7 @@ module GovukHealthcheck
     def status
       client = ::Redis.new(
         url: ENV["EMERGENCY_BANNER_REDIS_URL"],
-        reconnect_attempts: [2, 5, 15], # Purposefully short since this is a healthcheck
+        reconnect_attempts: [0, 0.25], # Purposefully short since this is a healthcheck
       )
 
       key = "healthcheck-emergency-banner-#{SecureRandom.hex}"
