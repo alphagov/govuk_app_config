@@ -1,0 +1,207 @@
+ku:
+  date:
+    abbr_day_names:
+    - ሰንበት
+    - ሶኒ
+    - ሰሉስ
+    - ረቡዕ
+    - ሓሙስ
+    - ዓርቢ
+    - ቀዳም
+    abbr_month_names:
+    - 
+    - ጥሪ
+    - ለካቲት
+    - መጋቢት
+    - ሚያዝያ
+    - ግንቦት
+    - ሰነ
+    - ሓምለ
+    - ነሓሰ
+    - መስከረም
+    - ጥቅምቲ
+    - ሕዳር
+    - ታሕሳስ
+    day_names:
+    - ሰንበት
+    - ሶኒ
+    - ሰሉስ
+    - ረቡዕ
+    - ሓሙስ
+    - ዓርቢ
+    - ቀዳም
+    formats:
+      default: "%m-%d-%Y"
+      long: "%B %e %Y"
+      short: "%b %e"
+    month_names:
+    -
+    - ጥሪ
+    - ለካቲት
+    - መጋቢት
+    - ሚያዝያ
+    - ግንቦት
+    - ሰነ
+    - ሓምለ
+    - ነሓሰ
+    - መስከረም
+    - ጥቅምቲ
+    - ሕዳር
+    - ታሕሳስ
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: 
+        other:
+      about_x_months:
+        one: 
+        other: 
+      about_x_years:
+        one: 
+        other:
+      almost_x_years:
+        one: 
+        other: 
+      half_a_minute:
+      less_than_x_minutes:
+        one: ትሕቲ ሓደ ደቒቕ
+        other: "ትሕቲ %{count} ደቓይቕ"
+      less_than_x_seconds:
+        one: "ትሕቲ %{count} ካልኢት"
+        other: "ትሕቲ %{count} ካልኢት"
+      over_x_years:
+        one: "ልዕሊ %{count} ዓመት"
+        other: "ልዕሊ %{count} ዓመታት"
+      x_days:
+        one: "%{count} መዓልቲ"
+        other: "%{count} መዓልታት"
+      x_minutes:
+        one: "%{count} ደቒቕ"
+        other: "%{count} ደቓይቕ"
+      x_months:
+        one: "%{count} ወርሒ"
+        other: "%{count} ኣዋርሕ"
+      x_seconds:
+        one: "%{count} ካልኢት"
+        other: "%{count} ካልኢት"
+      x_years:
+        one: "%{count} ዓመት"
+        other: "%{count} ዓመታት"
+    prompts:
+      day: መዓልቲ
+      hour: ሰዓት
+      minute: ደቒቕ
+      month: ወርሒ
+      second: ካልኢት
+      year: ዓመት
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: 
+      blank: 
+      confirmation: 
+      empty: 
+      equal_to: 
+      even:
+      exclusion: 
+      greater_than: 
+      greater_than_or_equal_to:
+      in: 
+      inclusion: 
+      invalid:
+      less_than: 
+      less_than_or_equal_to:
+      model_invalid: 
+      not_a_number: 
+      not_an_integer:
+      odd: 
+      other_than:
+      password_too_long:
+      present: 
+      required:
+      taken:
+      too_long:
+        one:
+        other:
+      too_short:
+        one:
+        other:
+      wrong_length:
+        one:
+        other:
+    template:
+      body:
+      header:
+        one: 
+        other:
+  helpers:
+    select:
+      prompt: 
+    submit:
+      create:
+      submit: 
+      update: 
+  number:
+    currency:
+      format:
+        delimiter:
+        format:
+        precision:
+        separator:
+        significant: 
+        strip_insignificant_zeros: 
+        unit:
+    human:
+      decimal_units:
+        format:
+        units:
+          billion: 
+          million: 
+          quadrillion: 
+          thousand: 
+          trillion: 
+          unit: 
+      format:
+        delimiter:
+        precision:
+        separator:
+        significant:
+        strip_insignificant_zeros:
+      storage_units:
+        format:
+        units:
+          byte:
+            one:
+            other:
+          eb:
+          gb:
+          kb:
+          mb:
+          pb:
+          tb:
+          zb:
+    percentage:
+      format:
+        delimiter:
+        format:
+        separator:
+    precision:
+      format:
+        delimiter:
+        separator:
+  support:
+    array:
+      last_word_connector: ን 
+      two_words_connector: ን
+      words_connector: ፡
+  time:
+    am: ቅድሚ ቀትሪ
+    formats:
+      default: "%a %d %b %Y %H:%M:%S %Z"
+      long: "%B %d %Y %H:%M"
+      short: "%d %b %H:%M"
+    pm: ድሕሪ ቀትሪ
