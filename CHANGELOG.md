@@ -1,3 +1,7 @@
+# 9.19.2
+
+* Update dependencies
+
 # 9.19.1
 
 * Add translations for Kurdish Sorani and Tigrinyan
