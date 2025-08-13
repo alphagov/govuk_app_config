@@ -1,3 +1,7 @@
+# 9.19.1
+
+* Add translations for Kurdish Sorani and Tigrinyan
+
 # 9.19.0
 
 * Add `GovukHealthcheck.EmergencyBannerRedis` healthcheck

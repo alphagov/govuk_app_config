@@ -1,0 +1,207 @@
+ku:
+  date:
+    abbr_day_names:
+    - یەک شەممە
+    - دووشەممە
+    - سێ شەممە
+    - چوارشەممە
+    - پێنج شەممە
+    - هەینی
+    - شەممە
+    abbr_month_names:
+    - 
+    - کانوونی دووەم 
+    - شوبات
+    - ئازار
+    - نیسان
+    - ئایار
+    - حوزەیران
+    - تەمموز
+    - ئاب
+    - ئەیلول
+    - تشرینی یەکەم
+    - تشرینی دووەم 
+    - کانوونی یەکەم
+    day_names:
+    - یەک شەممە
+    - دووشەممە
+    - سێ شەممە
+    - چوارشەممە
+    - پێنج شەممە
+    - هەینی
+    - شەممە
+    formats:
+      default: "%d-%m-%Y"
+      long: "%Y %B %e"
+      short: "%b %e"
+    month_names:
+    - 
+    - کانوونی دووەم 
+    - شوبات
+    - ئازار
+    - نیسان
+    - ئایار
+    - حوزەیران
+    - تەمموز
+    - ئاب
+    - ئەیلول
+    - تشرینی یەکەم
+    - تشرینی دووەم 
+    - کانوونی یەکەم
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: 
+        other:
+      about_x_months:
+        one: 
+        other: 
+      about_x_years:
+        one: 
+        other:
+      almost_x_years:
+        one: 
+        other: 
+      half_a_minute:
+      less_than_x_minutes:
+        one: کەمتر لە یەک خوولەک
+        other: "کەمتر لە {count}% خوولەک"
+      less_than_x_seconds:
+        one: "کەمتر لە {count}% چرکە"
+        other: "کەمتر لە {count}% چرکە"
+      over_x_years:
+        one: "لەسەروو {count}% ساڵ"
+        other: "لەسەروو {count}% ساڵ"
+      x_days:
+        one: "%{count} ڕۆژ"
+        other: "ڕۆژ {count}%"
+      x_minutes:
+        one: "%{count} خوولەک"
+        other: "%{count} خوولەک"
+      x_months:
+        one: "مانگ {count}%"
+        other: "مانگ {count}%"
+      x_seconds:
+        one: "چرکە {count}%"
+        other: "چرکە {count}%"
+      x_years:
+        one: "ساڵ {count}%"
+        other: "ساڵ {count}%"
+    prompts:
+      day: ڕۆژ
+      hour: کاتژمێر
+      minute: خوولەک
+      month: مانگ
+      second: چرکە
+      year: ساڵ
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: 
+      blank: 
+      confirmation: 
+      empty: 
+      equal_to: 
+      even:
+      exclusion: 
+      greater_than: 
+      greater_than_or_equal_to:
+      in: 
+      inclusion: 
+      invalid:
+      less_than: 
+      less_than_or_equal_to:
+      model_invalid: 
+      not_a_number: 
+      not_an_integer:
+      odd: 
+      other_than:
+      password_too_long:
+      present: 
+      required:
+      taken:
+      too_long:
+        one:
+        other:
+      too_short:
+        one:
+        other:
+      wrong_length:
+        one:
+        other:
+    template:
+      body:
+      header:
+        one: 
+        other:
+  helpers:
+    select:
+      prompt: 
+    submit:
+      create:
+      submit: 
+      update: 
+  number:
+    currency:
+      format:
+        delimiter:
+        format:
+        precision:
+        separator:
+        significant: 
+        strip_insignificant_zeros: 
+        unit:
+    human:
+      decimal_units:
+        format:
+        units:
+          billion: 
+          million: 
+          quadrillion: 
+          thousand: 
+          trillion: 
+          unit: 
+      format:
+        delimiter:
+        precision:
+        separator:
+        significant:
+        strip_insignificant_zeros:
+      storage_units:
+        format:
+        units:
+          byte:
+            one:
+            other:
+          eb:
+          gb:
+          kb:
+          mb:
+          pb:
+          tb:
+          zb:
+    percentage:
+      format:
+        delimiter:
+        format:
+        separator:
+    precision:
+      format:
+        delimiter:
+        separator:
+  support:
+    array:
+      last_word_connector: و
+      two_words_connector: و
+      words_connector: ،
+  time:
+    am: بەیانی
+    formats:
+      default: "%a %d %b %Y %H:%M:%S %Z"
+      long: "%d %B %Y %H:%M"
+      short: "%d %b %H:%M"
+    pm: دوانیوەڕۆ
