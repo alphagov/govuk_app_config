@@ -1,3 +1,7 @@
+# 9.19.1
+
+* Update dependencies
+
 # 9.19.0
 
 * Add `GovukHealthcheck.EmergencyBannerRedis` healthcheck
