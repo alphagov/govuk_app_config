@@ -1,3 +1,7 @@
+# 9.19.3
+
+* Update dependencies
+
 # 9.19.2
 
 * Update dependencies
