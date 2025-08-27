@@ -5,30 +5,6 @@ require "prometheus_exporter/middleware"
 
 module GovukPrometheusExporter
   class RailsMiddleware < PrometheusExporter::Middleware
-    #
-    # See https://github.com/discourse/prometheus_exporter/pull/293
-    #
-    # default_labels can be removed and fall through to the base method if
-    # that PR is merged / released
-    #
-    def default_labels(env, _result)
-      controller_instance = env["action_controller.instance"]
-      action = controller = nil
-      if controller_instance
-        action = controller_instance.action_name
-        controller = controller_instance.controller_name
-      elsif (cors = env["rack.cors"]) && cors.respond_to?(:preflight?) && cors.preflight?
-        # if the Rack CORS Middleware identifies the request as a preflight request,
-        # the stack doesn't get to the point where controllers/actions are defined
-        action = "preflight"
-        controller = "preflight"
-      end
-      {
-        action: action || "other",
-        controller: controller || "other",
-      }
-    end
-
     def custom_labels(env)
       env.fetch("govuk.prometheus_labels", {})
     end

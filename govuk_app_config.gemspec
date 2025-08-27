@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/alphagov/govuk_app_config"
   spec.license       = "MIT"
 
-  spec.required_ruby_version = ">= 3.1.4"
+  spec.required_ruby_version = ">= 3.2.0"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "exe"
@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "opentelemetry-instrumentation-all", ">= 0.39.1", "< 0.81.0"
   spec.add_dependency "opentelemetry-sdk", "~> 1.2"
   spec.add_dependency "plek", ">= 4", "< 6"
-  spec.add_dependency "prometheus_exporter", "~> 2.0"
+  spec.add_dependency "prometheus_exporter", "~> 2.3"
   spec.add_dependency "puma", ">= 5.6", "< 7.0"
   spec.add_dependency "rack-proxy", "~> 0.7"
   spec.add_dependency "sentry-rails", "~> 5.3"

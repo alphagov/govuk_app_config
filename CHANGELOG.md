@@ -1,3 +1,9 @@
+# 9.20.0
+
+* Update prometheus_exporter and remove patched middleware
+* BREAKING: drop support for ruby 3.1
+* Add support for ruby 3.4
+
 # 9.19.3
 
 * Update dependencies
