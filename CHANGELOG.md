@@ -1,3 +1,7 @@
+# 9.20.1
+
+* Update dependencies
+
 # 9.20.0
 
 * Update prometheus_exporter and remove patched middleware
