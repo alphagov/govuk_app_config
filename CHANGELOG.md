@@ -1,3 +1,7 @@
+# 9.20.2
+
+* Add support for Puma 7
+
 # 9.20.1
 
 * Update dependencies
