@@ -1,5 +1,20 @@
 require "plek"
 
+# Workaround for Logstasher initializer conflict under Rails 8.1
+begin
+  require "logstasher/railtie"
+
+  if defined?(LogStasher::Railtie)
+    # Remove duplicate initializers that cause cyclic dependency
+    LogStasher::Railtie.initializers.delete_if { |i| i.name == :logstasher }
+
+    # Replace with a single clean initializer
+    LogStasher::Railtie.initializer(:logstasher_fixed, after: :load_config_initializers) {}
+  end
+rescue LoadError, NameError
+  # Skip if Logstasher not present
+end
+
 module GovukAppConfig
   class Railtie < Rails::Railtie
     initializer "govuk_app_config.configure_govuk_proxy" do |app|
