@@ -1,3 +1,7 @@
+# 9.20.7
+
+* Implemented workaround for Logstasher initializer conflict under Rails 8.1
+
 # 9.20.6
 
 * Update dependencies
