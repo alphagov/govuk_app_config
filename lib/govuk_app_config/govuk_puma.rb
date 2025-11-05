@@ -1,3 +1,5 @@
+require "prometheus_exporter/instrumentation"
+
 module GovukPuma
   def self.configure_rails(config)
     config.port ENV.fetch("PORT", 3000)
@@ -33,6 +35,13 @@ module GovukPuma
       next unless ENV["GOVUK_APP_ROOT"]
 
       ENV["BUNDLE_GEMFILE"] = "#{ENV['GOVUK_APP_ROOT']}/Gemfile"
+    end
+
+    config.after_worker_boot do
+      unless PrometheusExporter::Instrumentation::Puma.started?
+        PrometheusExporter::Instrumentation::Puma.start
+      end
+      PrometheusExporter::Instrumentation::Process.start(type: "puma_worker")
     end
 
     # Allow puma to be restarted by `rails restart` command.
