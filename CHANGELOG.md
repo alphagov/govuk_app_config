@@ -1,3 +1,7 @@
+# 9.21.0
+
+* Add Prometheus monitoring of Puma processes
+
 # 9.20.7
 
 * Implemented workaround for Logstasher initializer conflict under Rails 8.1
