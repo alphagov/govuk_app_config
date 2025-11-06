@@ -1,3 +1,7 @@
+# 9.22.0
+
+* Add extra google analytics domains to content security policy
+
 # 9.21.0
 
 * Add Prometheus monitoring of Puma processes
