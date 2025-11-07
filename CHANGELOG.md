@@ -1,3 +1,7 @@
+# 9.22.1
+
+Remove logstasher workaround introduced in 9.20.7
+
 # 9.22.0
 
 * Add extra google analytics domains to content security policy
