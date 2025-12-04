@@ -1,3 +1,7 @@
+# 9.22.2
+
+* Update dependencies
+
 # 9.22.1
 
 Remove logstasher workaround introduced in 9.20.7
