@@ -1,3 +1,7 @@
+# 9.22.4
+
+* Update dependencies
+
 # 9.22.3
 
 * Pin dependency on connection_pool
