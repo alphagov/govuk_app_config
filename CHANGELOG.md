@@ -1,3 +1,7 @@
+# 9.23.0
+
+* Remove StaticProxy middleware now that Static is no longer in use
+
 # 9.22.3
 
 * Pin dependency on connection_pool
