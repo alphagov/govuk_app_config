@@ -1,3 +1,7 @@
+# 9.23.1
+
+* Restore compatibility with Rails 8.1+ by fixing the boot cycle and ensuring structured logging is enabled. This allows Rails 8.1 apps to upgrade to the latest govuk_app_config.
+
 # 9.23.0
 
 * Remove StaticProxy middleware now that Static is no longer in use
