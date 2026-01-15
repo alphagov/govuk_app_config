@@ -1,3 +1,39 @@
+# 9.23.1
+
+* Restore compatibility with Rails 8.1+ by fixing the boot cycle and ensuring structured logging is enabled. This allows Rails 8.1 apps to upgrade to the latest govuk_app_config.
+
+# 9.23.0
+
+* Remove StaticProxy middleware now that Static is no longer in use
+
+# 9.22.3
+
+* Pin dependency on connection_pool
+
+# 9.22.2
+
+* Update dependencies
+
+# 9.22.1
+
+Remove logstasher workaround introduced in 9.20.7
+
+# 9.22.0
+
+* Add extra google analytics domains to content security policy
+
+# 9.21.0
+
+* Add Prometheus monitoring of Puma processes
+
+# 9.20.7
+
+* Implemented workaround for Logstasher initializer conflict under Rails 8.1
+
+# 9.20.6
+
+* Update dependencies
+
 # 9.20.5
 
 * Update dependencies

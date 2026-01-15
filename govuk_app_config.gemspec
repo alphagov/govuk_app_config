@@ -20,15 +20,16 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = %w[lib]
 
+  spec.add_dependency "connection_pool", "< 3"
   spec.add_dependency "logstasher", "~> 2.1"
   spec.add_dependency "opentelemetry-exporter-otlp", ">= 0.25", "< 0.32"
-  spec.add_dependency "opentelemetry-instrumentation-all", ">= 0.39.1", "< 0.86.0"
+  spec.add_dependency "opentelemetry-instrumentation-all", ">= 0.39.1", "< 0.90.0"
   spec.add_dependency "opentelemetry-sdk", "~> 1.2"
   spec.add_dependency "plek", ">= 4", "< 6"
   spec.add_dependency "prometheus_exporter", "~> 2.3"
   spec.add_dependency "puma", ">= 5.6", "< 8.0"
   spec.add_dependency "rack-proxy", "~> 0.7"
-  spec.add_dependency "sentry-rails", "~> 5.3"
+  spec.add_dependency "sentry-rails", ">= 5.3", "< 7.0"
   spec.add_dependency "sentry-ruby", ">= 5.3", "< 7.0"
   spec.add_dependency "statsd-ruby", "~> 1.5"
 
