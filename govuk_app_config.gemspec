@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "puma", ">= 5.6", "< 8.0"
   spec.add_dependency "rack-proxy", "~> 0.7"
   spec.add_dependency "sentry-rails", ">= 5.3", "< 7.0"
-  spec.add_dependency "sentry-ruby", "~> 5.3"
+  spec.add_dependency "sentry-ruby", ">= 5.3", "< 7.0"
   spec.add_dependency "statsd-ruby", "~> 1.5"
 
   spec.add_development_dependency "byebug"
