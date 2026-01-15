@@ -1,3 +1,7 @@
+# 9.23.1
+
+* Update dependencies
+
 # 9.23.0
 
 * Remove StaticProxy middleware now that Static is no longer in use
