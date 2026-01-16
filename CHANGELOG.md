@@ -1,3 +1,7 @@
+# 9.23.3
+
+* Fix crash on boot for Rails 8.1 apps by delaying `GovukJsonLogging` configuration to `after_initialize`. This ensures it runs after Logstasher is initialized.
+
 # 9.23.2
 
 * Allow sentry-ruby 6.x

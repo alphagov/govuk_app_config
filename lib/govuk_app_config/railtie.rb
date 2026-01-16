@@ -31,11 +31,8 @@ module GovukAppConfig
       GovukTimezone.configure(app.config)
     end
 
-    config.before_initialize do
-      GovukJsonLogging.configure if ENV["GOVUK_RAILS_JSON_LOGGING"]
-    end
-
     config.after_initialize do
+      GovukJsonLogging.configure if ENV["GOVUK_RAILS_JSON_LOGGING"]
       GovukError.configure unless GovukError.is_configured?
     end
   end
