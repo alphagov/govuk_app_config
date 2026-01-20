@@ -44,8 +44,6 @@ module GovukError
         "Mongoid::Errors::DocumentNotFound",
         "Puma::HttpParserError",
         "Sinatra::NotFound",
-        "Slimmer::IntermittentRetrievalError",
-        "Slimmer::SourceWrapperNotFoundError",
         "Sidekiq::JobRetry::Skip",
         "Sanitiser::Strategy::SanitisingError",
         "SignalException",

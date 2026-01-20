@@ -1,3 +1,8 @@
+# 9.23.4
+
+* Remove Slimmer::IntermittentRetrievalError and Slimmer::SourceWrapperNotFoundError from excluded exceptions now that slimmer is retired.
+
+
 # 9.23.3
 
 * Fix crash on boot for Rails 8.1 apps by delaying `GovukJsonLogging` configuration to `after_initialize`. This ensures it runs after Logstasher is initialized.
