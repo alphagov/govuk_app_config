@@ -1,3 +1,7 @@
+# 9.23.5
+
+* Update dependencies
+
 # 9.23.4
 
 * Remove Slimmer::IntermittentRetrievalError and Slimmer::SourceWrapperNotFoundError from excluded exceptions now that slimmer is retired.
