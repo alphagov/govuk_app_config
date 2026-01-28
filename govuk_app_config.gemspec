@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = %w[lib]
 
   spec.add_dependency "connection_pool", "< 3"
-  spec.add_dependency "logstasher", "~> 2.1"
+  spec.add_dependency "logstasher", ">= 2.1", "< 4.0"
   spec.add_dependency "opentelemetry-exporter-otlp", ">= 0.25", "< 0.32"
   spec.add_dependency "opentelemetry-instrumentation-all", ">= 0.39.1", "< 0.91.0"
   spec.add_dependency "opentelemetry-sdk", "~> 1.2"
