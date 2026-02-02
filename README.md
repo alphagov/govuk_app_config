@@ -215,6 +215,30 @@ Note that we've introduced a new config field (`govuk_time_zone`) here, because
 it's otherwise not possible to distinguish between an app using UTC as the
 default and an app explicitly asking for UTC.
 
+## GraphQL traffic rates
+
+Provides a canonical way for frontend apps to configure GraphQL traffic rates for relevant content schemas. The rates are set in govuk-helm_chart as environment variables. It sets the following application configuration:
+
+* `Rails.application.config.graphql_allowed_schemas` - list of schema names that are eligible to be served via GraphQL.
+* `Rails.application.config.graphql_traffic_rates` - hash mapping schema names to traffic percentages (as floats between 0.0 and 1.0).
+
+Traffic rates for individual schemas are set in **govuk-helm-charts** as environment variables, with the following format `GRAPHQL_RATE_<SCHEMA_NAME>`.
+
+### Usage
+
+To enable this functionality, create a file `config/initializers/govuk_graphql_traffic_rates.rb` in the app containing:
+
+
+```ruby
+require "govuk_app_config/govuk_graphql_traffic_rates"
+GovukGraphqlTrafficRates.configure
+```
+
+## 
+for both live and draft in all relevant env
+        - name: PLEK_SERVICE_PUBLISHING_API_URI
+          value: "http://publishing-api-read-replica"
+
 ## License
 
 [MIT License](LICENCE)
