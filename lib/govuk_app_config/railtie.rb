@@ -7,13 +7,10 @@ begin
   # Only apply this workaround for Rails 8.1+ where the boot cycle issue exists.
   # This prevents any potential regressions for apps on older Rails versions.
   if defined?(LogStasher::Railtie) && Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("8.1")
-    # Remove duplicate initializers that cause cyclic dependency
+    # Remove the default initializer to fix a cyclic dependency boot crash on Rails 8.1.
+    # LogStasher.setup is instead called explicitly in GovukJsonLogging.configure (after_initialize),
+    # once logstasher.enabled has been set to true.
     LogStasher::Railtie.initializers.delete_if { |i| i.name == :logstasher }
-
-    # Replace with a single clean initializer that actually sets up LogStasher
-    LogStasher::Railtie.initializer(:logstasher_govuk_fix, after: :load_config_initializers) do |app|
-      LogStasher.setup(app) if app.config.logstasher.enabled
-    end
   end
 rescue LoadError, NameError
   # Skip if Logstasher not present
