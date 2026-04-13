@@ -21,8 +21,10 @@ module GovukContentSecurityPolicy
                                 www.googletagmanager.com
                                 www.region1.google-analytics.com
                                 region1.google-analytics.com
-                                region1.analytics.google.com
-                                www.google.co.uk].freeze
+                                www.google.co.uk
+                                analytics.google.com
+                                *.analytics.google.com
+                                www.google.com].freeze
 
   GOOGLE_STATIC_DOMAINS = %w[www.gstatic.com].freeze
 

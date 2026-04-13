@@ -1,3 +1,7 @@
+# 9.23.8
+
+* Fix Google Analytics CSP errors
+
 # 9.23.7
 
 * Remove single consent domains from connect_src CSP configuration
