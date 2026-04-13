@@ -1,3 +1,7 @@
+# 9.23.8
+
+* Update dependencies
+
 # 9.23.7
 
 * Remove single consent domains from connect_src CSP configuration
