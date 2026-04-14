@@ -1,3 +1,7 @@
+# 9.23.9
+
+* Update dependencies
+
 # 9.23.8
 
 * Fix Google Analytics CSP errors
