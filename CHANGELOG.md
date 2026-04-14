@@ -1,3 +1,7 @@
+# 9.23.9
+
+* Fix Logstasher JSON logger initialisation problems in Rails apps
+
 # 9.23.8
 
 * Fix Google Analytics CSP errors

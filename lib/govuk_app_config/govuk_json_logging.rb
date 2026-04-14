@@ -95,5 +95,12 @@ module GovukJsonLogging
       # the responses it gets, so direct this to the logstasher logger.
       GdsApi::Base.default_options[:logger] = Rails.application.config.logstasher.logger
     end
+
+    # On Rails 8.1+, the default LogStasher initializer is removed to prevent a boot
+    # crash (see railtie.rb). We call setup explicitly here, after all config is applied.
+    if defined?(LogStasher) && Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("8.1")
+      LogStasher.setup_before(Rails.application.config.logstasher)
+      LogStasher.setup(Rails.application.config.logstasher)
+    end
   end
 end
