@@ -1,3 +1,6 @@
+# 9.23.10
+* Set dependency cooldowns in Dependabot
+
 # 9.23.9
 
 * Fix Logstasher JSON logger initialisation problems in Rails apps
