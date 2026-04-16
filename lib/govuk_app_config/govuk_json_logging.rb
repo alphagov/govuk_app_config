@@ -56,6 +56,7 @@ module GovukJsonLogging
       # Mirrors Nginx request logging, e.g. GET /path/here HTTP/1.1
       fields[:request] = "#{request.request_method} #{request.fullpath} #{request.headers['SERVER_PROTOCOL']}"
 
+      fields[:request_uri] = request.fullpath
       fields[:govuk_request_id] = request.headers["GOVUK-Request-Id"]
       fields[:varnish_id] = request.headers["X-Varnish"]
       fields[:govuk_app_config] = GovukAppConfig::VERSION
