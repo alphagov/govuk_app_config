@@ -16,6 +16,10 @@ module GovukJsonLogging
   end
 
   def self.configure(&block)
+    return if @configured
+
+    @configured = true
+
     # Fixes the monkey patch from the logstasher gem to support Rails 7
     config = Rails.application.config.logstasher
     if (!config.controller_monkey_patch && config.controller_monkey_patch != false) || config.controller_monkey_patch == true

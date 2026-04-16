@@ -26,7 +26,10 @@ RSpec.describe GovukJsonLogging do
     end)
   end
 
-  after { Rails.application = nil }
+  after do
+    Rails.application = nil
+    GovukJsonLogging.instance_variable_set(:@configured, nil)
+  end
 
   # By storing origin stdout in a constant and redirect `$stdout` to a fake one,
   # We are able to inspect and test what is printed
@@ -53,6 +56,12 @@ RSpec.describe GovukJsonLogging do
   end
 
   describe ".configure" do
+    it "does not configure twice if called more than once" do
+      expect(Rails.application.config.logstasher).to receive(:enabled=).once.and_call_original
+      GovukJsonLogging.configure
+      GovukJsonLogging.configure
+    end
+
     it "enables logstasher" do
       Rails.application.config.logstasher.enabled = false
       expect { GovukJsonLogging.configure }
