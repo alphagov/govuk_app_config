@@ -20,7 +20,8 @@ module GovukAppConfig
   class Railtie < Rails::Railtie
     initializer "govuk_app_config.configure_open_telemetry" do |app|
       unless Rails.const_defined?(:Console)
-        GovukOpenTelemetry.configure(app.class.module_parent_name.underscore)
+        service_name = ENV["GOVUK_OTEL_SERVICE_NAME"] || app.class.module_parent_name.underscore
+        GovukOpenTelemetry.configure(service_name)
       end
     end
 
