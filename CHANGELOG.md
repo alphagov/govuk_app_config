@@ -1,4 +1,10 @@
+# 9.23.11
+
+* Fix dual boot of Logstasher configuration
+* Add request_uri to rails log fields
+
 # 9.23.10
+
 * Set dependency cooldowns in Dependabot
 
 # 9.23.9

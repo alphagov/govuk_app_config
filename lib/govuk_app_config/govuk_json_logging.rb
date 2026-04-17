@@ -16,6 +16,10 @@ module GovukJsonLogging
   end
 
   def self.configure(&block)
+    return if @configured
+
+    @configured = true
+
     # Fixes the monkey patch from the logstasher gem to support Rails 7
     config = Rails.application.config.logstasher
     if (!config.controller_monkey_patch && config.controller_monkey_patch != false) || config.controller_monkey_patch == true
@@ -52,6 +56,7 @@ module GovukJsonLogging
       # Mirrors Nginx request logging, e.g. GET /path/here HTTP/1.1
       fields[:request] = "#{request.request_method} #{request.fullpath} #{request.headers['SERVER_PROTOCOL']}"
 
+      fields[:request_uri] = request.fullpath
       fields[:govuk_request_id] = request.headers["GOVUK-Request-Id"]
       fields[:varnish_id] = request.headers["X-Varnish"]
       fields[:govuk_app_config] = GovukAppConfig::VERSION
