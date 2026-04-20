@@ -1,3 +1,7 @@
+# 9.24.0
+
+* Make OpenTelemetry service name configurable via environment variable `GOVUK_OTEL_SERVICE_NAME`
+
 # 9.23.11
 
 * Fix dual boot of Logstasher configuration
