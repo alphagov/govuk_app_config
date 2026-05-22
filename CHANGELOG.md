@@ -1,3 +1,7 @@
+# 9.24.1
+
+* Update dependencies
+
 # 9.24.0
 
 * Make OpenTelemetry service name configurable via environment variable `GOVUK_OTEL_SERVICE_NAME`
