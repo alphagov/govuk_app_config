@@ -43,6 +43,7 @@ module GovukError
         "GDS::SSO::PermissionDeniedError",
         "Mongoid::Errors::DocumentNotFound",
         "Puma::HttpParserError",
+        "Puma::HttpParserError501",
         "Sinatra::NotFound",
         "Sidekiq::JobRetry::Skip",
         "Sanitiser::Strategy::SanitisingError",
