@@ -1,3 +1,7 @@
+# 9.25.1
+
+* Update dependencies
+
 # 9.25.0
 
 * Add Puma::HttpParserError501 to error exceptions
