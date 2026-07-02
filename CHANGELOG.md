@@ -1,6 +1,7 @@
 # 9.25.2
 
-Pass Rails log level through to logstasher
+* Pass Rails log level through to logstasher
+* Update dependencies
 
 # 9.25.1
 
