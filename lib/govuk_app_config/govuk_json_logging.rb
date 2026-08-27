@@ -104,6 +104,10 @@ module GovukJsonLogging
     # On Rails 8.1+, the default LogStasher initializer is removed to prevent a boot
     # crash (see railtie.rb). We call setup explicitly here, after all config is applied.
     if defined?(LogStasher) && Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new("8.1")
+      # Without this line, logstasher setup falls back to WARN level. Instead,
+      # tell logstasher to use the same log level as Rails.
+      Rails.application.config.logstasher.log_level = Rails.logger.level
+
       LogStasher.setup_before(Rails.application.config.logstasher)
       LogStasher.setup(Rails.application.config.logstasher)
     end
