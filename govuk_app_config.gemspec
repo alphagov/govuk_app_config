@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "plek", ">= 4", "< 6"
   spec.add_dependency "prometheus_exporter", "~> 2.3"
   spec.add_dependency "puma", ">= 5.6", "< 9.0"
-  spec.add_dependency "rack-proxy", "~> 0.7"
+  spec.add_dependency "rack-proxy", ">= 0.7", "< 2.0"
   spec.add_dependency "sentry-rails", ">= 5.3", "< 7.0"
   spec.add_dependency "sentry-ruby", ">= 5.3", "< 7.0"
   spec.add_dependency "statsd-ruby", "~> 1.5"
