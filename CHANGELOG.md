@@ -1,3 +1,7 @@
+# 9.26.0
+
+* Add beacon.speedcurve.com to CSP's connect-src
+
 # 9.25.3
 
 * Update dependencies
