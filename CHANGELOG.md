@@ -1,3 +1,7 @@
+# 9.27.0
+
+* Allow sentry-ruby and sentry-rails 7.x
+
 # 9.26.0
 
 * Add beacon.speedcurve.com to CSP's connect-src
