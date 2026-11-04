@@ -1,3 +1,7 @@
+# 9.27.1
+
+* Update dependencies
+
 # 9.27.0
 
 * Allow sentry-ruby and sentry-rails 7.x
