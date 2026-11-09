@@ -1,3 +1,7 @@
+# 9.28
+
+Add rails translations for Mauritian Creole
+
 # 9.27.1
 
 * Update dependencies
