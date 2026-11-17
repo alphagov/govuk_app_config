@@ -1,0 +1,95 @@
+mfe:
+  date:
+    day_names:
+    - Dimans
+    - Lindi
+    - Mardi
+    - Merkredi
+    - Zedi
+    - Vandredi
+    - Samdi
+    abbr_day_names:
+    - Dim
+    - Lin
+    - Mar
+    - Mer
+    - Zed
+    - Van
+    - Sam
+    month_names:
+    - 
+    - Zanvie
+    - Fevriye
+    - Mars
+    - Avril
+    - Me
+    - Zien
+    - Zilye
+    - Out
+    - Septam
+    - Oktob
+    - Novam
+    - Desam
+    abbr_month_names:
+    - 
+    - Zan
+    - Fev
+    - Mar
+    - Avr
+    - Me
+    - Zien
+    - Zil
+    - Out
+    - Sep
+    - Okt
+    - Nov
+    - Des
+    formats:
+      default: "%m/%d/%Y"
+      long: "%d-%b-%Y"
+      short: "%b-%d"
+  datetime:
+    distance_in_words:
+      less_than_x_seconds:
+        one: Mwins ki %{count} segonn
+        other: Mwins ki %{count} segonn
+      less_than_x_minutes:
+        one: Mwins ki enn minit
+        other: Mwins ki %{count} minit
+      over_x_years:
+        one: Lor %{count} an
+        other: Lor %{count} an
+      x_seconds:
+        one: "%{count} segonn"
+        other: "%{count} segonn"
+      x_minutes:
+        one: "%{count} minit"
+        other: "%{count} minit"
+      x_days:
+        one: "%{count} zour"
+        other: "%{count} zour"
+      x_months:
+        one: "%{count} mwa"
+        other: "%{count} mwa"
+      x_years:
+        one: "%{count} an"
+        other: "%{count} an"
+    prompts:
+      second: Segonn
+      minute: Minit
+      hour: Ler
+      day: Zour
+      month: Mwa
+      year: Lane
+  support:
+    array:
+      last_word_connector: " ek "
+      two_words_connector: " ek "
+      words_connector: " , "
+  time:
+    am: am
+    pm: pm
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      long: "%-m/%-d/%Y %H:%M"
+      short: "%-m/%-d/%Y %H:%M"
