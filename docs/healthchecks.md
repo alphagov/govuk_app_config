@@ -1,6 +1,6 @@
 # Health Checks
 
-GOV.UK apps often have special `/healthcheck` routes, which give an indication of whether the app is running and able to respond to requests. [Read about how health checks are used](https://docs.publishing.service.gov.uk/manual/alerts/app-healthcheck-not-ok.html).
+GOV.UK apps often have special `/healthcheck` routes, which give an indication of whether the app is running and able to respond to requests. [Read about how health checks are used](https://docs.publishing.service.gov.uk/kubernetes/manage-app/control-healthchecks/).
 
 ## Including checks in your app
 
