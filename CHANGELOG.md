@@ -1,3 +1,8 @@
+# 10.0.0
+
+* Bump Ruby to 3.3.14
+* BREAKING: drop support for ruby 3.2
+
 # 9.28
 
 Add rails translations for Mauritian Creole
