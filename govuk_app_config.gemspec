@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "opentelemetry-instrumentation-all", ">= 0.39.1", "< 0.98.0"
   spec.add_dependency "opentelemetry-sdk", "~> 1.2"
   spec.add_dependency "ostruct", "~> 0.6"
-  spec.add_dependency "plek", ">= 4", "< 6"
+  spec.add_dependency "plek", ">= 4", "< 7"
   spec.add_dependency "prometheus_exporter", "~> 2.3"
   spec.add_dependency "puma", ">= 5.6", "< 9.0"
   spec.add_dependency "rack-proxy", ">= 0.7", "< 2.0"
