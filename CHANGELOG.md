@@ -1,3 +1,7 @@
+# 10.1.0
+
+* Allow plek 6.x
+
 # 10.0.0
 
 * Bump Ruby to 3.3.14
