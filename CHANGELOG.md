@@ -1,3 +1,8 @@
+# 10.2.0
+
+* Add govuk-request-id to HTTP span for OpenTelemetry
+* Update dependencies
+
 # 10.1.0
 
 * Allow plek 6.x
