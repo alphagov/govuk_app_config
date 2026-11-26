@@ -12,7 +12,12 @@ module GovukOpenTelemetry
 
     OpenTelemetry::SDK.configure do |config|
       config.service_name = service_name
-      config.use_all # enables all instrumentation!
+      # enables all instrumentation!
+      config.use_all(
+        "OpenTelemetry::Instrumentation::Rack" => {
+          allowed_request_headers: %w[GOVUK-Request-Id],
+        },
+      )
       config.logger = Logger.new(File::NULL) if in_rake_task?
     end
   end
