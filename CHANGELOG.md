@@ -1,3 +1,7 @@
+# 10.1.1
+
+* Update dependencies
+
 # 10.1.0
 
 * Allow plek 6.x
